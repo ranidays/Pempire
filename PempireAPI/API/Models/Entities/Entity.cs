@@ -33,7 +33,7 @@ namespace API.Models.Entities
         public string Description { get; set; }
         public int Health { get; set; }
         public int Mana { get; set; }
-        [Range(0, 3)]
+        [Range(0, 4)]
         public List<Item> ActiveItems { get; set; }
         public List<Item> Inventory { get; set; }
         [EnumDataType(typeof(Type))]

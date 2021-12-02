@@ -51,5 +51,23 @@ namespace API.Controllers
 
             return BadRequest(result.Errors);
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+
+            if (user == null)
+                return Unauthorized("email doesn't exist");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (result.Succeeded)
+                return Ok(new UserDto
+                {
+                    Token = _tokenService.CreateToken(user)
+                });
+
+            return Unauthorized("Not a good password");
+        }
     }
 }

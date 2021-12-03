@@ -1,15 +1,16 @@
 import React from "react";
 import titleBorder from "../../assets/title_with_border.png"
-import {Container, TitleImg, Text} from "./HomeStylings";
+import {CustomButton} from "./HomeStylings";
+import {Container, TitleImg} from "../GlobalStylings";
 
 const HomeScreen= () => {
     return(
 
         <Container>
             <TitleImg src={titleBorder} alt=""/>
-            <Text>Login</Text>
+            <CustomButton>Login</CustomButton>
 
-            <Text>Sign Up</Text>
+            <CustomButton>Sign Up</CustomButton>
         </Container>
 
     )

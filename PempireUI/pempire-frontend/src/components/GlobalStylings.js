@@ -23,3 +23,32 @@ export const TitleImg = styled.img`
 `
 
 
+export const BookWithHand = styled.img`
+  width: 47%;
+  height: auto;
+  //display: flex;
+  //align-items: flex-end;
+
+  position: fixed; 
+  bottom: 0px; 
+  right: 0px;
+  margin-right: 5%;
+  
+  
+  
+`
+
+export const Narrator = styled.img`
+  width: 40%;
+  height: auto;
+  //display: flex;
+  //align-items: flex-end;
+
+  position: fixed; 
+  bottom: 0px; 
+  left: 0px;
+
+  
+  
+  
+`

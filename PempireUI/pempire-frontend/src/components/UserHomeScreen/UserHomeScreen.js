@@ -3,6 +3,7 @@ import titleBorder from "../../assets/title_with_border.png"
 import {CustomButton} from "../HomeScreen/HomeStylings";
 import {Container, TitleImg} from "../GlobalStylings";
 
+
 const HomeScreen= () => {
     return(
 

@@ -7,12 +7,11 @@ const LoginScreen= () => {
     return(
 
         <Container>
-            <Header>Registration</Header>
+            <Header>Welcome!</Header>
             <TitleImg src={titleBorder} alt=""/>
             <InputField type="text" placeholder="Email Address"/>
             <InputField type="password" placeholder="Password"/>
-            <InputField type="password" placeholder="Confirm Password"/>
-            <CustomButton>Sign Up</CustomButton>
+            <CustomButton>Login</CustomButton>
 
         </Container>
 

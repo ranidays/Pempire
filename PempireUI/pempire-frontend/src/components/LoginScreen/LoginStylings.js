@@ -12,7 +12,7 @@ export const InputField = styled.input`
 `
 
 export const CustomButton = styled.button`
-  transform: translateY(-610%);
+  transform: translateY(-510%);
   font-family: 'ArcadeClassic', serif ;
   color: white;
   font-size: 55px;

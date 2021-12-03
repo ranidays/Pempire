@@ -16,9 +16,10 @@ export const Container = styled.div`
 `
 
 export const TitleImg = styled.img`
-  width: 598px;
-  height: 631px;
+  width: 47%;
+  height: auto;
   display: flex;
-  padding: 2%;`
+  padding: 2%;
+`
 
 

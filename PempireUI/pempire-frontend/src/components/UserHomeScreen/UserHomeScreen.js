@@ -4,9 +4,10 @@ import {CustomButton} from "../HomeScreen/HomeStylings";
 import {Container, TitleImg} from "../GlobalStylings";
 
 
-const HomeScreen= () => {
-    return(
 
+const HomeScreen= ({ authorized }) => {
+
+    return(
         <Container>
             <TitleImg src={titleBorder} alt=""/>
             <CustomButton>Load A Game</CustomButton>

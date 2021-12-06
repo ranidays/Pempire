@@ -8,23 +8,15 @@ namespace API.Models.Entities
 {
     public enum Hero
     {
-        Fighter, Rogue, Mage
+        NullHero, Fighter, Rogue, Mage
     }
     public enum Boss
     {
-        A, B, C, D, E, F, G, H
+        NullBoss, WaterBoss, FireBoss, OilBoss, GrassBoss, RockBoss, AcidBoss, MetalBoss, ElectricityBoss
     }
     public enum Type
     {
-        Normal,
-        Water,
-        Fire,
-        Oil,
-        Grass,
-        Rock,
-        Acid,
-        Metal,
-        Electricity
+        NullType, Normal, Water, Fire, Oil, Grass, Rock, Acid, Metal, Electricity
     }
     public class Entity
     {

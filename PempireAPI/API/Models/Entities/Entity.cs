@@ -29,10 +29,11 @@ namespace API.Models.Entities
         public int Health { get; set; }
         public int Mana { get; set; }
         [Range(0, 4)]
-        public List<Item>? ActiveItems { get; set; }
+        public List<Item>? ActiveWeapons { get; set; }
         public List<Item>? Inventory { get; set; }
         [EnumDataType(typeof(Element))]
         public Element StrongAgainst { get; set; }
+        [EnumDataType(typeof(Element))]
         public Element WeakAgainst { get; set; }
         public bool isEnemy { get; set; } //can't remember if we need this
         public Hero Hero { get; set; }

@@ -10,14 +10,17 @@ namespace API.Models.Entities
     {
         NullHero, Fighter, Rogue, Mage
     }
+
     public enum Boss
     {
         NullBoss, WaterBoss, FireBoss, OilBoss, GrassBoss, RockBoss, AcidBoss, MetalBoss, ElectricityBoss
     }
-    public enum Type
+
+    public enum Element
     {
         NullType, Normal, Water, Fire, Oil, Grass, Rock, Acid, Metal, Electricity
     }
+
     public class Entity
     {
         public Guid Id { get; set; }
@@ -28,9 +31,9 @@ namespace API.Models.Entities
         [Range(0, 4)]
         public List<Item>? ActiveItems { get; set; }
         public List<Item>? Inventory { get; set; }
-        [EnumDataType(typeof(Type))]
-        public Type StrongAgainst { get; set; }
-        public Type WeakAgainst { get; set; }
+        [EnumDataType(typeof(Element))]
+        public Element StrongAgainst { get; set; }
+        public Element WeakAgainst { get; set; }
         public bool isEnemy { get; set; } //can't remember if we need this
         public Hero Hero { get; set; }
         public Boss Boss { get; set; }

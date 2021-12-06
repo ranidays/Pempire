@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Models.Entities
 {
-    public enum ItemType{
-        potion,weapon
+    public enum ItemType
+    {
+        NullItemType, Weapon, Potion
     }
+
     public class Item
     {
         public Guid Id { get; set; }
@@ -17,7 +19,7 @@ namespace API.Models.Entities
         public string? Description { get; set; }
 
         public ItemType ItemType { get; set; }
-        public Type Element { get; set; }
+        public Element Element { get; set; }
 
         public EntityStateChanges? EntityChanges { get; set; }
         public int ResourceCost { get; set; }

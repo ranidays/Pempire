@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import b from "../assets/blue_background.png"
 
 export const Container = styled.div`
@@ -47,8 +47,15 @@ export const Narrator = styled.img`
   position: fixed; 
   bottom: 0px; 
   left: 0px;
+`
 
-  
-  
-  
+export const TextBox = styled.div`
+  background: #000000;
+  border: 2px solid #FFFFFF;
+  position: relative;
+  outline: 5px solid #000000;
+  color: #FFFFFF;
+  padding: 10px;
+  font-family: 'PixelFont';
+  letter-spacing: 2px;
 `

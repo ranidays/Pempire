@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace API.Models.Entities
 {
-    public enum Hero
+    public enum EntityType
+    {
+        NullEntity, Player, Underling, Boss
+    }
+    public enum HeroType
     {
         NullHero, Fighter, Rogue, Mage
     }
-
-    public enum Boss
-    {
-        NullBoss, WaterBoss, FireBoss, OilBoss, GrassBoss, RockBoss, AcidBoss, MetalBoss, ElectricityBoss
-    }
-
     public enum Element
     {
         NullType, Normal, Water, Fire, Oil, Grass, Rock, Acid, Metal, Electricity
@@ -23,22 +21,28 @@ namespace API.Models.Entities
 
     public class Entity
     {
+        //Identifiers and Descriptions
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+
+        //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }
         [Range(0, 4)]
         public List<Item>? ActiveWeapons { get; set; }
         public List<Item>? Inventory { get; set; }
-        [EnumDataType(typeof(Element))]
-        public Element StrongAgainst { get; set; }
-        [EnumDataType(typeof(Element))]
-        public Element WeakAgainst { get; set; }
-        public bool isEnemy { get; set; } //can't remember if we need this
-        public Hero Hero { get; set; }
-        public Boss Boss { get; set; }
-        public string? Image { get; set; }
         public int Gold { get; set; }
+
+        //Types
+        [EnumDataType(typeof(EntityType))]
+        public EntityType EntityType { get; set; }
+        [EnumDataType(typeof(HeroType))]
+        public HeroType HeroType { get; set; }
+        [EnumDataType(typeof(Element))]
+        public Element Element { get; set; }
+
+        //URLs for images for this entity
+        public List<string>? ImageUrls { get; set; }
     }
 }

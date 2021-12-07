@@ -32,9 +32,7 @@ namespace API.Models.Entities
         public int Health { get; set; }
         public int Mana { get; set; }
         public List<ItemNameWrapper>? Stash { get; set; }
-        public List<BattleActionNameWrapper>? OwnedBattleActions { get; set; }
-        [Range(0, 4)]
-        public List<BattleActionNameWrapper>? SelectedBattleActions { get; set; }
+        public List<BattleActionNameWrapper>? BattleActions { get; set; }
         public int Gold { get; set; }
 
         //Types

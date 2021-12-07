@@ -36,11 +36,7 @@ namespace API.Controllers
                 Email = registerDto.Email,
                 UserName = registerDto.UserName
             };
-            var game = new GameState()
-            {
-                BossesDefeated = 5,
-                Lives = 3
-            };
+            var game = new GameState();
             user.GameStates = new List<GameState>();
             user.GameStates!.Add(game);
 

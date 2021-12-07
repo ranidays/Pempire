@@ -4,45 +4,46 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+using API.Models.Wrappers;
+
 namespace API.Models.Entities
 {
-    public enum Hero
+    public enum EntityType
     {
-        Fighter, Rogue, Mage
+        NullEntity, Player, Underling, Boss
     }
-    public enum Boss
+    public enum HeroType
     {
-        A, B, C, D, E, F, G, H
+        NullHero, Fighter, Rogue, Mage
     }
-    public enum Type
+    public enum Element
     {
-        Normal,
-        Water,
-        Fire,
-        Oil,
-        Grass,
-        Rock,
-        Acid,
-        Metal,
-        Electricity
+        NullType, Normal, Water, Fire, Oil, Grass, Rock, Acid, Metal, Electricity
     }
+
     public class Entity
     {
+        //Identifiers and Descriptions
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+
+        //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }
-        [Range(0, 4)]
-        public List<Item>? ActiveItems { get; set; }
-        public List<Item>? Inventory { get; set; }
-        [EnumDataType(typeof(Type))]
-        public Type StrongAgainst { get; set; }
-        public Type WeakAgainst { get; set; }
-        public bool isEnemy { get; set; } //can't remember if we need this
-        public Hero Hero { get; set; }
-        public Boss Boss { get; set; }
-        public string? Image { get; set; }
+        public List<ItemNameWrapper>? Stash { get; set; }
+        public List<BattleActionNameWrapper>? BattleActions { get; set; }
         public int Gold { get; set; }
+
+        //Types
+        [EnumDataType(typeof(EntityType))]
+        public EntityType EntityType { get; set; }
+        [EnumDataType(typeof(HeroType))]
+        public HeroType HeroType { get; set; }
+        [EnumDataType(typeof(Element))]
+        public Element Element { get; set; }
+
+        //URLs for images for this entity
+        public List<ImageUrlWrapper>? ImageUrls { get; set; }
     }
 }

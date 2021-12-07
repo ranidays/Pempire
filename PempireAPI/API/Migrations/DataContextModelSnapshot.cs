@@ -23,11 +23,14 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Boss")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Element")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EntityType")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Gold")
                         .HasColumnType("INTEGER");
@@ -35,26 +38,14 @@ namespace API.Migrations
                     b.Property<int>("Health")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Hero")
+                    b.Property<int>("HeroType")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("Mana")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("StrongAgainst")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("WeakAgainst")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("isEnemy")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -67,71 +58,27 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BossesDefeated")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Lives")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid?>("SelectedBossId")
+                    b.Property<Guid?>("SelectedEnemyId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("SelectedHeroId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("UnderlingsDefeated")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SelectedBossId");
+                    b.HasIndex("SelectedEnemyId");
 
                     b.HasIndex("SelectedHeroId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("GameState");
-                });
-
-            modelBuilder.Entity("API.Models.Entities.Item", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("EntityId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("EntityId1")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Health")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ItemType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Mana")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId");
-
-                    b.HasIndex("EntityId1");
-
-                    b.ToTable("Item");
                 });
 
             modelBuilder.Entity("API.Models.Entities.User", b =>
@@ -146,6 +93,9 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Bio")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("CheckpointId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -196,6 +146,8 @@ namespace API.Migrations
 
                     b.HasIndex("ActiveGameStateId");
 
+                    b.HasIndex("CheckpointId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -204,6 +156,86 @@ namespace API.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.BattleActionNameWrapper", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EntityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("BattleActionNameWrapper");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.BossDefeatedNameWrapper", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("GameStateId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameStateId");
+
+                    b.ToTable("BossDefeatedNameWrapper");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.ImageUrlWrapper", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EntityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ImageUrlWrapper");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.ItemNameWrapper", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EntityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ItemNameWrapper");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -336,9 +368,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entities.GameState", b =>
                 {
-                    b.HasOne("API.Models.Entities.Entity", "SelectedBoss")
+                    b.HasOne("API.Models.Entities.Entity", "SelectedEnemy")
                         .WithMany()
-                        .HasForeignKey("SelectedBossId");
+                        .HasForeignKey("SelectedEnemyId");
 
                     b.HasOne("API.Models.Entities.Entity", "SelectedHero")
                         .WithMany()
@@ -348,20 +380,9 @@ namespace API.Migrations
                         .WithMany("GameStates")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("SelectedBoss");
+                    b.Navigation("SelectedEnemy");
 
                     b.Navigation("SelectedHero");
-                });
-
-            modelBuilder.Entity("API.Models.Entities.Item", b =>
-                {
-                    b.HasOne("API.Models.Entities.Entity", null)
-                        .WithMany("ActiveItems")
-                        .HasForeignKey("EntityId");
-
-                    b.HasOne("API.Models.Entities.Entity", null)
-                        .WithMany("Inventory")
-                        .HasForeignKey("EntityId1");
                 });
 
             modelBuilder.Entity("API.Models.Entities.User", b =>
@@ -370,7 +391,41 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("ActiveGameStateId");
 
+                    b.HasOne("API.Models.Entities.GameState", "Checkpoint")
+                        .WithMany()
+                        .HasForeignKey("CheckpointId");
+
                     b.Navigation("ActiveGameState");
+
+                    b.Navigation("Checkpoint");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.BattleActionNameWrapper", b =>
+                {
+                    b.HasOne("API.Models.Entities.Entity", null)
+                        .WithMany("BattleActions")
+                        .HasForeignKey("EntityId");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.BossDefeatedNameWrapper", b =>
+                {
+                    b.HasOne("API.Models.Entities.GameState", null)
+                        .WithMany("BossesDefeated")
+                        .HasForeignKey("GameStateId");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.ImageUrlWrapper", b =>
+                {
+                    b.HasOne("API.Models.Entities.Entity", null)
+                        .WithMany("ImageUrls")
+                        .HasForeignKey("EntityId");
+                });
+
+            modelBuilder.Entity("API.Models.Wrappers.ItemNameWrapper", b =>
+                {
+                    b.HasOne("API.Models.Entities.Entity", null)
+                        .WithMany("Stash")
+                        .HasForeignKey("EntityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -426,9 +481,16 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entities.Entity", b =>
                 {
-                    b.Navigation("ActiveItems");
+                    b.Navigation("BattleActions");
 
-                    b.Navigation("Inventory");
+                    b.Navigation("ImageUrls");
+
+                    b.Navigation("Stash");
+                });
+
+            modelBuilder.Entity("API.Models.Entities.GameState", b =>
+                {
+                    b.Navigation("BossesDefeated");
                 });
 
             modelBuilder.Entity("API.Models.Entities.User", b =>

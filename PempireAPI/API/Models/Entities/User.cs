@@ -9,9 +9,11 @@ namespace API.Models.Entities
 {
     public class User : IdentityUser
     {
-         public string? Bio { get; set; }
-        public GameState? ActiveGameState { get; set; }
+        public string? Bio { get; set; }
+
         [Range(0,3)]
         public List<GameState>? GameStates { get; set; }
+        public GameState? Checkpoint { get; set; }
+        public GameState? ActiveGameState { get; set; }
     }
 }

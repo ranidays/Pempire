@@ -7,7 +7,7 @@ namespace API.Models.Entities
 {
     public enum ItemType
     {
-        NullItemType, Weapon, Potion
+        NullItem, Potion, Scroll
     }
 
     public class Item
@@ -24,7 +24,7 @@ namespace API.Models.Entities
         public EntityStateChanges? EntityChanges { get; set; }
         public int ResourceCost { get; set; }
 
-        public void Use(Entity foe)
+        public void Use(Entity target)
         {
             //
         }

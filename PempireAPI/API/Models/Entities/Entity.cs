@@ -29,9 +29,10 @@ namespace API.Models.Entities
         //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }
+        public List<Item>? Stash { get; set; }
+        public List<BattleAction>? OwnedBattleActions { get; set; }
         [Range(0, 4)]
-        public List<Item>? ActiveWeapons { get; set; }
-        public List<Item>? Inventory { get; set; }
+        public List<BattleAction>? SelectedBattleActions { get; set; }
         public int Gold { get; set; }
 
         //Types

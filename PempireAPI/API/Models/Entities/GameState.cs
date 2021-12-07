@@ -11,7 +11,7 @@ namespace API.Models.Entities
         public Entity? SelectedHero { get; set; }
         public Entity? SelectedEnemy { get; set; }
 
-        public List<string>? BossesDefeated { get; set; }
+        public List<BossDefeatedNameWrapper>? BossesDefeated { get; set; }
         public int UnderlingsDefeated { get; set; }
     }
 }

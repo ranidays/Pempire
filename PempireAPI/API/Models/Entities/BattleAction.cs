@@ -13,7 +13,6 @@ namespace API.Models.Entities
     public class BattleAction
     {
         public Guid Id { get; set; }
-        public Entity? BattleActionOwner { get; set; }
 
         public string? Name { get; set; }
         public string? Description { get; set; }

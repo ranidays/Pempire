@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Models.Entities
+namespace API.Models.Wrappers
 {
-    public class BossDefeatedNameWrapper
+    public class ItemNameWrapper
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = "";

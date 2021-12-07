@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+using API.Models.Wrappers;
+
 namespace API.Models.Entities
 {
     public enum EntityType

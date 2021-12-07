@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using API.Models.Wrappers;
+
 namespace API.Models.Entities
 {
     public class GameState

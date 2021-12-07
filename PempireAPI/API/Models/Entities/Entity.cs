@@ -44,6 +44,6 @@ namespace API.Models.Entities
         public Element Element { get; set; }
 
         //URLs for images for this entity
-        public List<string>? ImageUrls { get; set; }
+        public List<ImageUrlWrapper>? ImageUrls { get; set; }
     }
 }

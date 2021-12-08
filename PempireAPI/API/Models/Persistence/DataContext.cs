@@ -12,7 +12,7 @@ namespace API.Models.Persistence
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("FileName=Pempire.db");
+            optionsBuilder.UseSqlite("FileName=Pempire.db").UseLazyLoadingProxies();
         }
 
     }

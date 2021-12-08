@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Transactions;
+using System.Web.Http.Cors;
 using API.Models;
 using API.Models.DTOs;
 using API.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,8 +41,7 @@ namespace API.Controllers
                 UserName = registerDto.UserName
             };
             var game = new GameState();
-            user.GameStates = new List<GameState>();
-            user.GameStates!.Add(game);
+            user.ActiveGameState = game;
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -47,6 +50,7 @@ namespace API.Controllers
 
             return BadRequest(result.Errors);
         }
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
@@ -64,6 +68,13 @@ namespace API.Controllers
                 });
 
             return Unauthorized("Not a good password");
+        }
+        [Authorize]
+        [HttpGet("getuserfromtoken")]
+        public async Task<IActionResult> GetUserFromToken()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            return Ok(user);
         }
     }
 }

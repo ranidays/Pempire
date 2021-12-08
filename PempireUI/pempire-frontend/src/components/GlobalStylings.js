@@ -3,48 +3,47 @@ import b from "../assets/blue_background.png"
 import pixelBorder from "../assets/pixel_border.png"
 
 export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${b});
+  width: 100vw;
+  height: 100vh;
+  background: url(${b}) no-repeat center center fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 2rem;
   overflow: hidden;
   position: relative;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;          /* Firefox */
+  image-rendering: -o-crisp-edges;            /* Opera */ 
+  /* Webkit (non-standard naming)*/
+  -ms-interpolation-mode: nearest-neighbor;   /* IE (non-standard property) */
 `
 
 export const TitleImg = styled.img`
   width: 47%;
   height: auto;
   display: flex;
-  padding: 2%;
+  padding-top: 15%;
 `
 
 
 export const BookWithHand = styled.img`
   width: 47%;
   height: auto;
-  //display: flex;
-  //align-items: flex-end;
-
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
   position: fixed; 
   bottom: 0px; 
   right: 0px;
-  margin-right: 5%;
-  
-  
-  
+  margin-right: 9%;
 `
 
 export const Narrator = styled.img`
   width: 40%;
   height: auto;
-  //display: flex;
-  //align-items: flex-end;
-
   position: fixed; 
   bottom: 0px; 
   left: 0px;
@@ -59,6 +58,10 @@ export const TextBox = styled.div`
   padding: 1.2em;
   font-family: 'PixelFont';
   letter-spacing: 0.3em;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;  
 `
 
 //code retrieved and modified from https://codepen.io/YoannM/pen/yyExEO?editors=0100

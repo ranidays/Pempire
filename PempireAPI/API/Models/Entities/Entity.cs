@@ -1,26 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-
-using API.Models.Wrappers;
+using API.Models.Enums;
 
 namespace API.Models.Entities
 {
-    public enum EntityType
-    {
-        NullEntity, Player, Underling, Boss
-    }
-    public enum HeroType
-    {
-        NullHero, Fighter, Rogue, Mage
-    }
-    public enum Element
-    {
-        NullType, Normal, Water, Fire, Oil, Grass, Rock, Acid, Metal, Electricity
-    }
-
     public class Entity
     {
         //Identifiers and Descriptions
@@ -31,19 +18,17 @@ namespace API.Models.Entities
         //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }
-        public List<ItemNameWrapper>? Stash { get; set; }
-        public List<BattleActionNameWrapper>? BattleActions { get; set; }
+        public virtual List<ConsumableName>? Stash { get; set; }
+        public virtual List<BattleMoveName>? BattleActions { get; set; }
         public int Gold { get; set; }
 
         //Types
         [EnumDataType(typeof(EntityType))]
         public EntityType EntityType { get; set; }
-        [EnumDataType(typeof(HeroType))]
-        public HeroType HeroType { get; set; }
+        [EnumDataType(typeof(Actor))]
+        public Actor Actor { get; set; }
         [EnumDataType(typeof(Element))]
         public Element Element { get; set; }
-
-        //URLs for images for this entity
-        public List<ImageUrlWrapper>? ImageUrls { get; set; }
+        public string? Portrait { get; set; }
     }
 }

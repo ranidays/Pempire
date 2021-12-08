@@ -21,7 +21,7 @@ namespace API.Models
                     new Claim(ClaimTypes.Email, user.Email),
                 };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This is my super duper key"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("67Gs*2H411M2C&WixDY%"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -11,9 +11,9 @@ namespace API.Models.Entities
     {
         public string? Bio { get; set; }
 
-        [Range(0,3)]
-        public List<GameState>? GameStates { get; set; }
-        public GameState? Checkpoint { get; set; }
-        public GameState? ActiveGameState { get; set; }
+        [Range(0, 3)]
+        public virtual List<GameState>? GameStates { get; set; }
+        public virtual GameState? Checkpoint { get; set; }
+        public virtual GameState? ActiveGameState { get; set; }
     }
 }

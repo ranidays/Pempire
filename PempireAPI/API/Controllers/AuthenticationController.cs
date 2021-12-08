@@ -8,6 +8,7 @@ using System.Web.Http.Cors;
 using API.Models;
 using API.Models.DTOs;
 using API.Models.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +70,7 @@ namespace API.Controllers
 
             return Unauthorized("Not a good password");
         }
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("getuserfromtoken")]
         public async Task<IActionResult> GetUserFromToken()
         {

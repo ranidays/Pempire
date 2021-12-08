@@ -12,7 +12,7 @@ class LoginScreen extends React.Component{
     constructor() {
       super()
       this.state = {
-        postId: null
+        webToken: null
         };
         this.handleClick = this.handleClick.bind(this)
     }
@@ -27,7 +27,8 @@ class LoginScreen extends React.Component{
       };
       fetch('http://localhost:5000/api/authentication/login', requestOptions)
       .then(response => response.json())
-      .then(data => this.setState({ postId: data.token }));
+      .then(data => this.setState({ webToken: data.token }));
+      sessionStorage.setItem('jwtToken', this.webToken);
       }
 
 
@@ -39,12 +40,8 @@ class LoginScreen extends React.Component{
                     {/* <BookWithHand src={BookHand}/> */}
                     <Narrator src={narrator}/>
                     <CustomButton>
-                        Post Request
+                        <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Story" onClick={this.handleClick}>Login</Link>
                     </CustomButton>
-                    <button className='button' onClick={this.handleClick}>Post Request</button>
-                    <div className="card-body">
-                    Returned Id: {postId}
-                     </div>
                 </Container >
             </Container>
         )

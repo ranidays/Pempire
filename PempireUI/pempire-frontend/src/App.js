@@ -9,7 +9,7 @@ import StoryScreen from "./components/StoryScreen/StoryScreen";
 
 function App() {
   return (
-    <HomeScreen/>
+    <SignUpScreen/>
   );
 }
 

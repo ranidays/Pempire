@@ -1,7 +1,10 @@
 import React from "react";
 import titleBorder from "../../assets/title_with_border.png";
-import {Container, TitleImg} from "../GlobalStylings";
+import {BookWithHand, Container, Narrator, TitleImg} from "../GlobalStylings";
 import {InputField, CustomButton, Header} from "./LoginStylings";
+import BookHand from "../../assets/book_with_hand.png"
+import narrator from "../../assets/narrator.png"
+
 
 
 const LoginScreen= () => {
@@ -9,12 +12,10 @@ const LoginScreen= () => {
     return(
 
         <Container>
-            <Header>Welcome!</Header>
-            <TitleImg src={titleBorder} alt=""/>
-            <InputField type="text" placeholder="Email Address"/>
-            <InputField type="password" placeholder="Password"/>
-            <CustomButton >Login</CustomButton>
-
+            <Container>
+                <BookWithHand src={BookHand}/>
+                <Narrator src={narrator}/>
+            </Container >
         </Container>
 
     )

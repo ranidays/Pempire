@@ -14,6 +14,7 @@ namespace API.Models.Entities
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+
         //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }

@@ -23,7 +23,6 @@ export const CustomButton = styled.button`
 `
 
 export const Header = styled.h1`
-  //transform: translateY(990%);
   position: absolute;
   bottom: 74%;
   font-family: 'ArcadeClassic', serif ;

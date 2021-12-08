@@ -1,9 +1,8 @@
 import React from "react";
 import titleBorder from "../../assets/title_with_border.png";
 import {Container, TitleImg} from "../GlobalStylings";
-import {InputField, Header} from "../LoginScreen/LoginStylings";
+import {InputField, Header} from "./SignUpStylings"
 import {CustomButton} from "./SignUpStylings";
-import { Redirect } from "react-router-dom"
 
 const SignUpScreen= () => {
     return(

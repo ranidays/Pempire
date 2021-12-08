@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class RefactoringDatabase : Migration
+    public partial class RefactoredMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

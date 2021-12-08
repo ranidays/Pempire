@@ -11,7 +11,7 @@ const HomeScreen= ({ authorized }) => {
         <Container>
             <TitleImg src={titleBorder} alt=""/>
             <CustomButton>Load A Game</CustomButton>
-
+            <CustomButton>Load A Game</CustomButton>
             <CustomButton>New Game</CustomButton>
         </Container>
 

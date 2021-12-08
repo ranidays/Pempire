@@ -9,6 +9,8 @@ import manaSmall from "../../assets/shop_items/mana_small.png"
 import manaLarge from "../../assets/shop_items/mana_large.png"
 import manaMedium from "../../assets/shop_items/mana_medium.png"
 
+const itemSize= "6vw";
+
 export const ShopContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -47,36 +49,40 @@ export const ShopContent = styled.div`
 export const ItemStore = styled.div`
     width: 100%;
     height: auto;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-start;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, ${itemSize});
+    grid-template-rows: repeat(auto-fill, ${itemSize});
+    justify-items: center;
+    justify-content: center;
+    grid-gap: 10px;
     background-color: #5b2e29c2;
     border: Cornsilk 2px solid;
-    outline: #5b2e29 3px solid;
+    outline: #5b2e29 5px solid;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    padding: 10px;
 `
 
 export const Item = styled.button`
-    border: none;
-    margin: 0;
+    border: 0;
     padding: 0;
-    overflow: visible;
+    margin: 0;
     background-color: transparent;
     background-image: ${(props) => `url(${require(`../../assets/shop_items/${props.image}`).default})`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-width: 32px;
-    min-height: 32px;
-    max-width: auto;
-    max-height: auto;
     image-rendering: crisp-edges;
+    min-height: ${itemSize};
+    min-width: ${itemSize};
  image-rendering: -moz-crisp-edges;          /* Firefox */
  image-rendering: -o-crisp-edges;            /* Opera */
  image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
  -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+    aspect-ratio: 1;
+`
+
+export const ShopButtonsContainer = styled.div`
+    
 `

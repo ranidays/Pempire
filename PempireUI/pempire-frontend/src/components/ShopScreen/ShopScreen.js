@@ -2,27 +2,47 @@ import React from "react";
 import {ShopContainer, ShopContent, ItemStore, Item} from "./ShopStylings";
 import {TextBox} from "../GlobalStylings";
 import TextBoxWithAnimation from "../TextBoxWithAnimation"
+import * as fs from "fs"
 
-const ShopScreen= () => {
+class ShopScreen extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+          itemNames: [
+              "mana_small.png",
+              "mana_medium.png",
+              "mana_large.png",
+              "health_small.png",
+              "health_medium.png",
+              "health_large.png",
+              "scroll_acid.png",
+              "scroll_earth.png",
+              "scroll_electricity.png",
+              "scroll_fire.png",
+              "scroll_grass.png",
+              "scroll_metal.png",
+              "scroll_oil.png",
+              "scroll_water.png"
+          ],
+        }    
+      }
 
-    const fs = require('fs');
-    const folder = "../../assets/shop_items"
+      render() {
+          return (
+              <ShopContainer>
+                  <ShopContent>
+                      <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
 
-    function getShopItems() {
+                        <ItemStore>
+                            {this.state.itemNames.map((item) => (
+                                <Item image={`${item}`}/>
+                            ))}
+                        </ItemStore>
 
-    }
-
-
-    return(
-        <ShopContainer>
-            <ShopContent>
-                <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"}/>
-                <ItemStore>
-                    <Item image={"mana_small.png"}></Item>
-                </ItemStore>
-            </ShopContent>
-        </ShopContainer>
-    )
+                  </ShopContent>
+              </ShopContainer>
+          )
+      }
 }
 
 export default ShopScreen;

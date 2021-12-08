@@ -23,7 +23,7 @@ export const TitleImg = styled.img`
   width: 47%;
   height: auto;
   display: flex;
-  padding: 2%;
+  padding-top: 15%;
 `
 
 
@@ -34,26 +34,15 @@ export const BookWithHand = styled.img`
   image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
-
-
-  //display: flex;
-  //align-items: flex-end;
-
   position: fixed; 
   bottom: 0px; 
   right: 0px;
-  margin-right: 5%;
-  
-  
-  
+  margin-right: 9%;
 `
 
 export const Narrator = styled.img`
   width: 40%;
   height: auto;
-  //display: flex;
-  //align-items: flex-end;
-
   position: fixed; 
   bottom: 0px; 
   left: 0px;

@@ -11,7 +11,7 @@ namespace API.Models.Entities
     {
         public Guid Id { get; set; }
         public Entity? SelectedHero { get; set; }
-        [EnumDataType(typeof(EntityType))]
+        [EnumDataType(typeof(Actor))]
         public Actor? SelectedEnemy { get; set; }
         public List<ActorName>? BossesDefeated { get; set; }
         public int UnderlingsDefeated { get; set; }

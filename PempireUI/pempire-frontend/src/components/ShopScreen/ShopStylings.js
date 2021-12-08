@@ -18,6 +18,7 @@ export const ShopContainer = styled.div`
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  overflow-y: hidden;
   background-size: cover;
   display: flex;
   flex-direction: row-reverse;
@@ -42,7 +43,7 @@ export const ShopContent = styled.div`
     align-items: center;
     margin: 10px;
     margin-right: 10%;
-    gap: 5%;
+    gap: 3%;
     ${TextBox} {
         font-size: 1.3vw;
         align-self: stretch;
@@ -51,13 +52,13 @@ export const ShopContent = styled.div`
 
 export const ItemStore = styled.div`
     width: 100%;
-    height: auto;
+    height: fit-content;
     display: grid;
     grid-template-columns: repeat(auto-fill, ${itemSize});
-    grid-template-rows: repeat(auto-fill, ${itemSize});
+    grid-template-rows: repeat(auto-fill,1fr);
     justify-items: center;
     justify-content: center;
-    grid-gap: 20px;
+    grid-column-gap: calc(${itemSize} / 2);
     background-color: #5b2e29c2;
     border: Cornsilk 2px solid;
     outline: #5b2e29 5px solid;
@@ -147,7 +148,7 @@ export const GoldIcon = styled.img`
 
 export const GoldDisplay = styled.p`
     font-family: 'PixelFont';
-    font-size: 2em;
+    font-size: 5vh;
     margin: 0;
     padding: 0;
     border: 0;

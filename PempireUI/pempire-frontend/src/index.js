@@ -12,7 +12,7 @@ ReactDOM.render(
     <FontStyles/>
     <BrowserRouter>
       <Routing />
-    </BrowserRouter>,
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

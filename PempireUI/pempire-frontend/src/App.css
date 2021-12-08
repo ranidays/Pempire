@@ -1,10 +1,3 @@
-/*custom pixel font*/
-@font-face {
-  font-family: 'PixelFont';
-  src: local('Minecraft'), url(./fonts/Minecraft.ttf) format('truetype');
-}
-
-
 .App {
   text-align: center;
 }

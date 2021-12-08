@@ -3,9 +3,11 @@ import ArcadeClassic from '../src/fonts/ARCADECLASSIC.TTF'
 import RumbleBrave from '../src/fonts/RumbleBrave.otf'
 
 const FontStyles = createGlobalStyle`
+  /*custom pixel font*/
   @font-face {
-    font-family: 'ArcadeClassic';
-    src: url(${ArcadeClassic})
+    font-family: 'PixelFont';
+    src: local('Minecraft'), url(./fonts/Minecraft.ttf) format('truetype');
+    letter-spacing: 0.3em;
   }
 
   @font-face {

@@ -9,7 +9,7 @@ import manaSmall from "../../assets/shop_items/mana_small.png"
 import manaLarge from "../../assets/shop_items/mana_large.png"
 import manaMedium from "../../assets/shop_items/mana_medium.png"
 
-const itemSize= "6vw";
+const itemSize = "6vw";
 
 export const ShopContainer = styled.div`
   width: 100vw;
@@ -76,13 +76,20 @@ export const Item = styled.button`
     image-rendering: crisp-edges;
     min-height: ${itemSize};
     min-width: ${itemSize};
- image-rendering: -moz-crisp-edges;          /* Firefox */
- image-rendering: -o-crisp-edges;            /* Opera */
- image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
- -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+    image-rendering: -moz-crisp-edges;          /* Firefox */
+    image-rendering: -o-crisp-edges;            /* Opera */
+    image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
+    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     aspect-ratio: 1;
 `
 
-export const ShopButtonsContainer = styled.div`
-    
+export const ShopButtonContainer = styled.div`
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
 `

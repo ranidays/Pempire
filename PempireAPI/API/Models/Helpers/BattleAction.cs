@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Models.Enums;
 
-namespace API.Models.Entities
+using API.Models.Entities;
+
+namespace API.Models.Helpers
 {
     public enum BattleActionType
     {

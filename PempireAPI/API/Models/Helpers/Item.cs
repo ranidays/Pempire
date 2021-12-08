@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Models.Entities;
 using API.Models.Enums;
 
-namespace API.Models.Entities
+namespace API.Models.Helpers
 {
     public enum ItemType
     {

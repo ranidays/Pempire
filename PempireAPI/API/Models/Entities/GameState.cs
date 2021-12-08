@@ -10,7 +10,7 @@ namespace API.Models.Entities
     public class GameState
     {
         public Guid Id { get; set; }
-        public Entity? SelectedHero { get; set; }
+        public virtual Entity? SelectedHero { get; set; }
         [EnumDataType(typeof(Actor))]
         public Actor? SelectedEnemy { get; set; }
         public virtual List<ActorName>? BossesDefeated { get; set; }

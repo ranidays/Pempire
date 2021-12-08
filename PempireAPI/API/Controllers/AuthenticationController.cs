@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Web.Http.Cors;
 using API.Models;
 using API.Models.DTOs;
 using API.Models.Entities;
@@ -49,6 +50,7 @@ namespace API.Controllers
 
             return BadRequest(result.Errors);
         }
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {

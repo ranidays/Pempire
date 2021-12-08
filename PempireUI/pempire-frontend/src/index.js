@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import FontStyles from "./FontStyles";
+import { BrowserRouter } from 'react-router-dom';
+import { Routing } from './routes';
 
 ReactDOM.render(
   <React.StrictMode>
     <FontStyles/>
-    <App />
+    <BrowserRouter>
+      <Routing />
+    </BrowserRouter>,
   </React.StrictMode>,
   document.getElementById('root')
 );

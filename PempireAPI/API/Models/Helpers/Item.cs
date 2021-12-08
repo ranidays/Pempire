@@ -21,6 +21,9 @@ namespace API.Models.Entities
         public Element Element { get; set; }
         public EntityStateChanges? EntityChanges { get; set; }
 
+        public int GoldCost { get; set; }
+        public string? IconUrl { get; set; }
+
         public void Use(Entity target)
         {
             //

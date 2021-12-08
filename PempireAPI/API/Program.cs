@@ -4,6 +4,7 @@ using API.Models.Entities;
 using API.Models.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,7 @@ builder.Services.AddIdentityCore<User>()
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<TokenService>();
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This is my super duper key"));
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("67Gs*2H411M2C&WixDY%"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {

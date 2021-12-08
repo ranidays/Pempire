@@ -1,9 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using API.Models;
 using API.Models.Entities;
+using API.Models.Enums;
+using API.Models.Helpers;
 using API.Models.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,19 +19,29 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class GameLogicController : ControllerBase
     {
-        private readonly DataContext _context;
-
-        public GameLogicController(DataContext context)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly TokenService _tokenService;
+        public GameLogicController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            TokenService tokenService
+            )
         {
-            _context = context;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            _tokenService = tokenService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User user)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("CharacterSelected")] // Post /API/GameLogic/CharacterSelected
+        public async Task<IActionResult> CharacterWasSelected([FromBody] ActorName actor)
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            return Created("", User);
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            var hero = ActorFactory.GenerateEntity(actor.Name);
+            user.ActiveGameState.SelectedHero = hero;
+            await _userManager.UpdateAsync(user);
+            return Ok(hero);
         }
     }
 }

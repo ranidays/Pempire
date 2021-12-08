@@ -11,6 +11,6 @@ namespace API.Models.Entities
     {
         public Guid Id { get; set; }
         [EnumDataType(typeof(Actor))]
-        public Actor? Name { get; set; }
+        public Actor Name { get; set; }
     }
 }

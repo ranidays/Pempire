@@ -17,8 +17,8 @@ namespace API.Models.Entities
         //Health, Mana, and Possessions
         public int Health { get; set; }
         public int Mana { get; set; }
-        public List<ConsumableName>? Stash { get; set; }
-        public List<BattleMoveName>? BattleActions { get; set; }
+        public virtual List<ConsumableName>? Stash { get; set; }
+        public virtual List<BattleMoveName>? BattleActions { get; set; }
         public int Gold { get; set; }
 
         //Types

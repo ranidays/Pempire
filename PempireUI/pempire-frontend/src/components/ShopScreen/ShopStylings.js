@@ -9,7 +9,7 @@ import manaSmall from "../../assets/shop_items/mana_small.png"
 import manaLarge from "../../assets/shop_items/mana_large.png"
 import manaMedium from "../../assets/shop_items/mana_medium.png"
 
-const itemSize = "6vw";
+const itemSize = "5vw";
 
 export const ShopContainer = styled.div`
   width: 100vw;
@@ -38,11 +38,11 @@ export const ShopContent = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     margin: 10px;
     margin-right: 10%;
-    gap: 10px;
+    gap: 5%;
     ${TextBox} {
         font-size: 1.3vw;
         align-self: stretch;
@@ -83,7 +83,7 @@ export const Item = styled.div`
     align-content: center;
 
     &:active{
-        background-color: #000000d1;
+        background-color: yellow;
     }
 `
 export const ItemImage = styled.img`
@@ -107,4 +107,53 @@ export const ShopButtonContainer = styled.div`
     gap: 10%;
     justify-content: center;
 
+`
+
+export const GoldContainer = styled.div`
+    width: 100%;
+    height: auto;
+    padding: 10px 3vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10%;
+    align-content: center;
+    justify-items: center;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
+    background-color: #00000090;
+`
+
+export const GoldInnerContainer = styled.div`
+    display: table;
+`
+
+export const GoldIcon = styled.img`
+    border: 0;
+    margin: 0 ;
+    margin-right: 0.5em;
+    margin-left: 1em;
+    padding: 0;
+    image-rendering: crisp-edges;
+    width: 5vh;
+    height: 5vh;
+    image-rendering: -moz-crisp-edges;          /* Firefox */
+    image-rendering: -o-crisp-edges;            /* Opera */
+    image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
+    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+    aspect-ratio: 1;
+`
+
+export const GoldDisplay = styled.p`
+    font-family: 'PixelFont';
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: white;
+    position: relative;
+    top: 1px;
+    display: table-cell;
+    vertical-align: middle;
 `

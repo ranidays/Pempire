@@ -1,5 +1,5 @@
 import React from "react";
-import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer} from "./ShopStylings";
+import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer, ItemImage} from "./ShopStylings";
 import {TextBox, PixelButton} from "../GlobalStylings";
 import TextBoxWithAnimation from "../TextBoxWithAnimation"
 import * as fs from "fs"
@@ -24,7 +24,15 @@ class ShopScreen extends React.Component{
               "scroll_oil.png",
               "scroll_water.png"
           ],
+          selectedItem: -1,
         }    
+      }
+
+      selectItem(index){
+        this.setState(prevState => ({
+            selectedItem: prevState.selectItem == index ? -1 : index
+        }))
+        console.log(index);
       }
 
       render() {
@@ -33,8 +41,10 @@ class ShopScreen extends React.Component{
                   <ShopContent>
                         <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
                         <ItemStore>
-                            {this.state.itemNames.map((item) => (
-                                <Item image={`${item}`}/>
+                            {this.state.itemNames.map((item, index) => (
+                                <Item>
+                                    <ItemImage src={`${require(`../../assets/shop_items/${item}`).default}`} onClick={this.selectItem.bind(this, index)}></ItemImage>
+                                </Item>
                             ))}
                         </ItemStore>
                         <ShopButtonContainer>

@@ -56,15 +56,14 @@ export const TextBox = styled.div`
   position: relative;
   outline: 5px solid #000000;
   color: #FFFFFF;
-  padding: 10px;
+  padding: 1.2em;
   font-family: 'PixelFont';
-  letter-spacing: 2px;
+  letter-spacing: 0.3em;
 `
 
 //code retrieved and modified from https://codepen.io/YoannM/pen/yyExEO?editors=0100
+//not working; background color not showing at most zoom levels.
 export const PixelButton = styled.div`
-  background-color: #000000;
-  background-clip: padding-box;
 
   line-height: 0;
 
@@ -82,21 +81,43 @@ export const PixelButton = styled.div`
   -o-border-image: url(${pixelBorder}) 20 stretch;
   border-image: url(${pixelBorder}) 20 stretch;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   cursor: pointer;
   text-transform: uppercase;
 
   position: relative;
   display: inline-block;
+  vertical-align: top;
+  text-align: center;
 
   & p{
-    margin: 0;
-    padding: 0;
     font-family: 'PixelFont';
     color: #FFFFFF;
+
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: auto;
+  text-align: center;
+  margin: -20px -20px;
+  line-height: 1.5em;
+  padding: 10px 40px;
+  font-size: 2em;
+  
+	background: #000000;
+	background:
+		linear-gradient(135deg, transparent 10px, #000000 0) top left,
+		linear-gradient(225deg, transparent 10px, #000000 0) top right,
+		linear-gradient(315deg, transparent 10px, #000000 0) bottom right,
+		linear-gradient(45deg,  transparent 10px, #000000 0) bottom left;
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-image:
+		radial-gradient(circle at 0 0, rgba(204,0,0,0) 14px, #000000 15px),
+		radial-gradient(circle at 100% 0, rgba(204,0,0,0) 14px, #000000 15px),
+		radial-gradient(circle at 100% 100%, rgba(204,0,0,0) 14px, #000000 15px),
+		radial-gradient(circle at 0 100%, rgba(204,0,0,0) 14px, #000000 15px);
+
   }
 
   &:active{

@@ -24,6 +24,7 @@ export const ShopContainer = styled.div`
   flex-wrap: nowrap;
   overflow: hidden;
   position: relative;
+  image-rendering: optimizeSpeed;
   image-rendering: crisp-edges;
  image-rendering: -moz-crisp-edges;          /* Firefox */
  image-rendering: -o-crisp-edges;            /* Opera */
@@ -32,7 +33,7 @@ export const ShopContainer = styled.div`
 `
 
 export const ShopContent = styled.div`
-    width: 50%;
+    width: 40%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -40,9 +41,11 @@ export const ShopContent = styled.div`
     justify-content: space-around;
     align-items: center;
     margin: 10px;
+    margin-right: 10%;
     gap: 10px;
     ${TextBox} {
-        font-size: 12px;
+        font-size: 1.3vw;
+        align-self: stretch;
     }
 `
 
@@ -54,7 +57,7 @@ export const ItemStore = styled.div`
     grid-template-rows: repeat(auto-fill, ${itemSize});
     justify-items: center;
     justify-content: center;
-    grid-gap: 10px;
+    grid-gap: 20px;
     background-color: #5b2e29c2;
     border: Cornsilk 2px solid;
     outline: #5b2e29 5px solid;
@@ -64,32 +67,44 @@ export const ItemStore = styled.div`
     padding: 10px;
 `
 
-export const Item = styled.button`
+export const Item = styled.div`
     border: 0;
-    padding: 0;
+    padding: 10px;
     margin: 0;
     background-color: transparent;
-    background-image: ${(props) => `url(${require(`../../assets/shop_items/${props.image}`).default})`};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    image-rendering: crisp-edges;
-    min-height: ${itemSize};
+
     min-width: ${itemSize};
+    min-height: ${itemSize};
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+
+    &:active{
+        background-color: #000000d1;
+    }
+`
+export const ItemImage = styled.img`
+    border: 0px;
+    image-rendering: crisp-edges;
+    width: 100%;
+    height: 100%;
     image-rendering: -moz-crisp-edges;          /* Firefox */
     image-rendering: -o-crisp-edges;            /* Opera */
     image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
     -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     aspect-ratio: 1;
+
 `
 
 export const ShopButtonContainer = styled.div`
-    width: 50%;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: center;
+    gap: 10%;
+    justify-content: center;
+
 `

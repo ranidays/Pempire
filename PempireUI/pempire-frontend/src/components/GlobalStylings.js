@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
-import b from "../assets/blue_background.png"
-import pixelBorder from "../assets/pixel_border.png"
+let b = "/assets/blue_background.png"
+let pixelBorder = "/assets/pixel_border.png"
 
 export const Container = styled.div`
   width: 100vw;

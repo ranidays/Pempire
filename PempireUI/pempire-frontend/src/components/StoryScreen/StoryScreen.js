@@ -1,12 +1,11 @@
 import React from "react";
 import {BookWithHand, Narrator} from "../GlobalStylings";
-import BookHand from "../../assets/book_with_hand.png"
-import narrator from "../../assets/narrator.png"
 import {Container} from "./StoryScreenStylings"
 import { Link } from "react-router-dom";
 import {InputField, CustomButton, Header} from "./StoryScreenStylings";
 
-
+let BookHand = "/assets/book_with_hand.png";
+let narrator = "/assets/narrator.png";
 
 class StoryScreen extends React.Component{
     constructor() {

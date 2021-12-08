@@ -2,14 +2,18 @@ import React from "react";
 import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer, ItemImage, GoldContainer, GoldIcon, GoldDisplay, GoldInnerContainer} from "./ShopStylings";
 import {TextBox, PixelButton} from "../GlobalStylings";
 import TextBoxWithAnimation from "../TextBoxWithAnimation"
-import * as fs from "fs"
-import coin from "../../assets/shop_items/coin.png"
-import redCoin from "../../assets/shop_items/red_coin.png"
+let coin = "/assets/shop_items/coin.png"
+let redCoin = "/assets/shop_items/red_coin.png"
 
 class ShopScreen extends React.Component{
+
+
     constructor(props) {
         //TODO: get list of item names, gold amounts, and gold owned.
         super(props);
+
+        this.prefix = "/assets/shop_items/";
+
         this.state = {
           itemNames: [
               "mana_small.png",
@@ -128,7 +132,7 @@ class ShopScreen extends React.Component{
                                 <Item style={{
                                     backgroundColor: `${this.state.backgroundColor[index]}`
                                 }}>
-                                    <ItemImage src={`${require(`../../assets/shop_items/${item}`).default}`} onClick={this.selectItem.bind(this, index)}></ItemImage>
+                                    <ItemImage src={`${this.prefix}` + `${item}`} onClick={this.selectItem.bind(this, index)}></ItemImage>
                                 </Item>
                             ))}
                         </ItemStore>

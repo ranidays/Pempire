@@ -1,8 +1,9 @@
 import React from "react";
-import titleBorder from "../../assets/title_with_border.png";
 import {Container, TitleImg} from "../GlobalStylings";
 import {InputField, Header} from "./SignUpStylings"
 import {CustomButton} from "./SignUpStylings";
+
+let titleBorder = "/assets/title_with_border.png";
 
 const SignUpScreen= () => {
     return(

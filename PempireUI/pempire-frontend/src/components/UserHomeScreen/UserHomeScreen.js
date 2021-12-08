@@ -1,9 +1,8 @@
 import React from "react";
-import titleBorder from "../../assets/title_with_border.png"
 import {CustomButton} from "../HomeScreen/HomeStylings";
 import {Container, TitleImg} from "../GlobalStylings";
 
-
+let titleBorder = "/assets/title_with_border.png";
 
 const HomeScreen= ({ authorized }) => {
 

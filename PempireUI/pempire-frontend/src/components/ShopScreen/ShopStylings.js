@@ -1,15 +1,9 @@
 import styled from "styled-components";
 import React from "react"
-import b from "../../assets/shop_background_pepe.png"
 import { TextBox } from "../GlobalStylings";
-import healthSmall from "../../assets/shop_items/health_small.png"
-import healthMedium from "../../assets/shop_items/health_medium.png"
-import healthLarge from "../../assets/shop_items/health_large.png"
-import manaSmall from "../../assets/shop_items/mana_small.png"
-import manaLarge from "../../assets/shop_items/mana_large.png"
-import manaMedium from "../../assets/shop_items/mana_medium.png"
 
 const itemSize = "5vw";
+let b = "/assets/shop_background_pepe.png";
 
 export const ShopContainer = styled.div`
   width: 100vw;

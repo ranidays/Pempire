@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models.Entities;
+using API.Models.Enums;
 
 namespace API.Models.Helpers
 {

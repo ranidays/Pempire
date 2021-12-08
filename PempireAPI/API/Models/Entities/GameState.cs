@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-
-using API.Models.Wrappers;
+using API.Models.Enums;
 
 namespace API.Models.Entities
 {
@@ -11,9 +11,9 @@ namespace API.Models.Entities
     {
         public Guid Id { get; set; }
         public Entity? SelectedHero { get; set; }
-        public Entity? SelectedEnemy { get; set; }
-
-        public List<BossDefeatedNameWrapper>? BossesDefeated { get; set; }
+        [EnumDataType(typeof(EntityType))]
+        public Actor? SelectedEnemy { get; set; }
+        public List<ActorName>? BossesDefeated { get; set; }
         public int UnderlingsDefeated { get; set; }
     }
 }

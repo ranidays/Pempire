@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class UpdatedMigration : Migration
+    public partial class RefactoringDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,8 +34,9 @@ namespace API.Migrations
                     Mana = table.Column<int>(type: "INTEGER", nullable: false),
                     Gold = table.Column<int>(type: "INTEGER", nullable: false),
                     EntityType = table.Column<int>(type: "INTEGER", nullable: false),
-                    HeroType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Element = table.Column<int>(type: "INTEGER", nullable: false)
+                    Actor = table.Column<int>(type: "INTEGER", nullable: false),
+                    Element = table.Column<int>(type: "INTEGER", nullable: false),
+                    Portrait = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,57 +65,52 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BattleActionNameWrapper",
+                name: "BattleMoveName",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<int>(type: "INTEGER", nullable: true),
                     EntityId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BattleActionNameWrapper", x => x.Id);
+                    table.PrimaryKey("PK_BattleMoveName", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BattleActionNameWrapper_Entity_EntityId",
+                        name: "FK_BattleMoveName_Entity_EntityId",
                         column: x => x.EntityId,
                         principalTable: "Entity",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImageUrlWrapper",
+                name: "ConsumableName",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<int>(type: "INTEGER", nullable: true),
                     EntityId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageUrlWrapper", x => x.Id);
+                    table.PrimaryKey("PK_ConsumableName", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImageUrlWrapper_Entity_EntityId",
+                        name: "FK_ConsumableName_Entity_EntityId",
                         column: x => x.EntityId,
                         principalTable: "Entity",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemNameWrapper",
+                name: "ActorName",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    EntityId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Name = table.Column<int>(type: "INTEGER", nullable: true),
+                    GameStateId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemNameWrapper", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ItemNameWrapper_Entity_EntityId",
-                        column: x => x.EntityId,
-                        principalTable: "Entity",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_ActorName", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,7 +214,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SelectedHeroId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    SelectedEnemyId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    SelectedEnemy = table.Column<int>(type: "INTEGER", nullable: true),
                     UnderlingsDefeated = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -231,34 +227,16 @@ namespace API.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_GameState_Entity_SelectedEnemyId",
-                        column: x => x.SelectedEnemyId,
-                        principalTable: "Entity",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_GameState_Entity_SelectedHeroId",
                         column: x => x.SelectedHeroId,
                         principalTable: "Entity",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "BossDefeatedNameWrapper",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    GameStateId = table.Column<Guid>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BossDefeatedNameWrapper", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BossDefeatedNameWrapper_GameState_GameStateId",
-                        column: x => x.GameStateId,
-                        principalTable: "GameState",
-                        principalColumn: "Id");
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ActorName_GameStateId",
+                table: "ActorName",
+                column: "GameStateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -308,19 +286,14 @@ namespace API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BattleActionNameWrapper_EntityId",
-                table: "BattleActionNameWrapper",
+                name: "IX_BattleMoveName_EntityId",
+                table: "BattleMoveName",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BossDefeatedNameWrapper_GameStateId",
-                table: "BossDefeatedNameWrapper",
-                column: "GameStateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GameState_SelectedEnemyId",
-                table: "GameState",
-                column: "SelectedEnemyId");
+                name: "IX_ConsumableName_EntityId",
+                table: "ConsumableName",
+                column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GameState_SelectedHeroId",
@@ -332,15 +305,12 @@ namespace API.Migrations
                 table: "GameState",
                 column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ImageUrlWrapper_EntityId",
-                table: "ImageUrlWrapper",
-                column: "EntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemNameWrapper_EntityId",
-                table: "ItemNameWrapper",
-                column: "EntityId");
+            migrationBuilder.AddForeignKey(
+                name: "FK_ActorName_GameState_GameStateId",
+                table: "ActorName",
+                column: "GameStateId",
+                principalTable: "GameState",
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserClaims_AspNetUsers_UserId",
@@ -384,8 +354,15 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_GameState_AspNetUsers_UserId",
-                table: "GameState");
+                name: "FK_AspNetUsers_GameState_ActiveGameStateId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_GameState_CheckpointId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ActorName");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -403,25 +380,19 @@ namespace API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BattleActionNameWrapper");
+                name: "BattleMoveName");
 
             migrationBuilder.DropTable(
-                name: "BossDefeatedNameWrapper");
-
-            migrationBuilder.DropTable(
-                name: "ImageUrlWrapper");
-
-            migrationBuilder.DropTable(
-                name: "ItemNameWrapper");
+                name: "ConsumableName");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "GameState");
 
             migrationBuilder.DropTable(
-                name: "GameState");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Entity");

@@ -9,19 +9,7 @@ import StoryScreen from "./components/StoryScreen/StoryScreen"
 import ShopScreen from "./components/ShopScreen/ShopScreen"
 import React from "react"
 
-
-class App extends React.Component{
-  constructor() {
-    super()
-  }
-  
-
-  
-  render (){
-    return <HomeScreen />
-  }
-}
-
-
+const App = () => 
+    <HomeScreen />
 
 export default App;

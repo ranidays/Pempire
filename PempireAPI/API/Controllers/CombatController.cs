@@ -27,5 +27,11 @@ namespace API.Controllers
             _signInManager = signInManager;
             _tokenService = tokenService;
         }
+
+        public IActionResult UseBattleAction(string battleMove)
+        {
+            //TODO: Placeholder value
+            return NoContent();
+        }
     }
 }

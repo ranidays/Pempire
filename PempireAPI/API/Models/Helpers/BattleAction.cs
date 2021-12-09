@@ -25,6 +25,7 @@ namespace API.Models.Helpers
 
         public EntityStateChanges? EntityChanges { get; set; }
         public int ManaCost { get; set; }
+        public int MaxPP { get; set; }
 
         public void Use(Entity target)
         {

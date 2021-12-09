@@ -154,7 +154,7 @@ namespace API.Models.Helpers
             }},
         };
      
-        public static Item? GetItem(Consumable itemType)
+        public static Item? GenerateItem(Consumable itemType)
         {
             return AllItems[itemType];
         }

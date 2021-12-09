@@ -60,7 +60,9 @@ namespace API.Models.Entities
             //Take a string and return the information for the battle action of that name
             //BattleMove in this method is the equivalent to `Consumable` in `ItemFactory.GetItemByName()`
             //TODO: Placeholder value
-            return new BattleAction();
+
+            
+            return _allBattleActions[battleActionName];
         }
     }
 }

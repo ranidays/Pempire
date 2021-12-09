@@ -55,7 +55,7 @@ namespace API.Models.Entities
             };
         }
 
-        public static BattleAction GenerateBattleAction(BattleMove battleActionName)
+        public static BattleAction? GenerateBattleAction(BattleMove battleActionName)
         {
             //Take a string and return the information for the battle action of that name
             //BattleMove in this method is the equivalent to `Consumable` in `ItemFactory.GetItemByName()`

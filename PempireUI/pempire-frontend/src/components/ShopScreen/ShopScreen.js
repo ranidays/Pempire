@@ -14,6 +14,11 @@ class ShopScreen extends React.Component{
 
         this.prefix = "/assets/shop_items/";
 
+        this.requestItemsOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+
         this.state = {
           itemNames: [
               "mana_small.png",
@@ -57,7 +62,7 @@ class ShopScreen extends React.Component{
       }
 
       componentDidMount() {
-          console.log(this.state.selectedItem);
+
       }
 
       componentDidUpdate() {

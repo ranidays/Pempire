@@ -26,8 +26,10 @@ class LoginScreen extends React.Component{
       };
       fetch('http://localhost:5000/api/authentication/login', requestOptions)
       .then(response => response.json())
-      .then(data => this.setState({ webToken: data.token }));
-      sessionStorage.setItem('jwtToken', this.webToken);
+      .then(data => {
+          this.setState({ webToken: data.token });
+          sessionStorage.setItem('jwtToken', data.token);
+      });
       }
 
 

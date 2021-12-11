@@ -7,21 +7,18 @@ const CombatScreen = () => {
 
   const handleClick = () => {
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
-        "Email" : "a@c.com",
-        "Password" : "Password1!"
+        "attack": "Att1"
       })
     };
 
-    fetch("http://localhost:5000/api/authentication/login", requestOptions)
+    console.log(requestOptions.body);
+    fetch("http://localhost:5000/api/combat/attack", requestOptions)
     .then(response => response.json())
-    .then(data => {
-      if (jwt === null) setJwt(data.token);
-      else alert(jwt);
-      console.log(`Successfully set ${data.token} as JWT!`);
-    });
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
   }
 
   return <Container>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
+using API.Models.DTOs;
 using API.Models.Entities;
 using API.Models.Enums;
 using API.Models.Helpers;
@@ -30,29 +31,29 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
-        public IActionResult UseAttack(string attack)
-        {
-            BattleMove battleMove = (BattleMove)Enum.Parse(typeof(BattleMove), attack);
-            BattleAction? battleAction = BattleActionFactory.GenerateBattleAction(battleMove);
-            //DEBUGGING: Replaced
-            //return Ok(battleAction);
-            //DEBUGGING: With
-            return battleAction == null ? Ok("Nothing here :/") : Ok(battleMove);
-        }
-
-        public IActionResult UseSpecial(string special)
+        [HttpPost("attack")]
+        public IActionResult UseAttack([FromBody] BattleMoveDto battleMoveDto)
         {
             //TODO: Placeholder value
             return NoContent();
         }
 
-        public IActionResult UsePotion(string potion)
+        [HttpPost("special")]
+        public IActionResult UseSpecial([FromBody] BattleMoveDto battleMoveDto)
         {
             //TODO: Placeholder value
             return NoContent();
         }
 
-        public IActionResult UseScroll(string scroll)
+        [HttpPost("potion")]
+        public IActionResult UsePotion([FromBody] ConsumableDto consumableDto)
+        {
+            //TODO: Placeholder value
+            return NoContent();
+        }
+
+        [HttpPost("scroll")]
+        public IActionResult UseScroll([FromBody] ConsumableDto consumableDto)
         {
             //TODO: Placeholder value
             return NoContent();

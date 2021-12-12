@@ -51,16 +51,35 @@ namespace API.Models.Entities
                     Element = Element.Normal,
                     EntityChanges = new EntityStateChanges(0, -100, -80, 0),
                     ManaCost = 100
+                }},
+                {BattleMove.SM1, new BattleAction
+                {
+                    Name = "Corrosive Dart",
+                    Description = "Deals no damage but begins to corrode foe.",
+                    BattleActionType = BattleActionType.Special,
+                    Element = Element.Acid,
+                    EntityChanges = new EntityStateChanges(0, 0, 0, 0, fsa: StatusCondition.Corrosion),
+                    MaxPP = 4
+                }},
+                {BattleMove.SM2, new BattleAction
+                {
+                    Name = "Bright Flash",
+                    Description = "A burst of hot light. Deals 40 damage and stuns foe for their next move.",
+                    BattleActionType = BattleActionType.Special,
+                    Element = Element.Fire,
+                    EntityChanges = new EntityStateChanges(0, 0, -80, 0, fsa: StatusCondition.Stunned),
+                    MaxPP = 3
                 }}
             };
         }
 
-        public static BattleAction GenerateBattleAction(BattleMove battleActionName)
+        public static BattleAction? GenerateBattleAction(BattleMove battleActionName)
         {
             //Take a string and return the information for the battle action of that name
             //BattleMove in this method is the equivalent to `Consumable` in `ItemFactory.GetItemByName()`
             //TODO: Placeholder value
-            return new BattleAction();
+
+            return _allBattleActions[battleActionName];
         }
     }
 }

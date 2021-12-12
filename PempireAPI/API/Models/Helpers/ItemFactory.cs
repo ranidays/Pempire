@@ -11,7 +11,7 @@ namespace API.Models.Helpers
     {
         public static Dictionary<Consumable, Item?> AllItems = new Dictionary<Consumable, Item?>
         {
-            {Consumable.NullUsable, null},
+            {Consumable.NullConsumable, null},
 
             {Consumable.SmallHP, new Item{
                 Name = "Small Health Potion",
@@ -154,7 +154,7 @@ namespace API.Models.Helpers
             }},
         };
      
-        public static Item GetItem(Consumable itemType)
+        public static Item? GenerateItem(Consumable itemType)
         {
             return AllItems[itemType];
         }

@@ -2,7 +2,7 @@ namespace API.Models.Enums
 {
     public enum Consumable
     {
-        NullUsable,
+        NullConsumable,
         SmallHP,MediumHP,GreaterHP,
         SmallMP,MediumMP,GreaterMP,
         WaterScroll, FireScroll, OilScroll, GrassScroll, RockScroll,

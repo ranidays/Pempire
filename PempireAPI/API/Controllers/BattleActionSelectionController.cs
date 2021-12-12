@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 using API.Models;
 using API.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using API.Models.Enums;
 
 namespace API.Controllers
 {
-    public class BattleActionSelectionController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BattleActionSelectionController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -23,6 +27,13 @@ namespace API.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+        }
+
+         
+        [HttpGet("BattleActions/{battleActionName}")]
+        public async Task<IActionResult> GenerateBattleActions(BattleMove battleActionName)
+        {    
+            return Ok(BattleActionFactory.GenerateBattleAction(battleActionName));
         }
     }
 }

@@ -4,6 +4,7 @@ import LoginScreen from './components/LoginScreen/LoginScreen';
 import SignUpScreen from './components/SignUpScreen/SignUpScreen';
 import StoryScreen from './components/StoryScreen/StoryScreen';
 import ShopScreen from './components/ShopScreen/ShopScreen';
+import CombatScreen from "./components/CombatScreen/CombatScreen";
 
 import {
     Routes,
@@ -19,6 +20,7 @@ export const Routing = () => {
             <Route path='/Login' element={<LoginScreen />} />
             <Route path='/Story' element={<StoryScreen />} />
             <Route path='/Shop' element={<ShopScreen/>}/>
+            <Route path="/Combat" element={<CombatScreen />} />
           </Routes>
         </div>
       );

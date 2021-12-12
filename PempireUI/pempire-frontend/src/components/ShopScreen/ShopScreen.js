@@ -1,171 +1,126 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer, ItemImage, GoldContainer, GoldIcon, GoldDisplay, GoldInnerContainer} from "./ShopStylings";
-import {TextBox, PixelButton} from "../GlobalStylings";
+import {PixelButton} from "../GlobalStylings";
 import TextBoxWithAnimation from "../TextBoxWithAnimation"
 let coin = "/assets/shop_items/coin.png"
 let redCoin = "/assets/shop_items/red_coin.png"
 
-class ShopScreen extends React.Component{
+function ShopScreen(props) {
+
+    //stateless variables
+    const prefix = "/assets/shop_items/";
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    //stateful variables
+    const [selectedItem, setSelectedItem] = useState(-1);
+    const [items, setItems] = useState([]); //empty list of objects to hold items
+    const [gold, setGold] = useState(0);
+    const [disabled, setDisabled] = useState(true);
+    const [showCost, setShowCost] = useState(false);
+    const [itemKeys, setItemKeys] = useState([]);
+
+    //componentDidMount
+    useEffect(() => {
+        async function fetchItems() {
+            const response = await fetch('http://localhost:5000/api/shop/getitems', requestOptions);
+            const json = await response.json();
+            setItems(json);
+            console.log(`fetchitems: ${JSON.stringify(json)}`);
+        }
+        async function fetchGold() {
+            const response = await fetch('http://localhost:5000/api/shop/getusergold', requestOptions);
+            const json = await response.json();
+            setGold(json);
+            console.log(`fetchgold: ${json}`);
+        }
+        async function fetchItemKeys() {
+            const response = await fetch('http://localhost:5000/api/shop/getitemkeys', requestOptions);
+            const json = await response.json();
+            setItemKeys(json);
+            console.log(`itemkeys: ${json}`);
+        }
+        fetchItems();
+        fetchGold();
+        fetchItemKeys();
+    }, [])
+
+    //componentDidUpdate
+    useEffect(() => {
+        setDisabled(selectedItem == -1 || gold < items[selectedItem].goldCost);
+        setShowCost(selectedItem != -1);
+    })
 
 
-    constructor(props) {
-        //TODO: get list of item names, gold amounts, and gold owned.
-        super(props);
+    //methods
+    const selectItem = (index) => {
+        console.log(`selected item before click: ${selectedItem}`);
+        setSelectedItem(selectedItem === index ? -1 : index);
+        console.log(`selected item: ${selectedItem}`);
+        console.log(`index of clicked: ${index}`);
+    }
 
-        this.prefix = "/assets/shop_items/";
+    const buyItem = () => {
+        console.log("buying item");
+        //TODO: 
+    }
 
-        this.requestItemsOptions = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        };
-
-        this.state = {
-          itemNames: [
-              "mana_small.png",
-              "mana_medium.png",
-              "mana_large.png",
-              "health_small.png",
-              "health_medium.png",
-              "health_large.png",
-              "scroll_acid.png",
-              "scroll_earth.png",
-              "scroll_electricity.png",
-              "scroll_fire.png",
-              "scroll_grass.png",
-              "scroll_metal.png",
-              "scroll_oil.png",
-              "scroll_water.png"
-          ],
-          selectedItem: -1,
-          backgroundColor: [
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-          ],
-          costs: [
-              5, 10, 15, 5, 10, 15,
-              25, 25, 25, 25, 25, 25, 25, 25
-          ],
-          goldOwned: 20
-        }    
-      }
-
-      componentDidMount() {
-
-      }
-
-      componentDidUpdate() {
-          console.log(this.state.backgroundColor);
-          console.log(this.state.selectedItem);
-      }
-
-      selectItem(index){
-
-        let bg = [
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent"
-        ];
-        if (this.state.selectedItem != index){
-            bg[index] = "#00000099";
+    //rendering:
+    const renderGoldCost = () => {
+        if (showCost) {
+            return (
+                <GoldInnerContainer>
+                    <GoldDisplay>Cost: </GoldDisplay>
+                    <GoldIcon src={redCoin}></GoldIcon>
+                    <GoldDisplay style={{ color: "red" }}>-{items[selectedItem].goldCost}</GoldDisplay>
+                </GoldInnerContainer>
+            );
         } else {
-            bg[index] = "transparent";
+            return (null);
         }
+    }
 
-        this.setState(prevState => ({
-            selectedItem: prevState.selectedItem == index ? -1 : index,
-            backgroundColor: bg
-        }))
-
-        this.forceUpdate();
-      }
-
-      buyItem() {
-          console.log("buying item");
-          //TODO: 
-      }
-
-      render() {
-        const selectedIndex = this.state.selectedItem;
-        const disabled = this.state.selectedItem == -1 || this.state.goldOwned < this.state.costs[selectedIndex];
-        console.log(disabled);
-        const showCost = this.state.selectedItem != -1;
-
-        const renderGoldCost = () => {
-            if (showCost) {
-                return (
-                    <GoldInnerContainer>
-                        <GoldDisplay>Cost: </GoldDisplay>
-                        <GoldIcon src={redCoin}></GoldIcon>
-                        <GoldDisplay style={{color: "red"}}>-{this.state.costs[this.state.selectedItem]}</GoldDisplay>
+    return (
+        <ShopContainer>
+            <ShopContent>
+                <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
+                <ItemStore>
+                    {/*instead of array of bg to loop through and match, set a class on component
+                for any component that doesn't match selected item, set class to false (or not at all?)
+                for component matching selected,toggle class (if it is selected, deselect, if deselected, select) */}
+                    {items.map((item, index) => (
+                        <Item key={itemKeys[index]} selected={index == selectedItem}>
+                            <ItemImage src={`${prefix}` + `${item.iconUrl}`} onClick={() => selectItem(index)}></ItemImage>
+                        </Item>
+                    ))
+                    }
+                </ItemStore>
+                <GoldContainer>
+                    {renderGoldCost()}
+                    <GoldInnerContainer
+                        style={!showCost ? { marginLeft: "auto" } : {}}
+                    >
+                        <GoldIcon src={coin}></GoldIcon>
+                        <GoldDisplay
+                            style={showCost && disabled ? { color: "red" } : {}}
+                        >{gold}</GoldDisplay>
                     </GoldInnerContainer>
-                );
-            } else {
-                return (null);
-            }
-        }
-
-          return (
-
-              <ShopContainer>
-                  <ShopContent>
-                        <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
-                        <ItemStore>
-                            {this.state.itemNames.map((item, index) => (   
-                                <Item style={{
-                                    backgroundColor: `${this.state.backgroundColor[index]}`
-                                }}>
-                                    <ItemImage src={`${this.prefix}` + `${item}`} onClick={this.selectItem.bind(this, index)}></ItemImage>
-                                </Item>
-                            ))}
-                        </ItemStore>
-                        <GoldContainer>
-                            {renderGoldCost()}
-                            <GoldInnerContainer
-                                style={!showCost ? {marginLeft: "auto"} : {}}
-                            >
-                                <GoldIcon src={coin}></GoldIcon>
-                                <GoldDisplay
-                                    style = {showCost && disabled ? {color: "red"} : {}}
-                                >{this.state.goldOwned}</GoldDisplay>
-                            </GoldInnerContainer>
-                        </GoldContainer>
-                        <ShopButtonContainer>
-                            <PixelButton>
-                                <p>Back</p>
-                            </PixelButton>
-                            <PixelButton style={disabled ? {pointerEvents: "none", opacity: "0.4"} : {}}
-                                onClick={this.buyItem}
-                            >
-                                <p>Buy</p>
-                            </PixelButton>
-                        </ShopButtonContainer>
-                  </ShopContent>
-              </ShopContainer>
-          )
-      }
+                </GoldContainer>
+                <ShopButtonContainer>
+                    <PixelButton>
+                        <p>Back</p>
+                    </PixelButton>
+                    <PixelButton style={disabled ? { pointerEvents: "none", opacity: "0.4" } : {}}
+                        onClick={buyItem}
+                    >
+                        <p>Buy</p>
+                    </PixelButton>
+                </ShopButtonContainer>
+            </ShopContent>
+        </ShopContainer>
+    )
 }
 
 export default ShopScreen;

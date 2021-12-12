@@ -77,6 +77,10 @@ export const Item = styled.div`
     justify-items: center;
     align-content: center;
 
+    &:selected{
+        background-color: blue;
+    }
+
     &:active{
         background-color: yellow;
     }

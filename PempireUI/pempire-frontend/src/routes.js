@@ -21,6 +21,7 @@ export const Routing = () => {
             <Route path='/Story' element={<StoryScreen />} />
             <Route path='/Shop' element={<ShopScreen/>}/>
             <Route path="/Combat" element={<CombatScreen />} />
+            <Route path="/SignUp" element={<SignUpScreen />} />
           </Routes>
         </div>
       );

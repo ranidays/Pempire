@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using API.Models.Helpers;
+using API.Models;
+using API.Models.Entities;
 using API.Models.Enums;
+using API.Models.Helpers;
 using System.Web.Http.Cors;
 using System.Collections.Specialized;
 using API.Models.DTOs;
+using API.Models.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+
 
 namespace API.Controllers
 {
@@ -15,12 +24,22 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ShopController : ControllerBase
     {
-        [HttpGet("test")]
-        public async Task<IActionResult> TestShop()
-        {        
-            return Ok(ItemFactory.AllItems);
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly TokenService _tokenService;
+
+        public ShopController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            TokenService tokenService
+        )
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("getitems")]
         public async Task<IActionResult> GetFullNonNullItems()
         {
@@ -46,6 +65,7 @@ namespace API.Controllers
             return Ok(response);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("getitemkeys")]
         public async Task<IActionResult> GetItemKeys()
         {
@@ -60,46 +80,33 @@ namespace API.Controllers
 
             return Ok(response);
         }
-        
-        
 
-        [HttpGet("geticons")]
-        public async Task<IActionResult> GetIcons()
-        {
-            var iconNames = new List<String>();
-            foreach (var item in ItemFactory.AllItems)
-            {
-                if (item.Key == Consumable.NullConsumable){
-                    continue;
-                }
-
-                iconNames.Add(item.Value.IconUrl);
-            }
-
-            return Ok(iconNames);
-        }
-
-        //dummy get gold api
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("getusergold")]
         public async Task<IActionResult> GetUserGold()
         {
-            return Ok(40);
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            var heroInfo = user.ActiveGameState.SelectedHero;
+            return Ok(heroInfo.Gold);
         }
+    
 
-        [HttpGet("testenums")]
-        public async Task<IActionResult> GetEnums()
-        {
-            return Ok(Consumable.WaterScroll);
-        }      
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("updateinventory")] 
         public async Task<IActionResult> UpdateInventory([FromBody] ShopDto shopDto)
         {
-            Item? itemToAdd = ItemFactory.GenerateItem(shopDto.ItemToAdd);
+            Consumable consumableToAdd = (Consumable)(shopDto.ItemToAdd + 1);
+            ConsumableName itemToAdd = new ConsumableName{
+                Name = consumableToAdd
+            };
             if (itemToAdd == null) return NoContent();
-            //todo: actually remove item from users inventory and subtract their gold.
-            System.Diagnostics.Debug.WriteLine($"item to add: {shopDto.ItemToAdd.ToString()}");
-            System.Diagnostics.Debug.WriteLine($"item to add: {shopDto.ItemToAdd.ToString()}");
+
+            //todo: actually add item from users inventory and subtract their gold.
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            var heroInfo = user.ActiveGameState.SelectedHero;
+            heroInfo.Gold = heroInfo.Gold - shopDto.Cost;
+            heroInfo.Stash.Add(itemToAdd);
+            await _userManager.UpdateAsync(user);
             return Ok();
         }
         

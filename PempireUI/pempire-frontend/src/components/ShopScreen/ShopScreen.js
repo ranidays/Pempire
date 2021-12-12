@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer, ItemImage, GoldContainer, GoldIcon, GoldDisplay, GoldInnerContainer} from "./ShopStylings";
 import {PixelButton} from "../GlobalStylings";
-import TextBoxWithAnimation from "../TextBoxWithAnimation"
+import TextBoxWithAnimation from "../TextBoxWithAnimation";
+import {useNavigate} from "react-router-dom";
 let coin = "/assets/shop_items/coin.png"
 let redCoin = "/assets/shop_items/red_coin.png"
 
@@ -68,11 +69,12 @@ function ShopScreen(props) {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     };
+    const navigate = useNavigate();
 
     //stateful variables
     const [items, setItems] = useState([]); //empty list of objects to hold items
     const [gold, setGold] = useState(0);
-    const [itemKeys, setItemKeys] = useState([]);
+    //const [itemKeys, setItemKeys] = useState([]);
     const [UIState, setUIState] = useState({
         selectedItem: -1,
         disabled: true,
@@ -94,15 +96,15 @@ function ShopScreen(props) {
             setGold(json);
 
         }
-        async function fetchItemKeys() {
-            const response = await fetch('http://localhost:5000/api/shop/getitemkeys', requestOptions);
-            const json = await response.json();
-            setItemKeys(json);
+        // async function fetchItemKeys() {
+        //     const response = await fetch('http://localhost:5000/api/shop/getitemkeys', requestOptions);
+        //     const json = await response.json();
+        //     setItemKeys(json);
 
-        }
+        // }
         fetchItems();
         fetchGold();
-        fetchItemKeys();
+        //fetchItemKeys();
     }, [])
 
     //componentDidUpdate
@@ -138,16 +140,17 @@ function ShopScreen(props) {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                "itemtoadd": itemKeys[UIState.selectedItem],
-                "cost": items[UIState.selectedItem].goldCost
+                "itemtoadd": UIState.selectedItem,
+                "cost": parseInt(items[UIState.selectedItem].goldCost)
             })
         };
-
+        console.log(buyRequestOptions.body);
         fetch("http://localhost:5000/api/shop/updateinventory", buyRequestOptions)
         .then(response => {
             console.log(response);
         })
         .catch(err => console.log(err));
+        
     }
 
     return (
@@ -162,7 +165,7 @@ function ShopScreen(props) {
                 </ItemStore>
                 <GoldInfo gold={gold} disabled={UIState.disabled} showCost={UIState.showCost} cost={UIState.selectedItem == -1 ? 0 : items[UIState.selectedItem].goldCost}/>
                 <ShopButtonContainer>
-                    <PixelButton>
+                    <PixelButton onClick={() => navigate(-1)}>
                         <p>Back</p>
                     </PixelButton>
                     <PixelButton style={UIState.disabled ? { pointerEvents: "none", opacity: "0.4" } : {}} onClick={() => buyItem()}>

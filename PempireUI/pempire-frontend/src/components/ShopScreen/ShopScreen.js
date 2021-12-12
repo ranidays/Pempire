@@ -131,6 +131,16 @@ function ShopScreen(props) {
         setUIState(newState);
     }
 
+    //reset ui state when item is bought
+    useEffect(() => {
+        let newState = {...UIState};
+        newState.selectedItem = -1;
+        newState.disabled = true;
+        newState.showCost = false;
+        newState.shopkeepSays = "My gratitude. Anything else I can get for you?";
+        setUIState(newState);
+    }, [gold])
+
     const buyItem = () => {
         console.log("buying item");
         //TODO: 
@@ -148,6 +158,11 @@ function ShopScreen(props) {
         fetch("http://localhost:5000/api/shop/updateinventory", buyRequestOptions)
         .then(response => {
             console.log(response);
+            let newGoldAmount = parseInt(gold);
+            console.log(newGoldAmount);
+            console.log("-" + parseInt(items[UIState.selectedItem].goldCost));
+            newGoldAmount -= parseInt(items[UIState.selectedItem].goldCost);
+            setGold(newGoldAmount);
         })
         .catch(err => console.log(err));
         

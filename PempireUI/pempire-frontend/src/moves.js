@@ -25,4 +25,8 @@ const moves = [
     new Move("SM2", "Bright Flash", 2, MoveType.SPECIAL),
 ];
 
-export { MoveType, moves };
+const findMoveByIdentifier = (identifier) => moves.find(move => move.identifier == identifier);
+
+const findMoveByEnumeration = (enumeration) => moves.find(move => move.enumeration == enumeration);
+
+export { MoveType, moves, findMoveByIdentifier, findMoveByEnumeration };

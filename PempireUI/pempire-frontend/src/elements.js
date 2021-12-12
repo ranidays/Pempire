@@ -29,4 +29,8 @@ const elements = [
     new Element(9, ElementType.ELECTRICITY)
 ]
 
-export { ElementType, elements };
+const findElementByEnumeration = (enumeration) => elements.find(elm => elm.enumeration == enumeration);
+
+const findElementByElementType = (elementType) => elements.find(elm => elm.elementType == elementType);
+
+export { ElementType, elements, findElementByEnumeration, findElementByElementType };

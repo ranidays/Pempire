@@ -5,6 +5,61 @@ import TextBoxWithAnimation from "../TextBoxWithAnimation"
 let coin = "/assets/shop_items/coin.png"
 let redCoin = "/assets/shop_items/red_coin.png"
 
+function GoldInfo(props){
+    if (!props.showCost){
+        return(
+            <GoldContainer>
+                <GoldInnerContainer style={{ marginLeft: "auto" }}>
+                    <GoldIcon src={coin}></GoldIcon>
+                    <GoldDisplay>{props.gold}</GoldDisplay>
+                </GoldInnerContainer>
+            </GoldContainer>
+        );
+    } else {
+        return(
+            <GoldContainer>
+                <GoldInnerContainer>
+                    <GoldDisplay>Cost: </GoldDisplay>
+                    <GoldIcon src={redCoin}></GoldIcon>
+                    <GoldDisplay style={{ color: "red" }}>-{props.cost}</GoldDisplay>
+                </GoldInnerContainer>
+                <GoldInnerContainer>
+                    <GoldIcon src={coin}></GoldIcon>
+                    <GoldDisplay style={props.disabled ? { color: "red" } : {}}>{props.gold}</GoldDisplay>
+                </GoldInnerContainer>
+            </GoldContainer>
+        );
+    }
+}
+
+function ItemDisplay(props) {
+    if (props.selected){
+        return(
+            <Item selected onClick={props.onChildClick}>
+                <ItemImage src={props.imgSrc} ></ItemImage>
+            </Item>
+        );
+    } else {
+        return(
+            <Item>
+                <ItemImage src={props.imgSrc} onClick={props.onChildClick}></ItemImage>
+            </Item>
+        );
+    }
+}
+
+function ShopkeepSays(props) {
+    if (props.shopkeepSays === undefined){
+        return(
+            <TextBoxWithAnimation stringToType="Welcome traveler, may I interest you in any of my wares?"/>
+        );
+    } else {
+        return(
+            <TextBoxWithAnimation stringToType={props.shopkeepSays}/>
+        );
+    }
+}
+
 function ShopScreen(props) {
 
     //stateless variables
@@ -15,12 +70,15 @@ function ShopScreen(props) {
     };
 
     //stateful variables
-    const [selectedItem, setSelectedItem] = useState(-1);
     const [items, setItems] = useState([]); //empty list of objects to hold items
     const [gold, setGold] = useState(0);
-    const [disabled, setDisabled] = useState(true);
-    const [showCost, setShowCost] = useState(false);
     const [itemKeys, setItemKeys] = useState([]);
+    const [UIState, setUIState] = useState({
+        selectedItem: -1,
+        disabled: true,
+        showCost: false,
+        shopkeepSays: "Welcome traveler, may I interest you in any of my wares?"
+    })
 
     //componentDidMount
     useEffect(() => {
@@ -28,19 +86,19 @@ function ShopScreen(props) {
             const response = await fetch('http://localhost:5000/api/shop/getitems', requestOptions);
             const json = await response.json();
             setItems(json);
-            console.log(`fetchitems: ${JSON.stringify(json)}`);
+            
         }
         async function fetchGold() {
             const response = await fetch('http://localhost:5000/api/shop/getusergold', requestOptions);
             const json = await response.json();
             setGold(json);
-            console.log(`fetchgold: ${json}`);
+
         }
         async function fetchItemKeys() {
             const response = await fetch('http://localhost:5000/api/shop/getitemkeys', requestOptions);
             const json = await response.json();
             setItemKeys(json);
-            console.log(`itemkeys: ${json}`);
+
         }
         fetchItems();
         fetchGold();
@@ -49,78 +107,73 @@ function ShopScreen(props) {
 
     //componentDidUpdate
     useEffect(() => {
-        setDisabled(selectedItem == -1 || gold < items[selectedItem].goldCost);
-        setShowCost(selectedItem != -1);
+        //console.log("component did update")
     })
 
 
     //methods
     const selectItem = (index) => {
-        console.log(`selected item before click: ${selectedItem}`);
-        setSelectedItem(selectedItem === index ? -1 : index);
-        console.log(`selected item: ${selectedItem}`);
-        console.log(`index of clicked: ${index}`);
+        let newState = {...UIState};
+
+        if (newState.selectedItem == index){
+            newState.selectedItem = -1;
+            newState.disabled = true;
+            newState.showCost = false;
+            newState.shopkeepSays = "Anything catch your fancy, dear travler?";
+        } else {
+            newState.selectedItem = index;
+            newState.disabled = items[index].goldCost > gold;
+            newState.showCost = true;
+            newState.shopkeepSays = `Ahh yes, the ${items[index].name}. ${items[index].description}.`;
+        }
+        setUIState(newState);
     }
 
     const buyItem = () => {
         console.log("buying item");
         //TODO: 
-    }
+        //send post request with cost and item to add
 
-    //rendering:
-    const renderGoldCost = () => {
-        if (showCost) {
-            return (
-                <GoldInnerContainer>
-                    <GoldDisplay>Cost: </GoldDisplay>
-                    <GoldIcon src={redCoin}></GoldIcon>
-                    <GoldDisplay style={{ color: "red" }}>-{items[selectedItem].goldCost}</GoldDisplay>
-                </GoldInnerContainer>
-            );
-        } else {
-            return (null);
-        }
+        const buyRequestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                "itemtoadd": itemKeys[UIState.selectedItem],
+                "cost": items[UIState.selectedItem].goldCost
+            })
+        };
+
+        fetch("http://localhost:5000/api/shop/updateinventory", buyRequestOptions)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => console.log(err));
     }
 
     return (
         <ShopContainer>
             <ShopContent>
-                <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
+                <ShopkeepSays key={UIState.shopkeepSays} shopkeepSays={`${UIState.shopkeepSays}`} />
                 <ItemStore>
-                    {/*instead of array of bg to loop through and match, set a class on component
-                for any component that doesn't match selected item, set class to false (or not at all?)
-                for component matching selected,toggle class (if it is selected, deselect, if deselected, select) */}
                     {items.map((item, index) => (
-                        <Item key={itemKeys[index]} selected={index == selectedItem}>
-                            <ItemImage src={`${prefix}` + `${item.iconUrl}`} onClick={() => selectItem(index)}></ItemImage>
-                        </Item>
+                        <ItemDisplay key={index} onChildClick={() => selectItem(index)} imgSrc={`${prefix}` + `${item.iconUrl}`} selected={index == UIState.selectedItem}/>
                     ))
                     }
                 </ItemStore>
-                <GoldContainer>
-                    {renderGoldCost()}
-                    <GoldInnerContainer
-                        style={!showCost ? { marginLeft: "auto" } : {}}
-                    >
-                        <GoldIcon src={coin}></GoldIcon>
-                        <GoldDisplay
-                            style={showCost && disabled ? { color: "red" } : {}}
-                        >{gold}</GoldDisplay>
-                    </GoldInnerContainer>
-                </GoldContainer>
+                <GoldInfo gold={gold} disabled={UIState.disabled} showCost={UIState.showCost} cost={UIState.selectedItem == -1 ? 0 : items[UIState.selectedItem].goldCost}/>
                 <ShopButtonContainer>
                     <PixelButton>
                         <p>Back</p>
                     </PixelButton>
-                    <PixelButton style={disabled ? { pointerEvents: "none", opacity: "0.4" } : {}}
-                        onClick={buyItem}
-                    >
+                    <PixelButton style={UIState.disabled ? { pointerEvents: "none", opacity: "0.4" } : {}} onClick={() => buyItem()}>
                         <p>Buy</p>
                     </PixelButton>
                 </ShopButtonContainer>
             </ShopContent>
         </ShopContainer>
-    )
+    );
 }
+
+
 
 export default ShopScreen;

@@ -4,9 +4,7 @@ using API.Models.Entities;
 using API.Models.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,12 +43,6 @@ builder.Services.AddCors(options =>
 
         });
 });
-
-builder.Services.AddControllers().AddJsonOptions( x=>
-{
-    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-}
-);
 
 var app = builder.Build();
 

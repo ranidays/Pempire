@@ -31,34 +31,29 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpPost("attack")]
-        public IActionResult UseAttack([FromBody] BattleMoveDto battleMoveDto)
+        [HttpPost("battleaction")]
+        public IActionResult UseBattleAction([FromBody] BattleMoveDto battleMoveDto)
         {
-            BattleAction? attack = BattleActionFactory.GenerateBattleAction(battleMoveDto.BattleMove);
-            //TODO: Placeholder value
-            if (attack == null) return NoContent();
-            return Ok(attack.EntityChanges);
+            BattleAction? battleAction = BattleActionFactory.GenerateBattleAction(battleMoveDto.BattleMove);
+            if (battleAction == null) return BadRequest();
+            return Ok(ApplyModifiersToMove(battleAction.EntityChanges!, battleAction.Element,
+                battleMoveDto.FoeElement));
         }
 
-        [HttpPost("special")]
-        public IActionResult UseSpecial([FromBody] BattleMoveDto battleMoveDto)
+        [HttpPost("item")]
+        public IActionResult UseItem([FromBody] ConsumableDto consumableDto)
         {
-            //TODO: Placeholder value
-            return NoContent();
+            Item? item = ItemFactory.GenerateItem(consumableDto.Consumable);
+            if (item == null) return BadRequest();
+            return Ok(ApplyModifiersToMove(item.EntityChanges!, item.Element, consumableDto.FoeElement));
         }
 
-        [HttpPost("potion")]
-        public IActionResult UsePotion([FromBody] ConsumableDto consumableDto)
+        private EntityStateChanges ApplyModifiersToMove(EntityStateChanges esc, Element moveElement, Element foeElement)
         {
-            //TODO: Placeholder value
-            return NoContent();
-        }
-
-        [HttpPost("scroll")]
-        public IActionResult UseScroll([FromBody] ConsumableDto consumableDto)
-        {
-            //TODO: Placeholder value
-            return NoContent();
+            if (ElementHelper.GetElementWeakTo(moveElement) == foeElement) esc.FoeHealthChange *= 2;
+            else if (ElementHelper.GetElementResistantTo(moveElement) == foeElement)
+                esc.FoeHealthChange = (int)(esc.FoeHealthChange * 0.5);
+            return esc;
         }
     }
 }

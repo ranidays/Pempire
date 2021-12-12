@@ -20,7 +20,7 @@ const CombatScreen = () => {
     };
 
     console.log(requestOptions.body);
-    fetch("http://localhost:5000/api/combat/attack", requestOptions)
+    fetch("http://localhost:5000/api/combat/battleaction", requestOptions)
     .then(response => {
       console.log(response)
       return response.json()

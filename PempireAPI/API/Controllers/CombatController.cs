@@ -34,8 +34,10 @@ namespace API.Controllers
         [HttpPost("attack")]
         public IActionResult UseAttack([FromBody] BattleMoveDto battleMoveDto)
         {
+            BattleAction? attack = BattleActionFactory.GenerateBattleAction(battleMoveDto.BattleMove);
             //TODO: Placeholder value
-            return NoContent();
+            if (attack == null) return NoContent();
+            return Ok(attack.EntityChanges);
         }
 
         [HttpPost("special")]

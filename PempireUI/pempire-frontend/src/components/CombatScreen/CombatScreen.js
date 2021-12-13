@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
 import { Container } from "../GlobalStylings";
-import MoveButton from "./MoveButton";
+import { MoveButton, OptionsDisplay } from "./CombatStylings";
+import "./CombatScreen.css"
 
-const CombatScreen = () => {
+const CombatScreen = (props) => {
   const testMoves = [moves[0], moves[1], moves[2], moves[3]];
   const [jwt, setJwt] = useState(null);
 
@@ -31,7 +32,7 @@ const CombatScreen = () => {
     .catch(err => console.log(err));
   }
 
-  return <Container>
+  return <Container className="combat-screen-container ">
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>

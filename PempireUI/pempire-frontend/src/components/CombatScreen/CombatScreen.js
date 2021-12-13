@@ -5,10 +5,8 @@ import { CombatOptionButton, CombatContainer, CombatOptions, MoveDisplay, MoveTy
 import "./CombatScreen.css"
 
 const CombatScreen = (props) => {
-  //DEBUGGING
-  const defaultButtonText = "Click Me";
   const numButtons = 4;
-  const testMoves = [moves[0], moves[1], moves[2], moves[3]];
+  const selectedMoves = moves.slice(0, 4);
   const [jwt, setJwt] = useState(null);
 
   const handleClick = () => {
@@ -36,13 +34,13 @@ const CombatScreen = (props) => {
   return <CombatContainer>
     <CombatOptions>
       <MoveDisplay>
-        {Array(4).fill(null).map(_ =>
-          <CombatOptionButton onClick={handleClick}>{defaultButtonText}</CombatOptionButton>
+        {selectedMoves.map(x =>
+          <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
         )}
       </MoveDisplay>
       <MoveTypeDisplay>
-        {Array(4).fill(null).map(_ =>
-          <CombatOptionButton onClick={handleClick}>{defaultButtonText}</CombatOptionButton>
+        {selectedMoves.map(x =>
+          <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
         )}
       </MoveTypeDisplay>
     </CombatOptions>

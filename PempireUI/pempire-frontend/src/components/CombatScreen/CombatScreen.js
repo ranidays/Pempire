@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
-import { Container } from "../GlobalStylings";
-import { MoveButton, OptionsDisplay } from "./CombatStylings";
+import { MoveButton, CombatContainer } from "./CombatStylings";
 import "./CombatScreen.css"
 
 const CombatScreen = (props) => {
@@ -32,12 +30,12 @@ const CombatScreen = (props) => {
     .catch(err => console.log(err));
   }
 
-  return <Container className="combat-screen-container ">
+  return <CombatContainer>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
     <MoveButton onClick={handleClick}>Click Me!</MoveButton>
-  </Container>
+  </CombatContainer>
 }
 
 export default CombatScreen;

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
-import { MoveButton, CombatContainer } from "./CombatStylings";
+import { CombatOptionButton, CombatContainer, CombatOptions, MoveDisplay, MoveTypeDisplay } from "./CombatStylings";
 import "./CombatScreen.css"
 
 const CombatScreen = (props) => {
+  //DEBUGGING
+  const defaultButtonText = "Click Me";
+  const numButtons = 4;
   const testMoves = [moves[0], moves[1], moves[2], moves[3]];
   const [jwt, setJwt] = useState(null);
 
@@ -31,10 +34,18 @@ const CombatScreen = (props) => {
   }
 
   return <CombatContainer>
-    <MoveButton onClick={handleClick}>Click Me!</MoveButton>
-    <MoveButton onClick={handleClick}>Click Me!</MoveButton>
-    <MoveButton onClick={handleClick}>Click Me!</MoveButton>
-    <MoveButton onClick={handleClick}>Click Me!</MoveButton>
+    <CombatOptions>
+      <MoveDisplay>
+        {Array(4).fill(null).map(_ =>
+          <CombatOptionButton onClick={handleClick}>{defaultButtonText}</CombatOptionButton>
+        )}
+      </MoveDisplay>
+      <MoveTypeDisplay>
+        {Array(4).fill(null).map(_ =>
+          <CombatOptionButton onClick={handleClick}>{defaultButtonText}</CombatOptionButton>
+        )}
+      </MoveTypeDisplay>
+    </CombatOptions>
   </CombatContainer>
 }
 

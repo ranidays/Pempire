@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, {isStyledComponent} from "styled-components";
+import {TextBox} from "../GlobalStylings";
 let blueBg = "/assets/blue_background.png"
 
 export const MainContainer = styled.div`
@@ -18,6 +19,7 @@ export const MainContainer = styled.div`
   /* Webkit (non-standard naming)*/
   -ms-interpolation-mode: nearest-neighbor;
   /* IE (non-standard property) */
+ 
 `
 
 export const Row = styled.div`
@@ -33,32 +35,38 @@ export const Column = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 50%;
-  margin-right: 10%;
+  margin-right: 3%;
 `
 
 export const Header = styled.h1`
   color: white;
-  font-family: 'PixelFont';
+  font-family: 'ArcadeClassic', serif ;
+  top: 0;
   
 `
 
 export const Subheader = styled.h2`
   color: white;
-  font-family: 'PixelFont';
+  font-family: 'PixelFont', serif;
 `
-export const CustomButton = styled.button`
+export const CustomButton =  styled.button`
   font-family: 'ArcadeClassic', serif ;
   color: white;
-  background: transparent;
   border-radius: 10px;
   z-index: 1;
-  width: 100%;
+  width: 200px;
   //align-self: flex-end;
   //margin-bottom: 25px;
   //padding-left: 1%;
   //transform: translateX(12%) translateY(-140%);
   height: 90%;
-  font-size: 35px;
-  margin: 10px;
+  font-size: 30px;
+  margin: 1%;
+  padding: 5%;
+  background: steelblue;
+  // opacity: ${props => props.toggle? "0.3" : "1"};;
+  &:active{
+    opacity: 0.3;
+  }
 
 `

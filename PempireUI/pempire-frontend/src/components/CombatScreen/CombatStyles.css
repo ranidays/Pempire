@@ -1,0 +1,49 @@
+.combat-options {
+  width: 100%;
+  height: 33%;
+  background-color: red;
+  display: flex;
+}
+
+.four-combat-options-display {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.move-type-display {
+  background-color: cyan;
+}
+
+.move-display {
+  background-color: magenta;
+}
+
+.combat-option-button {
+  border: solid 0.5rem brown;
+  margin: 1rem;
+  background-color: green;
+  cursor: pointer;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-family: "Consolas", serif;
+  font-size: 2rem;
+}
+
+.combat-option-button:nth-child(n+3) {
+  margin-top: 0;
+}
+
+.combat-option-button:nth-child(even) {
+  margin-left: 0;
+}
+
+.back-button {
+  right: 0;
+  border: solid 0.2rem brown;
+  background-color: black;
+  color: white;
+  font-family: "Times New Roman", serif;
+  font-size: 2rem;
+}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
-import { CombatOptionButton, CombatContainer, CombatOptions, MoveDisplay, MoveTypeDisplay } from "./CombatStylings";
-import "./CombatScreen.css"
+import { CombatContainer } from "./CombatStylings";
+import { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton } from "./CombatComponents";
 
 const CombatScreen = (props) => {
   const numButtons = 4;

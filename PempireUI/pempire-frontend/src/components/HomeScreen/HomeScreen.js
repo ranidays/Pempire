@@ -20,9 +20,6 @@ const HomeScreen= () => {
             <CustomButton>
                 <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Combat">Combat?</Link>
             </CustomButton>
-            <CustomButton>
-                <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/BattleActionSelection">Battle Action Selection</Link>
-            </CustomButton>
         </Container>
 
     )

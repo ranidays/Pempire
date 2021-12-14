@@ -13,7 +13,7 @@ function TextBoxWithAnimation({stringToType}) {
             index.current++;
         }
         if (index.current < stringToType.length) {
-            let addChar = setInterval(tick, 60);
+            let addChar = setInterval(tick, 20);
             return () => clearInterval(addChar);
         }
     }, [shownText, hiddenText]);

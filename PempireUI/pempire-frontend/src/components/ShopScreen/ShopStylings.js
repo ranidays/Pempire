@@ -66,7 +66,7 @@ export const Item = styled.div`
     border: 0;
     padding: 10px;
     margin: 0;
-    background-color: transparent;
+    background-color: ${props => props.selected? "#00000085" : "transparent"};
 
     min-width: ${itemSize};
     min-height: ${itemSize};
@@ -78,7 +78,7 @@ export const Item = styled.div`
     align-content: center;
 
     &:active{
-        background-color: yellow;
+        background-color: #3a697ed1;
     }
 `
 export const ItemImage = styled.img`

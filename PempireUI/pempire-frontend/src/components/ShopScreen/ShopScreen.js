@@ -1,166 +1,264 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {ShopContainer, ShopContent, ItemStore, Item, ShopButtonContainer, ItemImage, GoldContainer, GoldIcon, GoldDisplay, GoldInnerContainer} from "./ShopStylings";
-import {TextBox, PixelButton} from "../GlobalStylings";
-import TextBoxWithAnimation from "../TextBoxWithAnimation"
+import {PixelButton} from "../GlobalStylings";
+import TextBoxWithAnimation from "../TextBoxWithAnimation";
+import {useNavigate} from "react-router-dom";
 let coin = "/assets/shop_items/coin.png"
 let redCoin = "/assets/shop_items/red_coin.png"
 
-class ShopScreen extends React.Component{
-
-
-    constructor(props) {
-        //TODO: get list of item names, gold amounts, and gold owned.
-        super(props);
-
-        this.prefix = "/assets/shop_items/";
-
-        this.state = {
-          itemNames: [
-              "mana_small.png",
-              "mana_medium.png",
-              "mana_large.png",
-              "health_small.png",
-              "health_medium.png",
-              "health_large.png",
-              "scroll_acid.png",
-              "scroll_earth.png",
-              "scroll_electricity.png",
-              "scroll_fire.png",
-              "scroll_grass.png",
-              "scroll_metal.png",
-              "scroll_oil.png",
-              "scroll_water.png"
-          ],
-          selectedItem: -1,
-          backgroundColor: [
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-              "transparent",
-          ],
-          costs: [
-              5, 10, 15, 5, 10, 15,
-              25, 25, 25, 25, 25, 25, 25, 25
-          ],
-          goldOwned: 20
-        }    
-      }
-
-      componentDidMount() {
-          console.log(this.state.selectedItem);
-      }
-
-      componentDidUpdate() {
-          console.log(this.state.backgroundColor);
-          console.log(this.state.selectedItem);
-      }
-
-      selectItem(index){
-
-        let bg = [
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent",
-            "transparent"
-        ];
-        if (this.state.selectedItem != index){
-            bg[index] = "#00000099";
-        } else {
-            bg[index] = "transparent";
-        }
-
-        this.setState(prevState => ({
-            selectedItem: prevState.selectedItem == index ? -1 : index,
-            backgroundColor: bg
-        }))
-
-        this.forceUpdate();
-      }
-
-      buyItem() {
-          console.log("buying item");
-          //TODO: 
-      }
-
-      render() {
-        const selectedIndex = this.state.selectedItem;
-        const disabled = this.state.selectedItem == -1 || this.state.goldOwned < this.state.costs[selectedIndex];
-        console.log(disabled);
-        const showCost = this.state.selectedItem != -1;
-
-        const renderGoldCost = () => {
-            if (showCost) {
-                return (
-                    <GoldInnerContainer>
-                        <GoldDisplay>Cost: </GoldDisplay>
-                        <GoldIcon src={redCoin}></GoldIcon>
-                        <GoldDisplay style={{color: "red"}}>-{this.state.costs[this.state.selectedItem]}</GoldDisplay>
-                    </GoldInnerContainer>
-                );
-            } else {
-                return (null);
-            }
-        }
-
-          return (
-
-              <ShopContainer>
-                  <ShopContent>
-                        <TextBoxWithAnimation stringToType={"Welcome traveler, may I interest you in any of my wares?"} />
-                        <ItemStore>
-                            {this.state.itemNames.map((item, index) => (   
-                                <Item style={{
-                                    backgroundColor: `${this.state.backgroundColor[index]}`
-                                }}>
-                                    <ItemImage src={`${this.prefix}` + `${item}`} onClick={this.selectItem.bind(this, index)}></ItemImage>
-                                </Item>
-                            ))}
-                        </ItemStore>
-                        <GoldContainer>
-                            {renderGoldCost()}
-                            <GoldInnerContainer
-                                style={!showCost ? {marginLeft: "auto"} : {}}
-                            >
-                                <GoldIcon src={coin}></GoldIcon>
-                                <GoldDisplay
-                                    style = {showCost && disabled ? {color: "red"} : {}}
-                                >{this.state.goldOwned}</GoldDisplay>
-                            </GoldInnerContainer>
-                        </GoldContainer>
-                        <ShopButtonContainer>
-                            <PixelButton>
-                                <p>Back</p>
-                            </PixelButton>
-                            <PixelButton style={disabled ? {pointerEvents: "none", opacity: "0.4"} : {}}
-                                onClick={this.buyItem}
-                            >
-                                <p>Buy</p>
-                            </PixelButton>
-                        </ShopButtonContainer>
-                  </ShopContent>
-              </ShopContainer>
-          )
-      }
+function GoldInfo(props){
+    if (!props.showCost){
+        return(
+            <GoldContainer>
+                <GoldInnerContainer style={{ marginLeft: "auto" }}>
+                    <GoldIcon src={coin}></GoldIcon>
+                    <GoldDisplay>{props.gold}</GoldDisplay>
+                </GoldInnerContainer>
+            </GoldContainer>
+        );
+    } else {
+        return(
+            <GoldContainer>
+                <GoldInnerContainer>
+                    <GoldDisplay>Cost: </GoldDisplay>
+                    <GoldIcon src={redCoin}></GoldIcon>
+                    <GoldDisplay style={{ color: "red" }}>-{props.cost}</GoldDisplay>
+                </GoldInnerContainer>
+                <GoldInnerContainer>
+                    <GoldIcon src={coin}></GoldIcon>
+                    <GoldDisplay style={props.disabled ? { color: "red" } : {}}>{props.gold}</GoldDisplay>
+                </GoldInnerContainer>
+            </GoldContainer>
+        );
+    }
 }
+
+function ItemDisplay(props) {
+    if (props.selected){
+        return(
+            <Item selected onClick={props.onChildClick}>
+                <ItemImage src={props.imgSrc} ></ItemImage>
+            </Item>
+        );
+    } else {
+        return(
+            <Item>
+                <ItemImage src={props.imgSrc} onClick={props.onChildClick}></ItemImage>
+            </Item>
+        );
+    }
+}
+
+function ShopkeepSays(props) {
+    if (props.shopkeepSays === undefined){
+        return(
+            <TextBoxWithAnimation stringToType="Welcome traveler, may I interest you in any of my wares?"/>
+        );
+    } else {
+        return(
+            <TextBoxWithAnimation stringToType={props.shopkeepSays}/>
+        );
+    }
+}
+
+function ShopScreen(props) {
+
+    //stateless variables
+    const prefix = "/assets/shop_items/";
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': 'bearer ' + sessionStorage.getItem('jwtToken')
+        }
+    };
+    const navigate = useNavigate();
+
+    //stateful variables
+    const [items, setItems] = useState([]); //empty list of objects to hold items
+    const [gold, setGold] = useState(0);
+    //const [itemKeys, setItemKeys] = useState([]);
+    const [UIState, setUIState] = useState({
+        selectedItem: -1,
+        disabled: true,
+        showCost: false,
+        shopkeepSays: "Welcome traveler, may I interest you in any of my wares?"
+    })
+    const [hasAccess, setHasAccess] = useState(true);
+
+    //componentDidMount
+    useEffect(() => {
+        async function fetchItems() {
+            const response = await fetch('http://localhost:5000/api/shop/getitems', requestOptions);
+            if (response.status === 401){
+                //user unauthorized
+                setHasAccess(false);
+            } else {
+                const json = await response.json();
+                setItems(json);
+            }            
+        }
+        async function fetchGold() {
+            const response = await fetch('http://localhost:5000/api/shop/getusergold', requestOptions);
+            if (response.status === 401){
+                //user unauthorized
+                setHasAccess(false);
+            } else {
+                const json = await response.json();
+                setGold(json);
+            }
+
+        }
+        // async function fetchItemKeys() {
+        //     const response = await fetch('http://localhost:5000/api/shop/getitemkeys', requestOptions);
+        //     const json = await response.json();
+        //     setItemKeys(json);
+
+        // }
+        /* FOR DEBUGGING ONLY, TODO: REMOVE ONCE JWT TOKEN PROPERLY SET */
+        async function getJWT() {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                  "Email" : "a@c.com",
+                  "Password" : "Password1!"
+                  })
+            };
+            fetch('http://localhost:5000/api/authentication/login', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                sessionStorage.setItem('jwtToken', data.token);
+            })
+            .catch(error => {
+                console.log("error: " + error);
+            });
+        }
+        getJWT();
+        fetchItems();
+        fetchGold();        
+        let newState =  {...UIState};
+        newState.shopkeepSays = "Welcome traveler, may I interest you in any of my wares?";
+        setUIState(newState);
+        //fetchItemKeys();
+    }, [])
+
+    //componentDidUpdate
+    useEffect(() => {
+        //console.log("component did update")
+    })
+
+
+    //methods
+    const selectItem = (index) => {
+        let newState = {...UIState};
+
+        if (newState.selectedItem == index){
+            newState.selectedItem = -1;
+            newState.disabled = true;
+            newState.showCost = false;
+            newState.shopkeepSays = "Anything catch your fancy, dear travler?";
+        } else {
+            newState.selectedItem = index;
+            newState.disabled = items[index].goldCost > gold;
+            newState.showCost = true;
+            newState.shopkeepSays = `Ahh yes, the ${items[index].name}. ${items[index].description}.`;
+        }
+        setUIState(newState);
+    }
+
+    //reset ui state when item is bought
+    const sayThanks = () => {
+        let newState = {...UIState};
+        newState.selectedItem = -1;
+        newState.disabled = true;
+        newState.showCost = false;
+        newState.shopkeepSays = "My gratitude. Anything else I can get for you?";
+        setUIState(newState);
+    }
+
+    useEffect(() => {
+        if (!hasAccess){
+            sayWhoAreYou();
+        }
+    }, [hasAccess])
+
+    const sayWhoAreYou = () => {
+        let newState = {...UIState};
+        newState.selectedItem = -1;
+        newState.disabled = true;
+        newState.showCost = false;
+        newState.shopkeepSays = "I'm not sure you who are, but you definitely do not belong here. Check in with The Narrator first.";
+        setUIState(newState);
+    }
+
+    const buyItem = () => {
+        console.log("buying item");
+        //TODO: 
+        //send post request with cost and item to add
+
+        const buyRequestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'bearer ' + sessionStorage.getItem('jwtToken')
+            },
+            body: JSON.stringify({
+                "itemtoadd": UIState.selectedItem,
+                "cost": parseInt(items[UIState.selectedItem].goldCost)
+            })
+        };
+        //console.log(buyRequestOptions.body);
+        fetch("http://localhost:5000/api/shop/updateinventory", buyRequestOptions)
+        .then(response => {
+            //console.log(response);
+            let newGoldAmount = parseInt(gold);
+            //console.log(newGoldAmount);
+            //console.log("-" + parseInt(items[UIState.selectedItem].goldCost));
+            newGoldAmount -= parseInt(items[UIState.selectedItem].goldCost);
+            setGold(newGoldAmount);
+        }).then(r => {
+            sayThanks();
+        })
+        .catch(err => console.log(err));
+    }
+
+
+    if (hasAccess){
+        return (
+            <ShopContainer>
+                <ShopContent>
+                    <ShopkeepSays key={UIState.shopkeepSays} shopkeepSays={`${UIState.shopkeepSays}`} />
+                    <ItemStore>
+                        {items.map((item, index) => (
+                            <ItemDisplay key={index} onChildClick={() => selectItem(index)} imgSrc={`${prefix}` + `${item.iconUrl}`} selected={index == UIState.selectedItem}/>
+                        ))
+                        }
+                    </ItemStore>
+                    <GoldInfo gold={gold} disabled={UIState.disabled} showCost={UIState.showCost} cost={UIState.selectedItem == -1 ? 0 : items[UIState.selectedItem].goldCost}/>
+                    <ShopButtonContainer>
+                        <PixelButton onClick={() => navigate(-1)}>
+                            <p>Back</p>
+                        </PixelButton>
+                        <PixelButton style={UIState.disabled ? { pointerEvents: "none", opacity: "0.4" } : {}} onClick={() => buyItem()}>
+                            <p>Buy</p>
+                        </PixelButton>
+                    </ShopButtonContainer>
+                </ShopContent>
+            </ShopContainer>
+        );
+    } else {
+        return(
+            <ShopContainer>
+                <ShopContent>
+                    <ShopkeepSays key={UIState.shopkeepSays} shopkeepSays={`${UIState.shopkeepSays}`} />
+                </ShopContent>
+            </ShopContainer>
+        );
+        
+    }
+}
+
+
 
 export default ShopScreen;

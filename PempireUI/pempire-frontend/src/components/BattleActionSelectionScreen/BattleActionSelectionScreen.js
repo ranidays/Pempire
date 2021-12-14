@@ -12,108 +12,115 @@ const BattleActionSelectionScreen = (props) => {
     const [text, setShowText]= useState(false);
     const [count, setCount]= useState(0);
 
-    let counter = 0;
 
     const violentChargeToggle = (props) => {
-        if(counter === 4){
-            setShowText(!text);
-        }
-        else{
-            setCount(setCount + 1)
+        if(count === 4 && violentChargeButton === true ){
             setViolentChargeButton(!violentChargeButton);
-            if(!violentChargeButton){
-                counter--
-            }
-
+            setCount(count - 1)
         }
-        console.log(counter);
-    };
-
-    const corrosivePunchToggle = (props) => {
-        if(counter === 4){
-            setShowText(!text);
+        else if(count === 4){
+            console.log("Max Reached")
+            setShowText(!text)
         }
         else{
-
-            setCorrosivePunchButton(!corrosivePunchButton);
-            setCount(setCount + 1)
-            if(corrosivePunchButton === false){
-                counter--
-            }
-
-
+            setCount(count + 1)
+            setViolentChargeButton(!violentChargeButton);
         }
+        console.log(violentChargeButton)
         console.log(count);
     };
 
-    const fireballToggle = (props) => {
-        if(counter === 4){
-            setShowText(!text);
+    const corrosivePunchToggle = (props) => {
+        if(count === 4 && corrosivePunchButton === true ){
+            setCorrosivePunchButton(!corrosivePunchButton);
+            setCount(count - 1)
+
+        }
+        else if(count === 4){
+            console.log("Max Reached")
+            setShowText(!text)
         }
         else{
+            setCount(count + 1)
+            setCorrosivePunchButton(!corrosivePunchButton);
+        }
+        console.log(violentChargeButton)
+        console.log(count);
 
+    };
+
+    const fireballToggle = (props) => {
+        if(count === 4 && fireballButton === true){
             setFireballButton(!fireballButton);
-            setCount(setCount + 1)
-            if(fireballButton === false){
-                counter--
-            }
+            setCount(count - 1)
 
+        }
+        else if(count === 4){
+            console.log("Reached max")
+            setShowText(!text)
+        }
+        else{
+            setFireballButton(!fireballButton);
+            setCount(count + 1)
         }
         console.log(count);
 
     };
 
     const fullPowerBlastToggle = (props) => {
-        if(counter === 4){
-            setShowText(!text);
+        if(count === 4 && fullPowerBlastButton === true){
+            setFullPowerBlastButton(!fullPowerBlastButton);
+            setCount(count - 1)
+        }
+        else if(count === 4){
+            console.log("Reached max")
+            setShowText(!text)
         }
         else{
-            counter = counter + 1;
+            setCount(count + 1)
             setFullPowerBlastButton(!fullPowerBlastButton);
-            if(fullPowerBlastButton === false){
-                counter--
-            }
-            console.log(counter);
         }
+        console.log(count);
 
     };
 
     const corrosiveDartToggle = (props) => {
-        if(counter === 4){
-            setShowText(!text);
+        if(count === 4 && corrosiveDartButton === true){
+            setCorrosiveDartButton(!corrosiveDartButton);
+            setCount(count - 1)
+        }
+        else if(count === 4){
+            console.log("Reached max")
+            setShowText(!text)
         }
         else{
-            counter = counter + 1;
+            setCount(count + 1)
             setCorrosiveDartButton(!corrosiveDartButton);
-            if(corrosiveDartButton === false){
-                counter--
-            }
-            console.log(counter);
+            console.log(count);
         }
 
     };
 
     const brightFlashToggle = (props) => {
-        if(counter === 4){
-
+        if(count === 4 && brightFlashButton === true){
+            setBrightFlashButton(!brightFlashButton);
+            setCount(count - 1)
+        }
+        else if(count === 4){
+            console.log("Reached max")
+            setShowText(!text)
 
         }
         else{
-            counter = counter + 1;
+            setCount(count + 1)
             setBrightFlashButton(!brightFlashButton);
-            if(brightFlashButton === false){
-                counter --
-            }
-            console.log(counter);
+            console.log(count);
         }
-
     };
-
 
     return(
         <MainContainer>
 
-            <TextBoxWithAnimation stringToType={"Time to login. The adventure awaits."} style={{display: setShowText ? 'initial' : 'none'}} />
 
             <Header>Battle Action Selection</Header>
             <Subheader>Choose up to four!</Subheader>

@@ -33,7 +33,6 @@ const LoginScreen = (props) => {
                 <Narrator src={narrator}/>
             </LeftContainer>
 
-
             <RightContainer>
                 <BookWithHand src={BookHand}/>
                 <FormInputFieldContainer>

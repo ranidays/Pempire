@@ -8,6 +8,6 @@ const MoveDisplay = (props) => <div className="four-combat-options-display move-
 
 const CombatOptionButton = (props) => <div className="combat-option-button" onClick={props.onClick}>{props.children}</div>
 
-const BackButton = (props) => <div className="back-button">{props.children}</div>
+const BackButton = (props) => <div className="back-button-container"><p className="back-button">{props.children}</p></div>
 
 export { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton };

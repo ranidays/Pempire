@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
 import { CombatContainer } from "./CombatStylings";
-import { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton } from "./CombatComponents";
+import { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton } from "./CombatComponents";
 
 const CombatScreen = (props) => {
   const numButtons = 4;
@@ -32,6 +32,7 @@ const CombatScreen = (props) => {
   }
 
   return <CombatContainer>
+    <BackButton>Back</BackButton>
     <CombatOptions>
       <MoveDisplay>
         {selectedMoves.map(x =>

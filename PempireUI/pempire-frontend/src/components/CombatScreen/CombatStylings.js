@@ -7,7 +7,6 @@ const CombatContainer = styled.div`
   background-size: cover;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   flex-direction: column;
   overflow: hidden;
   position: relative;

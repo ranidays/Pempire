@@ -11,8 +11,8 @@ const CombatOptionButton = (props) => <div className="combat-option-button" onCl
 const BackButton = (props) => <p className="back-button">Back</p>
 
 const CombatProfile = (props) => <div className="combat-profile">
-  <p className="avatar">User Avatar</p>
-  <p className="combat-info">User Info</p>
+  <p className="avatar">Avatar</p>
+  <p className="combat-info">Info</p>
 </div>
 
 

@@ -32,6 +32,9 @@ const CombatScreen = (props) => {
   }
 
   return <CombatContainer>
+    <div className="foe-display">
+      <CombatProfile />
+    </div>
     <div className="user-display">
       <CombatProfile />
       <BackButton />

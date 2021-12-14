@@ -11,6 +11,7 @@ import {
     Route,
     Navigate
   } from "react-router-dom";
+import BattleActionSelectionScreen from "./components/BattleActionSelectionScreen/BattleActionSelectionScreen";
   
 export const Routing = () => {
     return (
@@ -23,6 +24,7 @@ export const Routing = () => {
             <Route path='/Shop' element={<ShopScreen/>}/>
             <Route path="/Combat" element={<CombatScreen />} />
             <Route path="/SignUp" element={<SignUpScreen />} />
+          <Route path="/BattleActionSelection" element={<BattleActionSelectionScreen />} />
           </Routes>
         </div>
       );

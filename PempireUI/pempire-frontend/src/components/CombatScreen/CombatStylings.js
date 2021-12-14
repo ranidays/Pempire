@@ -33,18 +33,10 @@ const FourCombatsOptionDisplay = styled.div`
 
 const MoveTypeDisplay = styled(FourCombatsOptionDisplay)`
   background-color: cyan;
-  :nth-child(even) {
-    background-color: black;
-    margin: 0;
-  }
 `;
 
 const MoveDisplay = styled(FourCombatsOptionDisplay)`
   background-color: magenta;
-  :nth-child(even) {
-    background-color: black;
-    margin: 0;
-  }
 `;
 
 const CombatOptionButton = styled.div`
@@ -53,6 +45,12 @@ const CombatOptionButton = styled.div`
   background-color: green;
   cursor: pointer;
   onClick: ${props => props.onClick};
+  :nth-child(n+3) {
+    margin-top: 0;
+  }
+  :nth-child(even) {
+    margin-left: 0;
+  }
   display: grid;
   justify-content: center;
   align-items: center;

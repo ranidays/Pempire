@@ -18,6 +18,7 @@ export const Routing = () => {
           <Routes>
             <Route index element={<HomeScreen />} />
             <Route path='/Login' element={<LoginScreen />} />
+            <Route path='/SignUp' element={<SignUpScreen />} />
             <Route path='/Story' element={<StoryScreen />} />
             <Route path='/Shop' element={<ShopScreen/>}/>
             <Route path="/Combat" element={<CombatScreen />} />

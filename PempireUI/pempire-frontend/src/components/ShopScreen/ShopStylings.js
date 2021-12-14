@@ -135,7 +135,6 @@ export const GoldIcon = styled.img`
     height: 5vh;
     image-rendering: -moz-crisp-edges;          /* Firefox */
     image-rendering: -o-crisp-edges;            /* Opera */
-    image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
     -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     aspect-ratio: 1;
 `

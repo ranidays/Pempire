@@ -18,6 +18,10 @@ export const Container = styled.div`
   image-rendering: -o-crisp-edges;            /* Opera */ 
   /* Webkit (non-standard naming)*/
   -ms-interpolation-mode: nearest-neighbor;   /* IE (non-standard property) */
+
+  .example::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const TitleImg = styled.img`
@@ -30,23 +34,20 @@ export const TitleImg = styled.img`
 
 export const BookWithHand = styled.img`
   width: 47%;
-  height: auto;
-  image-rendering: optimizeSpeed;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  -ms-interpolation-mode: nearest-neighbor;
   position: fixed; 
   bottom: 0px; 
   right: 0px;
-  margin-right: 9%;
+  margin-right: 6%;
 `
 
 export const Narrator = styled.img`
-  width: 40%;
-  height: auto;
+  
+  //width: 40%;
+  height: 80vh;
   position: fixed; 
   bottom: 0px; 
   left: 0px;
+
 `
 
 export const TextBox = styled.div`
@@ -73,7 +74,6 @@ export const PixelButton = styled.div`
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges; /* Firefox */
   image-rendering: -o-crisp-edges; /* Opera */
-  image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
   image-rendering: crisp-edges;
   -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
 

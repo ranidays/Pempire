@@ -14,7 +14,7 @@ export const CustomButton = styled.button`
 export const InputField = styled.input`
   background-color: white;
   width: 500px;
-  height: auto;
+  height: 200px;
   border-radius: 10px;
   margin-bottom: 25px;
   padding-left: 1%;

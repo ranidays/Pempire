@@ -8,6 +8,12 @@ const MoveDisplay = (props) => <div className="four-combat-options-display move-
 
 const CombatOptionButton = (props) => <div className="combat-option-button" onClick={props.onClick}>{props.children}</div>
 
-const BackButton = (props) => <div className="back-button-container"><p className="back-button">{props.children}</p></div>
+const BackButton = (props) => <p className="back-button">Back</p>
 
-export { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton };
+const CombatProfile = (props) => <div className="combat-profile">
+  <p className="avatar">User Avatar</p>
+  <p className="combat-info">User Info</p>
+</div>
+
+
+export { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile };

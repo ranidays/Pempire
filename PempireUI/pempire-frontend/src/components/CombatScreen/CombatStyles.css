@@ -39,12 +39,6 @@
   margin-left: 0;
 }
 
-.back-button-container {
-  display: flex;
-  justify-content: flex-end;
-  max-height: fit-content;
-}
-
 .back-button {
   margin: 0;
   border: solid 0.2rem brown;
@@ -52,4 +46,27 @@
   color: white;
   font-family: "Times New Roman", serif;
   font-size: 2rem;
+}
+
+.user-display {
+  display: flex;
+  justify-content: space-between;
+}
+
+.foe-profile-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.combat-profile {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.avatar {
+  background-color: blue;
+}
+
+.combat-info {
+  background-color: blueviolet;
 }

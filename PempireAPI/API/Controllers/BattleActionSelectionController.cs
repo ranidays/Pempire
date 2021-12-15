@@ -35,5 +35,11 @@ namespace API.Controllers
         {    
             return Ok(BattleActionFactory.GenerateBattleAction(battleActionName));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {   
+            return Ok(BattleActionFactory.GetAllBattleActions());
+        }
     }
 }

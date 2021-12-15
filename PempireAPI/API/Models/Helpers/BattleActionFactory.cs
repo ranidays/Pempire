@@ -81,5 +81,9 @@ namespace API.Models.Entities
 
             return _allBattleActions[battleActionName];
         }
+
+        public static Dictionary<BattleMove, BattleAction?> GetAllBattleActions(){
+            return _allBattleActions;
+        }
     }
 }

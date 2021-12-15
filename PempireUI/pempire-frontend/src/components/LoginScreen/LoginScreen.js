@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import TextBoxWithAnimation from "../TextBoxWithAnimation";
 import {MainContainer, LeftContainer, RightContainer, BookWithHand, Narrator, FormInputFieldContainer, InputField, SaveTab, CustomButton} from "./LoginStylings";
+import {Link} from "react-router-dom";
 
 let BookHand = "/assets/book_with_hand.png";
 let narrator = "/assets/narrator.png";
@@ -39,7 +40,9 @@ const LoginScreen = (props) => {
                     <InputField type="text" placeholder="Email Address"/>
                     <InputField type="text" placeholder="Password"/>
                 </FormInputFieldContainer>
-                <CustomButton to="/Story" onClick={handleClick}>Login</CustomButton>
+                <CustomButton>
+                    <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Shop">Login</Link>
+                </CustomButton>
             </RightContainer>
 
             <SaveTab style={{transform: 'translateX(460%)', display: 'none'}}>Saved Game 1</SaveTab>

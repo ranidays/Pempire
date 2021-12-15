@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {MainContainer, Column, Row, Header, Subheader, CustomButton} from "./BattleActionSelectionScreenStylings";
 import TextBoxWithAnimation from "../TextBoxWithAnimation";
+import {Link} from "react-router-dom";
 
 const BattleActionSelectionScreen = (props) => {
     const [violentChargeButton, setViolentChargeButton ]= useState(false);
@@ -18,13 +19,17 @@ const BattleActionSelectionScreen = (props) => {
     const [att3, setAtt3] = useState();
     const [att4, setAtt4] = useState();
     const [sm1, setSm1] = useState();
-    const [sm2, setSm2] = useState();
+    const [sm2, setSm2] = useState()
+    const [routeParam1, setRouteParam1] = useState()
+    const [routeParam2, setRouteParam2] = useState()
+    const [routeParam3, setRouteParam3] = useState()
+    const [routeParam4, setRouteParam4] = useState()
+
 
     //TODO: Don't hardcode this. I can get the moves from the backend and then display that
     const moves = [violentChargeButton, corrosiveDartButton, corrosivePunchButton, fireballButton, brightFlashButton, fullPowerBlastButton];
     const moveNames = ["Att1", "SM1", "Att2", "Att3", "SM2", "Att4"]
-    let battleMoveData;
-
+    const selectedMoves = [];
 
     //Use the token
     //To Get a list of the user moves
@@ -74,7 +79,6 @@ const BattleActionSelectionScreen = (props) => {
         }
         getJWT()
         fetchMoves()
-
     })
 
     const violentChargeToggle = () => {
@@ -107,6 +111,7 @@ const BattleActionSelectionScreen = (props) => {
         else if(count === 4){
             console.log("Max Reached")
             setShowText(!text)
+
         }
         else if(count < 4 && corrosivePunchButton === true){
             setCorrosivePunchButton(!corrosivePunchButton);
@@ -117,7 +122,7 @@ const BattleActionSelectionScreen = (props) => {
             setCorrosivePunchButton(!corrosivePunchButton);
         }
         console.log(violentChargeButton)
-        console.log(count);
+
 
     };
 
@@ -151,6 +156,7 @@ const BattleActionSelectionScreen = (props) => {
         else if(count === 4){
             console.log("Reached max")
             setShowText(!text)
+
         }
         else if( count < 4 && fullPowerBlastButton === true){
             setFullPowerBlastButton(!fullPowerBlastButton);
@@ -206,14 +212,20 @@ const BattleActionSelectionScreen = (props) => {
         }
     };
 
+
+
     const handleClick = () => {
-        const selectedMoves = [];
+
         for (let x in moves){
             if(moves[x] === true){
                 selectedMoves.push(moveNames[x])
             }
-            console.log(selectedMoves);
+            console.log(selectedMoves[0]);
         }
+        setRouteParam1(selectedMoves[0])
+        setRouteParam2(selectedMoves[1])
+        setRouteParam3(selectedMoves[2])
+        setRouteParam4(selectedMoves[3])
     }
 
     return(
@@ -250,11 +262,11 @@ const BattleActionSelectionScreen = (props) => {
                 </Column>
             </Row>
             <Row>
-                <CustomButton onClick={handleClick}  to="/Combat" style={{background: 'transparent'} }>Next</CustomButton>
+                <CustomButton onClick={handleClick} style={{ background: 'transparent'} }>
+                    <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={`/Combat/${routeParam1}/${routeParam2}/${routeParam3}/${routeParam4}}`}>Next</Link>
+                </CustomButton>
             </Row>
-
         </MainContainer>
     )
 }
-
 export default BattleActionSelectionScreen;

@@ -12,7 +12,7 @@ const BattleActionSelectionScreen = (props) => {
     const [brightFlashButton, setBrightFlashButton ]= useState(false);
     const [text, setShowText]= useState(false);
     const [count, setCount]= useState(0);
-    const [hasAccess, setHasAccess] = useState(true);
+    const [hasAccess, setHasAccess] = useState(false);
     const [showButton, setShowButton] = useState(true);
     const [jsonData, setJsonData] = useState();
     const [att1, setAtt1] = useState();
@@ -40,16 +40,16 @@ const BattleActionSelectionScreen = (props) => {
 
     useEffect(() => {
         //TODO: REMOVE getJWT LATER ON.
-        const getJWT = () => {
+        const getJWT =  () => {
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    "Email" : "a@c.com",
-                    "Password" : "Password1!"
+                    "Email": "a@c.com",
+                    "Password": "Password1!"
                 })
             };
-            const response = fetch('http://localhost:5000/api/authentication/login', requestOptions)
+            fetch('http://localhost:5000/api/authentication/login', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     sessionStorage.setItem('jwtToken', data.token);
@@ -57,14 +57,11 @@ const BattleActionSelectionScreen = (props) => {
                 .catch(error => {
                     console.log("error: " + error);
                 });
-            if (response.status === 401){
-                //user unauthorized
-                setHasAccess(false);
-            }
+
         }
 
-        const fetchMoves = () => {
-            fetch('http://localhost:5000/api/battleactionselection', requestOptions)
+        const fetchMoves = async () => {
+            const response = await fetch('http://localhost:5000/api/battleactionselection', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     setJsonData(data)
@@ -75,6 +72,8 @@ const BattleActionSelectionScreen = (props) => {
                     setAtt4(data.Att4.name);
                     setSm1(data.SM1.name);
                     setSm2(data.SM2.name);
+                    setHasAccess(true);
+
             });
         }
         getJWT()

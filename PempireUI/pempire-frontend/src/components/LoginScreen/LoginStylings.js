@@ -112,4 +112,5 @@ export const SaveTab= styled.button`
   border-width: 1px;
   color: white;
   text-align: left;
+  z-index: 1;
 `

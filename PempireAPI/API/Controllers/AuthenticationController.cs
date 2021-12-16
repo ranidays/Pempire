@@ -75,7 +75,9 @@ namespace API.Controllers
         public async Task<IActionResult> GetUserFromToken()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            Console.WriteLine(user.GameStates);
             return Ok(user);
         }
+
     }
 }

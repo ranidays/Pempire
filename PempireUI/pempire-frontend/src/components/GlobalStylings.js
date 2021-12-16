@@ -26,9 +26,9 @@ export const Container = styled.div`
 
 export const TitleImg = styled.img`
   width: 47%;
-  height: auto;
+  height: 670px;
   display: flex;
-  padding-top: 15%;
+  margin-top: 28%;
 `
 
 

@@ -13,6 +13,7 @@ const BattleActionSelectionScreen = (props) => {
     const [text, setShowText]= useState(false);
     const [count, setCount]= useState(0);
     const [hasAccess, setHasAccess] = useState(true);
+    const [showButton, setShowButton] = useState(true);
     const [jsonData, setJsonData] = useState();
     const [att1, setAtt1] = useState();
     const [att2, setAtt2] = useState();
@@ -25,16 +26,9 @@ const BattleActionSelectionScreen = (props) => {
     const [routeParam3, setRouteParam3] = useState()
     const [routeParam4, setRouteParam4] = useState()
 
-
-    //TODO: Don't hardcode this. I can get the moves from the backend and then display that
     const moves = [violentChargeButton, corrosiveDartButton, corrosivePunchButton, fireballButton, brightFlashButton, fullPowerBlastButton];
     const moveNames = ["Att1", "SM1", "Att2", "Att3", "SM2", "Att4"]
     const selectedMoves = [];
-
-    //Use the token
-    //To Get a list of the user moves
-    //Display all their moves
-    //And only allow them to choose 4
 
     const requestOptions = {
         method: 'GET',
@@ -45,6 +39,7 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     useEffect(() => {
+        //TODO: REMOVE getJWT LATER ON.
         const getJWT = () => {
             const requestOptions = {
                 method: 'POST',
@@ -54,7 +49,7 @@ const BattleActionSelectionScreen = (props) => {
                     "Password" : "Password1!"
                 })
             };
-            fetch('http://localhost:5000/api/authentication/login', requestOptions)
+            const response = fetch('http://localhost:5000/api/authentication/login', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     sessionStorage.setItem('jwtToken', data.token);
@@ -62,7 +57,12 @@ const BattleActionSelectionScreen = (props) => {
                 .catch(error => {
                     console.log("error: " + error);
                 });
+            if (response.status === 401){
+                //user unauthorized
+                setHasAccess(false);
+            }
         }
+
         const fetchMoves = () => {
             fetch('http://localhost:5000/api/battleactionselection', requestOptions)
                 .then(response => response.json())
@@ -82,7 +82,10 @@ const BattleActionSelectionScreen = (props) => {
     })
 
     const violentChargeToggle = () => {
-        if(count === 4 && violentChargeButton === true ){
+        if(count === 4 && violentChargeButton === true && showButton === false){
+            //do nothing
+        }
+        else if(count === 4 && violentChargeButton === true ){
             setViolentChargeButton(!violentChargeButton);
             setCount(count - 1)
         }
@@ -103,7 +106,10 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     const corrosivePunchToggle = () => {
-        if(count === 4 && corrosivePunchButton === true ){
+        if(count === 4 && corrosivePunchButton === true && showButton === false){
+            //do nothing
+        }
+        else if(count === 4 && corrosivePunchButton === true ){
             setCorrosivePunchButton(!corrosivePunchButton);
             setCount(count - 1)
 
@@ -117,6 +123,9 @@ const BattleActionSelectionScreen = (props) => {
             setCorrosivePunchButton(!corrosivePunchButton);
             setCount(count - 1)
         }
+        else if(showButton === false){
+            //do nothing
+        }
         else{
             setCount(count + 1)
             setCorrosivePunchButton(!corrosivePunchButton);
@@ -127,7 +136,10 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     const fireballToggle = () => {
-        if(count === 4 && fireballButton === true){
+        if(count === 4 && fireballButton === true && showButton === false){
+            //do nothing
+        }
+        else if(count === 4 && fireballButton === true){
             setFireballButton(!fireballButton);
             setCount(count - 1)
 
@@ -140,6 +152,9 @@ const BattleActionSelectionScreen = (props) => {
             setFireballButton(!fireballButton);
             setCount(count - 1)
         }
+        else if(showButton === false){
+            //do nothing
+        }
         else{
             setFireballButton(!fireballButton);
             setCount(count + 1)
@@ -149,7 +164,10 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     const fullPowerBlastToggle = () => {
-        if(count === 4 && fullPowerBlastButton === true){
+        if(count === 4 && fullPowerBlastButton === true && showButton === false){
+            //do nothing
+        }
+        else if(count === 4 && fullPowerBlastButton === true){
             setFullPowerBlastButton(!fullPowerBlastButton);
             setCount(count - 1)
         }
@@ -162,6 +180,9 @@ const BattleActionSelectionScreen = (props) => {
             setFullPowerBlastButton(!fullPowerBlastButton);
             setCount(count - 1)
         }
+        else if(showButton === false){
+            //do nothing
+        }
         else{
             setCount(count + 1)
             setFullPowerBlastButton(!fullPowerBlastButton);
@@ -171,7 +192,10 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     const corrosiveDartToggle = () => {
-        if(count === 4 && corrosiveDartButton === true){
+        if(count === 4 && corrosiveDartButton === true && showButton === false){
+            //do nothing
+        }
+        else  if(count === 4 && corrosiveDartButton === true){
             setCorrosiveDartButton(!corrosiveDartButton);
             setCount(count - 1)
         }
@@ -183,6 +207,9 @@ const BattleActionSelectionScreen = (props) => {
             setCorrosiveDartButton(!corrosiveDartButton);
             setCount(count - 1)
         }
+        else if(showButton === false){
+            //do nothing
+        }
         else{
             setCount(count + 1)
             setCorrosiveDartButton(!corrosiveDartButton);
@@ -192,7 +219,10 @@ const BattleActionSelectionScreen = (props) => {
     };
 
     const brightFlashToggle = () => {
-        if(count === 4 && brightFlashButton === true){
+        if(count === 4 && brightFlashButton === true && showButton === false){
+            //do nothing
+        }
+        else  if(count === 4 && brightFlashButton === true){
             setBrightFlashButton(!brightFlashButton);
             setCount(count - 1)
         }
@@ -205,17 +235,18 @@ const BattleActionSelectionScreen = (props) => {
             setBrightFlashButton(!brightFlashButton);
             setCount(count - 1)
         }
+        else if(showButton === false){
+            //do nothing
+        }
         else{
             setCount(count + 1)
             setBrightFlashButton(!brightFlashButton);
+
             console.log(count);
         }
     };
 
-
-
     const handleClick = () => {
-
         for (let x in moves){
             if(moves[x] === true){
                 selectedMoves.push(moveNames[x])
@@ -226,47 +257,58 @@ const BattleActionSelectionScreen = (props) => {
         setRouteParam2(selectedMoves[1])
         setRouteParam3(selectedMoves[2])
         setRouteParam4(selectedMoves[3])
+        setShowButton(false);
     }
 
-    return(
-        <MainContainer>
-            <Header>Battle Action Selection</Header>
-            <Subheader>Choose up to four!</Subheader>
+    if(hasAccess){
+        return(
+            <MainContainer>
+                <Header>Battle Action Selection</Header>
+                <Subheader>Choose up to four!</Subheader>
 
 
-            <Row>
-                <Column>
-                    <CustomButton onClick={violentChargeToggle}  style={{opacity: violentChargeButton ? '0.3' : '1'}} >
-                        {att1}
+                <Row>
+                    <Column>
+                        <CustomButton onClick={violentChargeToggle}  style={{opacity: violentChargeButton ? '0.3' : '1'}} >
+                            {att1}
+                        </CustomButton>
+                    </Column>
+
+                    <Column>
+                        <CustomButton onClick={corrosivePunchToggle}  style={{opacity: corrosivePunchButton ? '0.3' : '1'} }>{att2}</CustomButton>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column>
+                        <CustomButton onClick={fireballToggle}  style={{opacity: fireballButton ? '0.3' : '1'} }>{att3}</CustomButton>
+                    </Column>
+                    <Column>
+                        <CustomButton onClick={fullPowerBlastToggle}  style={{opacity: fullPowerBlastButton ? '0.3' : '1'} }>{att4}</CustomButton>
+                    </Column>
+                </Row>
+                <Row>
+                    <Column>
+                        <CustomButton onClick={corrosiveDartToggle}  style={{opacity: corrosiveDartButton ? '0.3' : '1'} }>{sm1}</CustomButton>
+                    </Column>
+                    <Column>
+                        <CustomButton onClick={brightFlashToggle}  style={{opacity: brightFlashButton ? '0.3' : '1'} }>{sm2}</CustomButton>
+                    </Column>
+                </Row>
+                <Row>
+
+                    <CustomButton onClick={handleClick} style={{ background: 'transparent', marginTop: '8%', borderRadius: '60px', fontSize: '20px', display: showButton ? 'initial' : 'none'} }>I'm done selecting!</CustomButton>
+
+                    <CustomButton  style={{ background: 'transparent', display: showButton ? 'none' : 'initial',  marginTop: '8%', borderRadius: '60px'} }>
+                        <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={`/Combat/${routeParam1}/${routeParam2}/${routeParam3}/${routeParam4}}`} >Next</Link>
                     </CustomButton>
-                </Column>
-
-                <Column>
-                    <CustomButton onClick={corrosivePunchToggle}  style={{opacity: corrosivePunchButton ? '0.3' : '1'} }>{att2}</CustomButton>
-                </Column>
-            </Row>
-            <Row>
-                <Column>
-                    <CustomButton onClick={fireballToggle}  style={{opacity: fireballButton ? '0.3' : '1'} }>{att3}</CustomButton>
-                </Column>
-                <Column>
-                    <CustomButton onClick={fullPowerBlastToggle}  style={{opacity: fullPowerBlastButton ? '0.3' : '1'} }>{att4}</CustomButton>
-                </Column>
-            </Row>
-            <Row>
-                <Column>
-                    <CustomButton onClick={corrosiveDartToggle}  style={{opacity: corrosiveDartButton ? '0.3' : '1'} }>{sm1}</CustomButton>
-                </Column>
-                <Column>
-                    <CustomButton onClick={brightFlashToggle}  style={{opacity: brightFlashButton ? '0.3' : '1'} }>{sm2}</CustomButton>
-                </Column>
-            </Row>
-            <Row>
-                <CustomButton onClick={handleClick} style={{ background: 'transparent'} }>
-                    <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to={`/Combat/${routeParam1}/${routeParam2}/${routeParam3}/${routeParam4}}`}>Next</Link>
-                </CustomButton>
-            </Row>
-        </MainContainer>
-    )
+                </Row>
+            </MainContainer>
+        )
+    }
+    else{
+        return(
+            <TextBoxWithAnimation stringToType="Seems like you don't belong here"/>
+        )
+    }
 }
 export default BattleActionSelectionScreen;

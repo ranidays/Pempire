@@ -10,12 +10,10 @@ import ItemBagScreen from "../ItemBag/ItemBagScreen";
 const CombatScreen = (props) => {
   const numButtons = 4;
   const selectedMoves = moves.slice(0, 4);
-  const [jwt, setJwt] = useState(null);
+  const [user, setUser] = useState({});
   //const [showingItems, setShowingItems] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
   const [usedItems, setUsedItems] = useState([]);
-
   const [itemsState, setItemsState] = useState({
     usedItems: [],
     showingItems: false,
@@ -55,6 +53,20 @@ const CombatScreen = (props) => {
     newState.showingItems = false;
     setItemsState(newState);
   }
+
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("jwt");
+    fetch("http://localhost:5000/api/authentication/getuserfromtoken", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwt}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => setUser(data))
+    .catch(err => console.log(err));
+  }, []);
 
   useEffect(() => {
     usedItems.forEach(i => {

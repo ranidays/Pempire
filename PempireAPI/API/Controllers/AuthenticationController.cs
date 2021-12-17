@@ -87,14 +87,16 @@ namespace API.Controllers
             user.ActiveGameState = activeState;
             return Ok();
         }
-        
-        [HttpPost("newgamestate")]
-        public async Task<IActionResult> NewGameState([FromBody]GameState activeState){
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("newgamestate")]
+        public async Task<IActionResult> NewGameState(){
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            user.GameStates.Add(activeState);
-            return Ok(user.GameStates);
+            var state = new GameState();
+            Guid newId = Guid.NewGuid();
+            state.Id = newId; 
+            user.GameStates.Add(state);
+            return Ok();
         }
-
-
     }
 }

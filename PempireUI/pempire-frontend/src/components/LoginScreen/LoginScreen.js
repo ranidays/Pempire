@@ -10,6 +10,7 @@ const LoginScreen = () => {
     const [responseStatus, setResponseStatus] = useState(null);
     const [savedGameResponseStatus, setSavedGameResponseStatus] = useState(null);
     const [gameState, setGameStates] = useState(null);
+    const [newGameStateObj, setNewGameStateObj] = useState(null);
     const [selectedGameState, setSelectedGameState] = useState(null);
     const [hasAccess, setHasAccess] = useState(false);
     const [email, setEmail] = useState();
@@ -73,19 +74,13 @@ const LoginScreen = () => {
     const handleSaveTabClick = (props) => {
         if(props === "New Game"){
 
-            fetch("http://localhost:5000/api/authentication/newgamestate/", {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    //TODO: MAKE ALL GAMESTATE VALUES NULL
-                    // body: {
-                //     "selectedhero" : "null",
-                //     "selectedenemy" : "null",
-                //     "bossesdefeated" : "null",
-                //     "underlingsdefeated" : "null"
-                //
-                // }
-                }
-            ).then(response => setResponseStatus(response.status))
+            fetch("http://localhost:5000/api/authentication/newgamestate", {
+                method: 'GET',
+                headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')},
+
+            }).then(response => response.json())
+            .then(response => setResponseStatus(response.status))
+            .then(data => setNewGameStateObj(data))
 
         }
         else if(props === "Saved Game 1"){
@@ -100,11 +95,11 @@ const LoginScreen = () => {
 
         }
 
-        //Post the active game state
-        fetch(`http://localhost:5000/api/authentication/activegamestate/${gameState[selectedGameState]}`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-        }).then(response => setSavedGameResponseStatus(response.status))
+        // //Post the active game state
+        // fetch(`http://localhost:5000/api/authentication/activegamestate/${gameState[selectedGameState]}`, {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        // }).then(response => setSavedGameResponseStatus(response.status))
     }
 
     if(responseStatus === 200){

@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
-//import { CombatContainer } from "./CombatStylings";
-import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile } from "./CombatComponents";
+import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, UserDisplay,
+  FoeDisplay } from "./CombatStylings";
+import { CombatProfile } from "./CombatComponents";
 import { PixelButton } from "../GlobalStylings";
 import ItemBagScreen from "../ItemBag/ItemBagScreen";
 
@@ -66,16 +67,16 @@ const CombatScreen = (props) => {
     return <ItemBagScreen usedItems={itemsState.usedItems} callback={itemBagCallback}></ItemBagScreen>
   } else {
     return <CombatContainer>
-      <div className="foe-display">
+      <FoeDisplay>
         <CombatProfile />
-      </div>
-      <div className="user-display">
+      </FoeDisplay>
+      <UserDisplay>
         <CombatProfile />
-        <BackButton />
+        <BackButton>Back</BackButton>
         <PixelButton onClick={() => showItems()}>
           <p>Items</p>
         </PixelButton>
-      </div>
+      </UserDisplay>
       <CombatOptions>
         <MoveDisplay>
           {selectedMoves.map(x =>

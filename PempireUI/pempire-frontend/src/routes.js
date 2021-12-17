@@ -9,7 +9,8 @@ import CombatScreen from "./components/CombatScreen/CombatScreen";
 import {
     Routes,
     Route,
-    Navigate
+    Navigate,
+    Redirect
   } from "react-router-dom";
 import BattleActionSelectionScreen from "./components/BattleActionSelectionScreen/BattleActionSelectionScreen";
   

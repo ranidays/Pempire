@@ -70,6 +70,7 @@ namespace API.Controllers
 
             return Unauthorized("Not a good password");
         }
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("getuserfromtoken")]
         public async Task<IActionResult> GetUserFromToken()
@@ -78,6 +79,22 @@ namespace API.Controllers
             Console.WriteLine(user.GameStates);
             return Ok(user);
         }
+
+        
+        [HttpPost("activegamestate/{activeState}")]
+        public async Task<IActionResult> ActiveGameState(GameState activeState){
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            user.ActiveGameState = activeState;
+            return Ok();
+        }
+        
+        [HttpPost("newgamestate")]
+        public async Task<IActionResult> NewGameState([FromBody]GameState activeState){
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            user.GameStates.Add(activeState);
+            return Ok(user.GameStates);
+        }
+
 
     }
 }

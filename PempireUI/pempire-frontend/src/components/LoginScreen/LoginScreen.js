@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import TextBoxWithAnimation from "../TextBoxWithAnimation";
 import {MainContainer, LeftContainer, RightContainer, BookWithHand, Narrator, FormInputFieldContainer, InputField, SaveTab, CustomButton} from "./LoginStylings";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 let BookHand = "/assets/book_with_hand.png";
 let narrator = "/assets/narrator.png";
@@ -9,12 +9,15 @@ let narrator = "/assets/narrator.png";
 const LoginScreen = () => {
     const [webToken, setWebToken] = useState(null);
     const [gameState, setGameStates] = useState(null);
+    const [selectedGameState, setSelectedGameState] = useState(null);
     const [hasAccess, setHasAccess] = useState(false);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [saveTab1, setSaveTab1] = useState("");
     const [saveTab2, setSaveTab2] = useState("");
     const [saveTab3, setSaveTab3] = useState("");
+
+
     const handleClick = (props) => {
         const requestOptions = {
             method: 'POST',
@@ -68,6 +71,30 @@ const LoginScreen = () => {
         // sessionStorage.setItem('jwtToken', webToken);
     }
 
+    const handleSaveTabClick = (props) => {
+
+        if(props === "New Game"){
+            return <Navigate to='/story' />;
+        }
+        else if(props === "Saved Game 1"){
+            //Post gameState[0] to http://localhost:5000/api/authentication/activegamestate
+            setSelectedGameState(0)
+        }
+        else if(props === "Saved Game 2"){
+            setSelectedGameState(1)
+
+        }else if(props === "Saved Game 3"){
+            setSelectedGameState(2)
+
+        }
+
+        //Post the active game state
+        fetch(`http://localhost:5000/api/authentication/activegamestate/${gameState[selectedGameState]}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        }).then(response => console.log(response.status))
+    }
+
     if(!hasAccess){
         return(
             <MainContainer>
@@ -104,9 +131,9 @@ const LoginScreen = () => {
 
                 </RightContainer>
 
-                <SaveTab style={{transform: 'translateX(460%) translateY(10%)'}}>{saveTab1}</SaveTab>
-                <SaveTab style={{transform: 'translateX(460%) translateY(400%)'}}>{saveTab2}</SaveTab>
-                <SaveTab style={{transform: 'translateX(460%) translateY(200%)'}}>{saveTab3}</SaveTab>
+                <SaveTab onClick={() => handleSaveTabClick(saveTab1)} style={{transform: 'translateX(460%) translateY(10%)'}}>{saveTab1}</SaveTab>
+                <SaveTab onClick={() => handleSaveTabClick(saveTab2)} style={{transform: 'translateX(460%) translateY(400%)'}}>{saveTab2}</SaveTab>
+                <SaveTab onClick={() => handleSaveTabClick(saveTab3)} style={{transform: 'translateX(460%) translateY(200%)'}}>{saveTab3}</SaveTab>
             </MainContainer>
         )
     }

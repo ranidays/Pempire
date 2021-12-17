@@ -69,9 +69,6 @@ const SignUpScreen= () => {
                         <InputField type="password" placeholder="Confirm Password"/>
                     </Row>
 
-
-
-
                 </FormInputFieldContainer>
 
                 <CustomButton onClick={handleClick} >Sign Up</CustomButton>

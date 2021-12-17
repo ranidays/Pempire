@@ -149,7 +149,6 @@ const LoginScreen = () => {
 
                 <RightContainer>
                     <BookWithHand src={BookHand}/>
-
                 </RightContainer>
 
                 <SaveTab onClick={() => handleSaveTabClick(saveTab1)} style={{transform: 'translateX(460%) translateY(10%)'}}>{saveTab1}</SaveTab>

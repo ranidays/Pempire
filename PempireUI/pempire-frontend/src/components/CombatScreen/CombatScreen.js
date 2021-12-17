@@ -83,7 +83,7 @@ const CombatScreen = (props) => {
         <CombatProfile />
       </FoeDisplay>
       <UserDisplay>
-        <CombatProfile />
+        <CombatProfile health={75} mana={25} />
         <PixelButton>
           <p>Back</p>
         </PixelButton>

@@ -72,7 +72,9 @@ const CombatScreen = (props) => {
       </FoeDisplay>
       <UserDisplay>
         <CombatProfile />
-        <BackButton>Back</BackButton>
+        <PixelButton>
+          <p>Back</p>
+        </PixelButton>
         <PixelButton onClick={() => showItems()}>
           <p>Items</p>
         </PixelButton>

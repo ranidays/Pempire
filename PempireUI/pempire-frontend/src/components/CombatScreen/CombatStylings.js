@@ -70,6 +70,7 @@ export const BackButton = styled.div`
 export const UserDisplay = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export const FoeDisplay = styled.div`

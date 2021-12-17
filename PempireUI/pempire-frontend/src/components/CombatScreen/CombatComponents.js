@@ -1,4 +1,13 @@
 import "./CombatStyles.css";
+import blue_background from "./blue_background.png";
+
+const CombatContainer = (props) => {
+  return <div
+  className="combat-container"
+  style={{ backgroundImage: `url(${blue_background})`, backgroundRepeat: "no-repeat" }}>
+    {props.children}
+  </div>
+}
 
 const CombatOptions = (props) => {
   return <div
@@ -45,4 +54,4 @@ const CombatProfile = (props) => {
 }
 
 
-export { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile };
+export { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from "react";
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier, moves } from "../../moves";
-import { CombatContainer } from "./CombatStylings";
-import { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile } from "./CombatComponents";
+//import { CombatContainer } from "./CombatStylings";
+import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile } from "./CombatComponents";
 import { PixelButton } from "../GlobalStylings";
 import ItemBagScreen from "../ItemBag/ItemBagScreen";
 

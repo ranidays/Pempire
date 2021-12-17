@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Container, TitleImg} from "../GlobalStylings";
 import {InputField, Header} from "./SignUpStylings"
-import {CustomButton} from "./SignUpStylings";
+import {CustomButton, Row, Column, FormInputFieldContainer} from "./SignUpStylings";
 import LoginScreen from "../LoginScreen/LoginScreen";
 import  { Navigate } from 'react-router-dom'
 
@@ -28,7 +28,7 @@ const SignUpScreen= () => {
         }).then(response =>
             {
                 if(response.status === 400){
-                    setErrorMsg("YOU MADE AN ERROR");
+                    setErrorMsg("There was an error with signing up. Try again.");
                     setErrorStatus(true);
                     setSignUpSuccessful(false);
                 }
@@ -47,13 +47,33 @@ const SignUpScreen= () => {
     else{
         return(
             <Container>
-                <Header>Registration</Header>
-                <Header style={{display: errorStatus ? 'initial' : 'none' }}>{errorMsg}</Header>
-                <TitleImg src={titleBorder} alt=""/>
-                <InputField onChange={e => setEmail(e.target.value)} type="text" placeholder="Email Address"/>
-                <InputField onChange={e => setUsername(e.target.value)} type="text" placeholder="Username"/>
-                <InputField onChange={e => setPassword(e.target.value)} type="password" placeholder="Password"/>
-                <InputField type="password" placeholder="Confirm Password"/>
+                <Row>
+                    <TitleImg src={titleBorder} alt=""/>
+                    <Row>
+                        <Header>Registration</Header>
+                        <Header style={{display: errorStatus ? 'initial' : 'none', bottom: '58%', right: '27%', fontSize: '26px', color: 'red' , padding: '6%',}}>{errorMsg}</Header>
+                    </Row>
+
+                </Row>
+                <FormInputFieldContainer>
+                    <Row>
+                        <InputField onChange={e => setEmail(e.target.value)} type="text" placeholder="Email Address"/>
+                    </Row>
+                   <Row>
+                       <InputField onChange={e => setUsername(e.target.value)} type="text" placeholder="Username"/>
+                   </Row>
+                    <Row>
+                        <InputField onChange={e => setPassword(e.target.value)} type="password" placeholder="Password"/>
+                    </Row>
+                    <Row>
+                        <InputField type="password" placeholder="Confirm Password"/>
+                    </Row>
+
+
+
+
+                </FormInputFieldContainer>
+
                 <CustomButton onClick={handleClick} >Sign Up</CustomButton>
 
             </Container>

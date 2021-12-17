@@ -7,7 +7,8 @@ let BookHand = "/assets/book_with_hand.png";
 let narrator = "/assets/narrator.png";
 
 const LoginScreen = () => {
-    const [webToken, setWebToken] = useState(null);
+    const [responseStatus, setResponseStatus] = useState(null);
+    const [savedGameResponseStatus, setSavedGameResponseStatus] = useState(null);
     const [gameState, setGameStates] = useState(null);
     const [selectedGameState, setSelectedGameState] = useState(null);
     const [hasAccess, setHasAccess] = useState(false);
@@ -16,7 +17,6 @@ const LoginScreen = () => {
     const [saveTab1, setSaveTab1] = useState("");
     const [saveTab2, setSaveTab2] = useState("");
     const [saveTab3, setSaveTab3] = useState("");
-
 
     const handleClick = (props) => {
         const requestOptions = {
@@ -68,20 +68,19 @@ const LoginScreen = () => {
                     setSaveTab3("Saved Game 3");
                 }
         })
-        // sessionStorage.setItem('jwtToken', webToken);
     }
 
     const handleSaveTabClick = (props) => {
-
         if(props === "New Game"){
 
             fetch("http://localhost:5000/api/authentication/newgamestate/", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                //TODO: MAKE ALL GAMESTATE VALUES NULL
-                //body
-            }).then(response => console.log(response.status))
-            return <Navigate to='/story' />;
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    //TODO: MAKE ALL GAMESTATE VALUES NULL
+                    // body:
+                }
+            ).then(response => setResponseStatus(response.status))
+
         }
         else if(props === "Saved Game 1"){
             //Post gameState[0] to http://localhost:5000/api/authentication/activegamestate
@@ -99,7 +98,16 @@ const LoginScreen = () => {
         fetch(`http://localhost:5000/api/authentication/activegamestate/${gameState[selectedGameState]}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-        }).then(response => console.log(response.status))
+        }).then(response => setSavedGameResponseStatus(response.status))
+    }
+
+    if(responseStatus === 200){
+        return <Navigate to='/Story'  />;
+    }
+
+    if(savedGameResponseStatus === 200) {
+        //TODO: Needs to return to Boss Select Screen
+        return <Navigate to='/Story'  />;
     }
 
     if(!hasAccess){

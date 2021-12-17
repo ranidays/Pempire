@@ -35,6 +35,12 @@ export const LeftContainer = styled.div`
   image-rendering: crisp-edges;
   image-rendering: -moz-crisp-edges;         
   image-rendering: -o-crisp-edges;
+  ${TextBox} {
+    margin-top: 4%;
+    width: 800px;
+    height: 80%;
+  }
+  
 `
 
 export const RightContainer = styled.div`
@@ -48,7 +54,6 @@ export const RightContainer = styled.div`
 `
 
 export const FormInputFieldContainer = styled.form`
- 
   transform: translateX(62%) translateY(-130%);
   z-index: 1;
 `
@@ -93,7 +98,6 @@ export const CustomButton = styled.button`
   transform: translateX(12%) translateY(-140%);
   height: 50px;
   font-size: 35px;
-
 `
 
 export const Header = styled.h1`
@@ -102,7 +106,6 @@ export const Header = styled.h1`
   font-family: 'ArcadeClassic', serif ;
   color: white;
 `
-
 
 export const SaveTab= styled.button`
   width: 10%;

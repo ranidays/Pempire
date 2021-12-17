@@ -68,16 +68,11 @@ const LoginScreen = () => {
         // sessionStorage.setItem('jwtToken', webToken);
     }
 
-    const handleHasAccessClick = () => {
-
-    }
-
     if(!hasAccess){
         return(
             <MainContainer>
-                <TextBoxWithAnimation stringToType={"Time to login. The adventure awaits."} />
-
                 <LeftContainer>
+                    <TextBoxWithAnimation stringToType={"Time to login. The adventure awaits."} />
                     <Narrator src={narrator}/>
                 </LeftContainer>
 
@@ -85,7 +80,7 @@ const LoginScreen = () => {
                     <BookWithHand src={BookHand}/>
                     <FormInputFieldContainer>
                         <InputField onChange={e => setEmail(e.target.value)} type="text" placeholder="Email Address"/>
-                        <InputField onChange={e => setPassword(e.target.value)} type="text" placeholder="Password"/>
+                        <InputField onChange={e => setPassword(e.target.value)} type="password" placeholder="Password"/>
                     </FormInputFieldContainer>
                     <CustomButton onClick={() => handleClick(email, password)}>
                         {/*<Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Shop">Login</Link>*/}
@@ -97,24 +92,16 @@ const LoginScreen = () => {
         )
     }
     else{
-        //Show save tabs
-
-
         return(
             <MainContainer>
-                <TextBoxWithAnimation stringToType={"Choose to load a previous or start a new game"} />
-
                 <LeftContainer>
+                    <TextBoxWithAnimation stringToType={"Time to choose. Would you like to start a new game, or a saved game?"} />
                     <Narrator src={narrator}/>
                 </LeftContainer>
 
                 <RightContainer>
                     <BookWithHand src={BookHand}/>
 
-                    <CustomButton onClick={() => handleHasAccessClick()}>
-                        {/*<Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Shop">Login</Link>*/}
-                        Next
-                    </CustomButton>
                 </RightContainer>
 
                 <SaveTab style={{transform: 'translateX(460%) translateY(10%)'}}>{saveTab1}</SaveTab>
@@ -123,6 +110,5 @@ const LoginScreen = () => {
             </MainContainer>
         )
     }
-
 }
 export default LoginScreen;

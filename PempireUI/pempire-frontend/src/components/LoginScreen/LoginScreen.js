@@ -74,6 +74,13 @@ const LoginScreen = () => {
     const handleSaveTabClick = (props) => {
 
         if(props === "New Game"){
+
+            fetch("http://localhost:5000/api/authentication/newgamestate/", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                //TODO: MAKE ALL GAMESTATE VALUES NULL
+                //body
+            }).then(response => console.log(response.status))
             return <Navigate to='/story' />;
         }
         else if(props === "Saved Game 1"){

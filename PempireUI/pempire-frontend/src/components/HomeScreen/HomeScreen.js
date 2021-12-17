@@ -10,25 +10,16 @@ let titleBorder = "/assets/title_with_border.png";
 
 const HomeScreen= () => {
     return(
-        // <MainContainer>
-        //     <TitleImg src={titleBorder} alt=""/>
-        //     <CustomButton>
-        //         <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Login">Login</Link>
-        //     </CustomButton>
-        //     <CustomButton>
-        //         <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/SignUp">Sign Up</Link>
-        //     </CustomButton>
-        //     <CustomButton>
-        //         <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Combat">Combat?</Link>
-        //     </CustomButton>
-        // </MainContainer>
-
         <Container>
             <Row>
                 <TitleImg style={{marginBottom: '27%'}} src={titleBorder} alt=""/>
             </Row>
-            <CustomButton  style={{paddingBottom: '60px'}}>Login </CustomButton>
-            <CustomButton style={{paddingBottom: '50px'}}>Sign Up</CustomButton>
+            <CustomButton  style={{paddingBottom: '60px'}}>
+                <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Login"> Login</Link>
+            </CustomButton>
+            <CustomButton style={{paddingBottom: '50px'}} >
+                <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/signup"> Sign Up</Link>
+            </CustomButton>
         </Container>
 
     )

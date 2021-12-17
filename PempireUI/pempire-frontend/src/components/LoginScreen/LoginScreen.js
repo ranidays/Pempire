@@ -77,7 +77,13 @@ const LoginScreen = () => {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     //TODO: MAKE ALL GAMESTATE VALUES NULL
-                    // body:
+                    // body: {
+                //     "selectedhero" : "null",
+                //     "selectedenemy" : "null",
+                //     "bossesdefeated" : "null",
+                //     "underlingsdefeated" : "null"
+                //
+                // }
                 }
             ).then(response => setResponseStatus(response.status))
 

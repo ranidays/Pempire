@@ -20,6 +20,9 @@ const HomeScreen= () => {
             <CustomButton style={{paddingBottom: '50px'}} >
                 <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/signup"> Sign Up</Link>
             </CustomButton>
+            <CustomButton style={{paddingBottom: '50px'}} >
+                <Link style={{ color: 'inherit', textDecoration: 'inherit'}} to="/Combat">Combat</Link>
+            </CustomButton>
         </Container>
 
     )

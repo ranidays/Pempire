@@ -23,6 +23,7 @@ export const Routing = () => {
             <Route path='/Story' element={<StoryScreen />} />
             <Route path='/Shop' element={<ShopScreen/>}/>
             <Route path="/Combat/:selectedMove1/:selectedMove2/:selectedMove3/:selectedMove4" element={<CombatScreen />} />
+            <Route path="/Combat" element={<CombatScreen />} />
             <Route path="/SignUp" element={<SignUpScreen />} />
             <Route path="/BattleActionSelection" element={<BattleActionSelectionScreen />} />
           </Routes>

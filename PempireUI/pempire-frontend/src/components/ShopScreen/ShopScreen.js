@@ -48,6 +48,7 @@ function ItemDisplay(props) {
         );
     }
 }
+export {ItemDisplay};
 
 function ShopkeepSays(props) {
     if (props.shopkeepSays === undefined){
@@ -258,7 +259,5 @@ function ShopScreen(props) {
         
     }
 }
-
-
 
 export default ShopScreen;

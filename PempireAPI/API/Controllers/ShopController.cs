@@ -101,7 +101,6 @@ namespace API.Controllers
             };
             if (itemToAdd == null) return NoContent();
 
-            //todo: actually add item from users inventory and subtract their gold.
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
             var heroInfo = user.ActiveGameState.SelectedHero;
             heroInfo.Gold = heroInfo.Gold - shopDto.Cost;

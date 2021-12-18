@@ -80,7 +80,7 @@ const LoginScreen = () => {
                 headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')},
             }).then(response => {
                 setResponseStatus(true);
-                navigate("/Boss")
+                navigate("/Story")
             })
  setResponseStatus(true);
         }

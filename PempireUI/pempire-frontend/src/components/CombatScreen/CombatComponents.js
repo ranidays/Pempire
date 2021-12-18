@@ -9,15 +9,11 @@ export const CombatProfile = (props) => {
 };
 
 const CombatInfo = (props) => {
-  const baseEntityInfo = {
-    health: props.hasOwnProperty("health") ? props.health : 100,
-    mana: props.hasOwnProperty("mana") ? props.mana : 100
-  };
-  const [entityInfo, setEntityInfo] = useState({
-    health: baseEntityInfo.health,
-    mana: baseEntityInfo.mana,
+  const entityInfo = {
+    health: props.health,
+    mana: props.mana,
     statusConditions: []
-  });
+  };
 
   return <CombatInfoSC>
     <p>Health: {entityInfo.health}</p>

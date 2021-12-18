@@ -76,7 +76,7 @@ const CombatScreen = (props) => {
   useEffect(() => {
     const jwt = sessionStorage.getItem("jwt");
     if (user !== null) {
-      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedFoe}`, {
+      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedEnemy}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const CombatScreen = (props) => {
         </MoveDisplay>
         <MoveTypeDisplay>
           <CombatOptionButton>Attack</CombatOptionButton>
-          <CombatOptionButton>Stash</CombatOptionButton>
+          <CombatOptionButton onClick={() => console.log(safeGetHero().stash)}>Stash</CombatOptionButton>
           <CombatOptionButton>Block</CombatOptionButton>
           <CombatOptionButton>Run</CombatOptionButton>
         </MoveTypeDisplay>

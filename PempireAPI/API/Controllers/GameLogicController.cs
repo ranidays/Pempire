@@ -45,13 +45,13 @@ namespace API.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("BossSelected")] // Post /API/GameLogic/CharacterSelected
+        [HttpPost("BossSelected")] // Post /API/GameLogic/BossSelected
         public async Task<IActionResult> BossWasSelected([FromBody] ActorName actor)
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            var enemy = ActorFactory.GenerateEntity(actor.Name);
-            return Ok();
+            user.ActiveGameState.SelectedEnemy = actor.Name;
+            await _userManager.UpdateAsync(user);
+            return Ok(actor);
         }
-
     }
 }

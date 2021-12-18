@@ -6,6 +6,8 @@ import StoryScreen from './components/StoryScreen/StoryScreen';
 import ShopScreen from './components/ShopScreen/ShopScreen';
 import CombatScreen from "./components/CombatScreen/CombatScreen";
 import BossSelectScreen from './components/BossSelectScreen/BossSelectScreen';
+import CharacterSelectScreen from './components/CharacterSelect/CharacterSelectScreen';
+
 import {
     Routes,
     Route,
@@ -26,6 +28,7 @@ export const Routing = () => {
             <Route path="/Boss" element={<BossSelectScreen />} />
             <Route path="/SignUp" element={<SignUpScreen />} />
             <Route path="/BattleActionSelection" element={<BattleActionSelectionScreen />} />
+            <Route path="/CharacterSelect" element={<CharacterSelectScreen />} />
           </Routes>
         </div>
       );

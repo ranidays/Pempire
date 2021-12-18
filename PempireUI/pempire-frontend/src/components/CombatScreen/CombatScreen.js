@@ -119,9 +119,10 @@ const CombatScreen = (props) => {
           )}
         </MoveDisplay>
         <MoveTypeDisplay>
-          {selectedMoves.map((x, index) =>
-            <CombatOptionButton key={index} onClick={handleClick}>{x.name}</CombatOptionButton>
-          )}
+          <CombatOptionButton>Attack</CombatOptionButton>
+          <CombatOptionButton>Stash</CombatOptionButton>
+          <CombatOptionButton>Block</CombatOptionButton>
+          <CombatOptionButton>Run</CombatOptionButton>
         </MoveTypeDisplay>
       </CombatOptions>
     </CombatContainer>

@@ -7,8 +7,11 @@ using API.Models.DTOs;
 using API.Models.Entities;
 using API.Models.Enums;
 using API.Models.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace API.Controllers
 {
@@ -31,6 +34,7 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("foe")]
         public IActionResult GetFoe([FromQuery] Actor actor)
         {
@@ -39,6 +43,7 @@ namespace API.Controllers
             return Ok(foe);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("battleaction")]
         public IActionResult UseBattleAction([FromBody] BattleMoveDto battleMoveDto)
         {
@@ -48,6 +53,7 @@ namespace API.Controllers
                 battleMoveDto.FoeElement));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("item")]
         public IActionResult UseItem([FromBody] ConsumableDto consumableDto)
         {

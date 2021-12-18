@@ -24,13 +24,13 @@ const CombatScreen = (props) => {
   const safeGetHero = () => user !== null ? user.activeGameState.selectedHero : { health: 100, mana: 100 };
   const safeGetFoe = () => foe !== null ? foe : { health: 100, mana: 100 };
 
-  const handleClick = () => {
+  const handleClick = (enumeration) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
-        "battlemove": findMoveByIdentifier("Att1").enumeration,
-        "foeelement": findElementByElementType(ElementType.WATER).enumeration
+        "battlemove": enumeration,
+        "foeelement": foe.element
       })
     };
 
@@ -115,7 +115,7 @@ const CombatScreen = (props) => {
       <CombatOptions>
         <MoveDisplay>
           {selectedMoves.map((x, index) =>
-            <CombatOptionButton key={index} onClick={handleClick}>{x.name}</CombatOptionButton>
+            <CombatOptionButton key={index} onClick={() => handleClick(x.enumeration)}>{x.name}</CombatOptionButton>
           )}
         </MoveDisplay>
         <MoveTypeDisplay>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
+using API.Models.DTOs;
 using API.Models.Entities;
 using API.Models.Enums;
 using API.Models.Helpers;
@@ -42,6 +43,16 @@ namespace API.Controllers
             user.ActiveGameState.SelectedHero = hero;
             await _userManager.UpdateAsync(user);
             return Ok(hero);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("BossSelected")] // Post /API/GameLogic/BossSelected
+        public async Task<IActionResult> BossWasSelected([FromBody] ActorName actor)
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            user.ActiveGameState.SelectedEnemy = actor.Name;
+            await _userManager.UpdateAsync(user);
+            return Ok(actor);
         }
     }
 }

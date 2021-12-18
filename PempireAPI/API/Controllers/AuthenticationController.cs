@@ -96,7 +96,9 @@ namespace API.Controllers
             Guid newId = Guid.NewGuid();
             state.Id = newId; 
             user.GameStates.Add(state);
-            return Ok();
+            return Ok(state);
         }
+        
+
     }
 }

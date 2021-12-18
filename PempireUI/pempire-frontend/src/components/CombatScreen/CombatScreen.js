@@ -1,31 +1,36 @@
 import React, { useState, useEffect} from "react";
 import { ElementType, findElementByElementType } from "../../elements";
-import { findMoveByIdentifier, moves } from "../../moves";
+import { findMoveByIdentifier } from "../../moves";
 import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, UserDisplay,
   FoeDisplay } from "./CombatStylings";
 import { CombatProfile } from "./CombatComponents";
 import { PixelButton } from "../GlobalStylings";
 import ItemBagScreen from "../ItemBag/ItemBagScreen";
+import { useParams } from "react-router-dom";
 
 const CombatScreen = (props) => {
-  const numButtons = 4;
-  const selectedMoves = moves.slice(0, 4);
-  const [user, setUser] = useState({});
+  const { selectedMove1, selectedMove2, selectedMove3, selectedMove4 } = useParams();
+  const selectedMoves = [selectedMove1, selectedMove2, selectedMove3, selectedMove4].map(x => findMoveByIdentifier(x));
+  const [user, setUser] = useState(null);
+  const [foe, setFoe] = useState(null);
   //const [showingItems, setShowingItems] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  //const [selectedItem, setSelectedItem] = useState(null);
   const [usedItems, setUsedItems] = useState([]);
   const [itemsState, setItemsState] = useState({
     usedItems: [],
     showingItems: false,
 })
 
-  const handleClick = () => {
+  const safeGetHero = () => user !== null ? user.activeGameState.selectedHero : { health: 100, mana: 100 };
+  const safeGetFoe = () => foe !== null ? foe : { health: 100, mana: 100 };
+
+  const handleClick = (enumeration) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
-        "battlemove": findMoveByIdentifier("Att1").enumeration,
-        "foeelement": findElementByElementType(ElementType.WATER).enumeration
+        "battlemove": enumeration,
+        "foeelement": foe.element
       })
     };
 
@@ -64,9 +69,25 @@ const CombatScreen = (props) => {
       }
     })
     .then(response => response.json())
-    .then(data => setUser(data))
+    .then(userData => setUser(userData))
     .catch(err => console.log(err));
   }, []);
+
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("jwt");
+    if (user !== null) {
+      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedFoe}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => setFoe(data))
+      .catch(err => console.log(err));
+    }
+  }, [user]);
 
   useEffect(() => {
     usedItems.forEach(i => {
@@ -80,10 +101,10 @@ const CombatScreen = (props) => {
   } else {
     return <CombatContainer>
       <FoeDisplay>
-        <CombatProfile />
+        <CombatProfile health={safeGetFoe().health} mana={safeGetFoe().mana}/>
       </FoeDisplay>
       <UserDisplay>
-        <CombatProfile health={75} mana={25} />
+        <CombatProfile health={safeGetHero().health} mana={safeGetHero().mana} />
         <PixelButton>
           <p>Back</p>
         </PixelButton>
@@ -93,14 +114,15 @@ const CombatScreen = (props) => {
       </UserDisplay>
       <CombatOptions>
         <MoveDisplay>
-          {selectedMoves.map(x =>
-            <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
+          {selectedMoves.map((x, index) =>
+            <CombatOptionButton key={index} onClick={() => handleClick(x.enumeration)}>{x.name}</CombatOptionButton>
           )}
         </MoveDisplay>
         <MoveTypeDisplay>
-          {selectedMoves.map(x =>
-            <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
-          )}
+          <CombatOptionButton>Attack</CombatOptionButton>
+          <CombatOptionButton>Stash</CombatOptionButton>
+          <CombatOptionButton>Block</CombatOptionButton>
+          <CombatOptionButton>Run</CombatOptionButton>
         </MoveTypeDisplay>
       </CombatOptions>
     </CombatContainer>

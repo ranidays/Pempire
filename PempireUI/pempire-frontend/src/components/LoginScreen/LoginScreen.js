@@ -2,12 +2,14 @@ import React, {useState} from "react";
 import TextBoxWithAnimation from "../TextBoxWithAnimation";
 import {MainContainer, LeftContainer, RightContainer, BookWithHand, Narrator, FormInputFieldContainer, InputField, SaveTab, CustomButton} from "./LoginStylings";
 import {Link, Navigate} from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 let BookHand = "/assets/book_with_hand.png";
 let narrator = "/assets/narrator.png";
 
 const LoginScreen = () => {
-    const [responseStatus, setResponseStatus] = useState(null);
+    const navigate = useNavigate()
+    const [responseStatus, setResponseStatus] = useState(false);
     const [savedGameResponseStatus, setSavedGameResponseStatus] = useState(null);
     const [gameState, setGameStates] = useState(null);
     const [newGameStateObj, setNewGameStateObj] = useState(null);
@@ -73,15 +75,14 @@ const LoginScreen = () => {
 
     const handleSaveTabClick = (props) => {
         if(props === "New Game"){
-
             fetch("http://localhost:5000/api/authentication/newgamestate", {
                 method: 'GET',
                 headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')},
-
-            }).then(response => response.json())
-            .then(response => setResponseStatus(response.status))
-            .then(data => setNewGameStateObj(data))
-
+            }).then(response => {
+                setResponseStatus(true);
+                navigate("/Boss")
+            })
+ setResponseStatus(true);
         }
         else if(props === "Saved Game 1"){
             //Post gameState[0] to http://localhost:5000/api/authentication/activegamestate
@@ -102,7 +103,8 @@ const LoginScreen = () => {
         // }).then(response => setSavedGameResponseStatus(response.status))
     }
 
-    if(responseStatus === 200){
+    if(responseStatus){
+        console.log(responseStatus)
         return <Navigate to='/Story'  />;
     }
 

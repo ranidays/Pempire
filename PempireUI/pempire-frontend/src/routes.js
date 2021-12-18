@@ -5,13 +5,12 @@ import SignUpScreen from './components/SignUpScreen/SignUpScreen';
 import StoryScreen from './components/StoryScreen/StoryScreen';
 import ShopScreen from './components/ShopScreen/ShopScreen';
 import CombatScreen from "./components/CombatScreen/CombatScreen";
+import BossSelectScreen from './components/BossSelectScreen/BossSelectScreen';
 import CharacterSelectScreen from './components/CharacterSelect/CharacterSelectScreen';
 
 import {
     Routes,
     Route,
-    Navigate,
-    Redirect
   } from "react-router-dom";
 import BattleActionSelectionScreen from "./components/BattleActionSelectionScreen/BattleActionSelectionScreen";
   
@@ -26,6 +25,7 @@ export const Routing = () => {
             <Route path='/Shop' element={<ShopScreen/>}/>
             <Route path="/Combat/:selectedMove1/:selectedMove2/:selectedMove3/:selectedMove4" element={<CombatScreen />} />
             <Route path="/Combat" element={<CombatScreen />} />
+            <Route path="/Boss" element={<BossSelectScreen />} />
             <Route path="/SignUp" element={<SignUpScreen />} />
             <Route path="/BattleActionSelection" element={<BattleActionSelectionScreen />} />
             <Route path="/CharacterSelect" element={<CharacterSelectScreen />} />

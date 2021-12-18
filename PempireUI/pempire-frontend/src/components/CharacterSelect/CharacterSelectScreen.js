@@ -89,7 +89,7 @@ function CharacterSelectScreen(props) {
                 console.log("error: " + error);
             });
         }
-        // getJWT();
+        getJWT();
 
         // fetchHeroes();       
         // let newState =  {...UIState};

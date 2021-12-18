@@ -60,5 +60,18 @@ namespace API.Controllers
 
             return Ok(response);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("selecthero")] 
+        public async Task<IActionResult> selecthero([FromBody] int selected)
+        {
+            Actor selectedActor = (Actor) (selected+1);
+            Entity hero = ActorFactory.AllHeroes[selectedActor];
+
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            user.ActiveGameState.SelectedHero = hero;
+            await _userManager.UpdateAsync(user);
+            return Ok();
+        }
     }
 }

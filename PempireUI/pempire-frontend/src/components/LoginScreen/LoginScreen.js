@@ -35,13 +35,13 @@ const LoginScreen = () => {
         fetch('http://localhost:5000/api/authentication/login', requestOptions)
             .then(response => response.json())
             .then(data => {
-                sessionStorage.setItem('jwt', data.token);
+                sessionStorage.setItem('jwtToken', data.token);
 
                 setHasAccess(true);
         });
         fetch('http://localhost:5000/api/authentication/getuserfromtoken', {
             method: 'GET',
-            headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')},
+            headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwtToken')},
         })
             .then(response => response.json())
             .then(data => {

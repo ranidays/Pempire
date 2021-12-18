@@ -1,19 +1,26 @@
-import "./CombatStyles.css";
+import React, { useState } from "react";
+import { CombatProfileSC, AvatarSC, CombatInfoSC } from "./CombatStylings";
 
-const CombatOptions = (props) => <div className="combat-options">{props.children}</div>
+export const CombatProfile = (props) => {
+  return <CombatProfileSC>
+    <AvatarSC />
+    <CombatInfo {...props} />
+  </CombatProfileSC>
+};
 
-const MoveTypeDisplay = (props) => <div className="four-combat-options-display move-type-display">{props.children}</div>
+const CombatInfo = (props) => {
+  const baseEntityInfo = {
+    health: props.hasOwnProperty("health") ? props.health : 100,
+    mana: props.hasOwnProperty("mana") ? props.mana : 100
+  };
+  const [entityInfo, setEntityInfo] = useState({
+    health: baseEntityInfo.health,
+    mana: baseEntityInfo.mana,
+    statusConditions: []
+  });
 
-const MoveDisplay = (props) => <div className="four-combat-options-display move-display">{props.children}</div>
-
-const CombatOptionButton = (props) => <div className="combat-option-button" onClick={props.onClick}>{props.children}</div>
-
-const BackButton = (props) => <p className="back-button">Back</p>
-
-const CombatProfile = (props) => <div className="combat-profile">
-  <p className="avatar">Avatar</p>
-  <p className="combat-info">Info</p>
-</div>
-
-
-export { CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, CombatProfile };
+  return <CombatInfoSC>
+    <p>Health: {entityInfo.health}</p>
+    <p>Mana: {entityInfo.mana}</p>
+  </CombatInfoSC>
+};

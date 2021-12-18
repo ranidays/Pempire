@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
+using API.Models.DTOs;
 using API.Models.Entities;
 using API.Models.Enums;
 using API.Models.Helpers;

@@ -70,6 +70,7 @@ export const BackButton = styled.div`
 export const UserDisplay = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export const FoeDisplay = styled.div`
@@ -93,4 +94,7 @@ export const AvatarSC = styled.div`
 
 export const CombatInfoSC = styled.div`
   background-color: blueviolet;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;

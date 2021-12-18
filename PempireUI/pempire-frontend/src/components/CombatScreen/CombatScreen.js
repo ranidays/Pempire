@@ -1,19 +1,20 @@
 import React, { useState, useEffect} from "react";
 import { ElementType, findElementByElementType } from "../../elements";
-import { findMoveByIdentifier, moves } from "../../moves";
+import { findMoveByIdentifier } from "../../moves";
 import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, UserDisplay,
   FoeDisplay } from "./CombatStylings";
 import { CombatProfile } from "./CombatComponents";
 import { PixelButton } from "../GlobalStylings";
 import ItemBagScreen from "../ItemBag/ItemBagScreen";
+import { useParams } from "react-router-dom";
 
 const CombatScreen = (props) => {
-  const numButtons = 4;
-  const selectedMoves = moves.slice(0, 4);
+  const { selectedMove1, selectedMove2, selectedMove3, selectedMove4 } = useParams();
+  const selectedMoves = [selectedMove1, selectedMove2, selectedMove3, selectedMove4].map(x => findMoveByIdentifier(x));
   const [user, setUser] = useState(null);
   const [foe, setFoe] = useState(null);
   //const [showingItems, setShowingItems] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  //const [selectedItem, setSelectedItem] = useState(null);
   const [usedItems, setUsedItems] = useState([]);
   const [itemsState, setItemsState] = useState({
     usedItems: [],
@@ -113,13 +114,13 @@ const CombatScreen = (props) => {
       </UserDisplay>
       <CombatOptions>
         <MoveDisplay>
-          {selectedMoves.map(x =>
-            <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
+          {selectedMoves.map((x, index) =>
+            <CombatOptionButton key={index} onClick={handleClick}>{x.name}</CombatOptionButton>
           )}
         </MoveDisplay>
         <MoveTypeDisplay>
-          {selectedMoves.map(x =>
-            <CombatOptionButton onClick={handleClick}>{x.name}</CombatOptionButton>
+          {selectedMoves.map((x, index) =>
+            <CombatOptionButton key={index} onClick={handleClick}>{x.name}</CombatOptionButton>
           )}
         </MoveTypeDisplay>
       </CombatOptions>

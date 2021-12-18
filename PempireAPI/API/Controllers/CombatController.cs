@@ -34,7 +34,6 @@ namespace API.Controllers
         [HttpGet("foe")]
         public IActionResult GetFoe([FromQuery] Actor actor)
         {
-            Console.WriteLine("Actor =");
             Entity? foe = ActorFactory.GenerateEntity(actor);
             if (foe == null) return BadRequest();
             return Ok(foe);

@@ -37,7 +37,7 @@ namespace API.Models.Helpers
         private static Entity GenerateHapepe() => new Entity()
         {
             Name = "Hapepe",
-            Description = "Some Description",
+            Description = "Hapape the oldest and most confident of the pepe brothers",
             Health = 150,
             Mana = 25,
             Stash = new List<ConsumableName>(),
@@ -45,6 +45,34 @@ namespace API.Models.Helpers
             Gold = Constants.STARTING_GOLD,
             EntityType = EntityType.Player,
             Actor = Actor.Hapepe,
+            Element = Element.Normal,
+            Portrait = "SomePicture"
+        };
+        private static Entity GeneratePepedia() => new Entity()
+        {
+            Name = "Pepedia",
+            Description = "The youngest, but most intelligent of the Pemperors sons",
+            Health = 150,
+            Mana = 25,
+            Stash = new List<ConsumableName>(),
+            BattleActions = new List<BattleMoveName>(),
+            Gold = Constants.STARTING_GOLD,
+            EntityType = EntityType.Player,
+            Actor = Actor.Pepedia,
+            Element = Element.Normal,
+            Portrait = "SomePicture"
+        };
+        private static Entity GenerateDaprepe() => new Entity()
+        {
+            Name = "Daprepe",
+            Description = "The most miserable of the pepe siblings",
+            Health = 150,
+            Mana = 25,
+            Stash = new List<ConsumableName>(),
+            BattleActions = new List<BattleMoveName>(),
+            Gold = Constants.STARTING_GOLD,
+            EntityType = EntityType.Player,
+            Actor = Actor.Deprepe,
             Element = Element.Normal,
             Portrait = "SomePicture"
         };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier } from "../../moves";
 import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, UserDisplay,
@@ -10,6 +10,7 @@ import ItemBagScreen from "../ItemBag/ItemBagScreen";
 import { useParams } from "react-router-dom";
 
 const CombatScreen = (props) => {
+  const navigate = useNavigate();
   const { selectedMove1, selectedMove2, selectedMove3, selectedMove4 } = useParams();
   const selectedMoves = [selectedMove1, selectedMove2, selectedMove3, selectedMove4].map(x => findMoveByIdentifier(x));
   const [user, setUser] = useState(null);
@@ -24,6 +25,15 @@ const CombatScreen = (props) => {
 
   const safeGetHero = () => user !== null ? user.activeGameState.selectedHero : { health: 100, mana: 100 };
   const safeGetFoe = () => foe !== null ? foe : { health: 100, mana: 100 };
+
+  const defeatBoss = () => {
+    fetch("http://localhost:5000/api/combat/bossdefeated", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(_ => navigate("/Boss"))
+    .catch(err => console.log(err));
+  }
 
   const handleClick = (enumeration) => {
     const requestOptions = {
@@ -120,8 +130,9 @@ const CombatScreen = (props) => {
           )}
         </MoveDisplay>
         <MoveTypeDisplay>
-          <CombatOptionButton>
-            <Link style={{ textDecoration: "inherit" }} to="/Boss">Attack</Link>
+          <CombatOptionButton onClick={() => defeatBoss()}>
+            Attack
+            <Link style={{ display: "none", textDecoration: "inherit" }} to="/Boss" />
           </CombatOptionButton>
           <CombatOptionButton onClick={() => console.log(safeGetHero().stash)}>Stash</CombatOptionButton>
           <CombatOptionButton>Block</CombatOptionButton>

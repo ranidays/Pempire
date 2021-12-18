@@ -15,6 +15,12 @@ namespace API.Models.Helpers
                 case Actor.Hapepe:
                     entity = GenerateHapepe();
                     break;
+                case Actor.Deprepe:
+                entity = GenerateDaprepe();
+                break;
+                case Actor.Pepedia:
+                entity = GeneratePepedia();
+                break;
                 case Actor.WaterBoss:
                     entity = GenerateWaterBoss();
                     break;

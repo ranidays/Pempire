@@ -9,6 +9,14 @@ namespace API.Models.Helpers
 {
     public static class ActorFactory
     {
+        public static Dictionary<Actor, Entity> AllHeroes = new Dictionary<Actor, Entity>{
+            {Actor.Hapepe, GenerateHapepe()},
+
+            {Actor.Deprepe, GenerateDeprepe()},
+
+            {Actor.Pepedia, GeneratePepedia()}
+        };
+
         public static Entity GenerateEntity(Actor actor){
             var entity = new Entity();
             switch (actor){
@@ -16,7 +24,7 @@ namespace API.Models.Helpers
                     entity = GenerateHapepe();
                     break;
                 case Actor.Deprepe:
-                entity = GenerateDaprepe();
+                entity = GenerateDeprepe();
                 break;
                 case Actor.Pepedia:
                 entity = GeneratePepedia();
@@ -52,7 +60,7 @@ namespace API.Models.Helpers
             EntityType = EntityType.Player,
             Actor = Actor.Hapepe,
             Element = Element.Normal,
-            Portrait = "SomePicture"
+            Portrait = "hapepe"
         };
         private static Entity GeneratePepedia() => new Entity()
         {
@@ -66,11 +74,11 @@ namespace API.Models.Helpers
             EntityType = EntityType.Player,
             Actor = Actor.Pepedia,
             Element = Element.Normal,
-            Portrait = "SomePicture"
+            Portrait = "pepedia"
         };
-        private static Entity GenerateDaprepe() => new Entity()
+        private static Entity GenerateDeprepe() => new Entity()
         {
-            Name = "Daprepe",
+            Name = "Deprepe",
             Description = "The most miserable of the pepe siblings",
             Health = 150,
             Mana = 25,
@@ -80,7 +88,7 @@ namespace API.Models.Helpers
             EntityType = EntityType.Player,
             Actor = Actor.Deprepe,
             Element = Element.Normal,
-            Portrait = "SomePicture"
+            Portrait = "deprepe"
         };
         private static Entity GenerateWaterBoss() => new Entity()
         {

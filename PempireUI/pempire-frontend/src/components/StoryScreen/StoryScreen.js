@@ -34,7 +34,7 @@ function StoryScreen(props) {
   
   useEffect(() => {
     if (beingSaid.Index == 6){
-      navigate("/Boss")
+      navigate("/characterselect")
     }
 }, [beingSaid.Index])
 

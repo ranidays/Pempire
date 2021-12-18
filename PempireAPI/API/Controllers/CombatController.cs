@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
 using API.Models.DTOs;
 using API.Models.Entities;
 using API.Models.Enums;
 using API.Models.Helpers;
+using API.Models.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,16 +24,19 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly TokenService _tokenService;
+        private readonly DataContext _context;
 
         public CombatController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            TokenService tokenService
+            TokenService tokenService,
+            DataContext context
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _context = context;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -41,6 +46,20 @@ namespace API.Controllers
             Entity? foe = ActorFactory.GenerateEntity(actor);
             if (foe == null) return BadRequest();
             return Ok(foe);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("bossdefeated")]
+        public async Task<IActionResult> DefeatCurrentBoss()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            if (user.ActiveGameState!.BossesDefeated == null) user.ActiveGameState.BossesDefeated = new List<ActorName>();
+            user.ActiveGameState.BossesDefeated.Add(new ActorName {
+                Name = (Actor)user.ActiveGameState.SelectedEnemy!
+            });
+            user.ActiveGameState.SelectedEnemy = (Actor)0;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

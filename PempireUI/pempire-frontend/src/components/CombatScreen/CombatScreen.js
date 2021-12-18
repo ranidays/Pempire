@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 import { ElementType, findElementByElementType } from "../../elements";
 import { findMoveByIdentifier } from "../../moves";
 import { CombatContainer, CombatOptions, MoveTypeDisplay, MoveDisplay, CombatOptionButton, BackButton, UserDisplay,
@@ -76,7 +77,7 @@ const CombatScreen = (props) => {
   useEffect(() => {
     const jwt = sessionStorage.getItem("jwt");
     if (user !== null) {
-      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedFoe}`, {
+      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedEnemy}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -119,10 +120,14 @@ const CombatScreen = (props) => {
           )}
         </MoveDisplay>
         <MoveTypeDisplay>
-          <CombatOptionButton>Attack</CombatOptionButton>
-          <CombatOptionButton>Stash</CombatOptionButton>
+          <CombatOptionButton>
+            <Link style={{ textDecoration: "inherit" }} to="/Boss">Attack</Link>
+          </CombatOptionButton>
+          <CombatOptionButton onClick={() => console.log(safeGetHero().stash)}>Stash</CombatOptionButton>
           <CombatOptionButton>Block</CombatOptionButton>
-          <CombatOptionButton>Run</CombatOptionButton>
+          <CombatOptionButton>
+            <Link style={{ textDecoration: "inherit" }} to="/Boss">Run</Link>
+          </CombatOptionButton>
         </MoveTypeDisplay>
       </CombatOptions>
     </CombatContainer>

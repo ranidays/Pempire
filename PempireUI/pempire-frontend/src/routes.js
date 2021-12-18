@@ -5,6 +5,7 @@ import SignUpScreen from './components/SignUpScreen/SignUpScreen';
 import StoryScreen from './components/StoryScreen/StoryScreen';
 import ShopScreen from './components/ShopScreen/ShopScreen';
 import CombatScreen from "./components/CombatScreen/CombatScreen";
+import CharacterSelectScreen from './components/CharacterSelect/CharacterSelectScreen';
 
 import {
     Routes,
@@ -27,6 +28,7 @@ export const Routing = () => {
             <Route path="/Combat" element={<CombatScreen />} />
             <Route path="/SignUp" element={<SignUpScreen />} />
             <Route path="/BattleActionSelection" element={<BattleActionSelectionScreen />} />
+            <Route path="/CharacterSelect" element={<CharacterSelectScreen />} />
           </Routes>
         </div>
       );

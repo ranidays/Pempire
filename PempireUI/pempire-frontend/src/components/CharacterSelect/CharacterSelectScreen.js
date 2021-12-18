@@ -4,7 +4,6 @@ import TextBoxWithAnimation from "../TextBoxWithAnimation";
 import {useNavigate} from "react-router-dom";
 import { MainContainer, LeftContainer, RightContainer, CharacterSheet, HeroContainer, Narrator, Header, Description, HeroImage } from "./CharacterSelectStylings";
 
-
 const prefix = "/assets/heroes/";
 const narrImg = "/assets/narrator.png";
 
@@ -36,6 +35,10 @@ function DialogueSays(props) {
     }
 }
 
+function SheetContent(props) {
+
+}
+
 function CharacterSelectScreen(props) {
 
     //stateless variables
@@ -49,7 +52,7 @@ function CharacterSelectScreen(props) {
     const navigate = useNavigate();
 
     //stateful variables
-    const [heros, setHeros] = useState([]); //empty list of objects to hold items
+    const [heroes, setHeroes] = useState([]); //empty list of objects to hold items
     const [UIState, setUIState] = useState({
         selectedItem: -1,
         disabled: true,
@@ -60,41 +63,41 @@ function CharacterSelectScreen(props) {
     //componentDidMount
     useEffect(() => {
         async function fetchHeroes() {
-            const response = await fetch('http://localhost:5000/api/shop/getitems', requestOptions);
+            const response = await fetch('http://localhost:5000/api/characterselect/getheroes', requestOptions);
             if (response.status === 401){
                 //user unauthorized
                 setHasAccess(false);
             } else {
                 const json = await response.json();
-                //setItems(json);
+                setHeroes(json);
             }            
         }
 
         /* FOR DEBUGGING ONLY, TODO: REMOVE ONCE JWT TOKEN PROPERLY SET */
-        async function getJWT() {
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                  "Email" : "a@c.com",
-                  "Password" : "Password1!"
-                  })
-            };
-            fetch('http://localhost:5000/api/authentication/login', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                sessionStorage.setItem('jwtToken', data.token);
-            })
-            .catch(error => {
-                console.log("error: " + error);
-            });
-        }
-        getJWT();
+        // async function getJWT() {
+        //     const requestOptions = {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ 
+        //           "Email" : "a@c.com",
+        //           "Password" : "Password1!"
+        //           })
+        //     };
+        //     fetch('http://localhost:5000/api/authentication/login', requestOptions)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         sessionStorage.setItem('jwtToken', data.token);
+        //     })
+        //     .catch(error => {
+        //         console.log("error: " + error);
+        //     });
+        // }
+        // getJWT();
 
-        // fetchHeroes();       
-        // let newState =  {...UIState};
-        // newState.dialogue = "It is time for you to choose your hero.";
-        // setUIState(newState);
+         fetchHeroes();       
+         let newState =  {...UIState};
+         newState.dialogue = "It is time for you to choose your hero.";
+         setUIState(newState);
         //fetchItemKeys();
     }, [])
 
@@ -104,7 +107,38 @@ function CharacterSelectScreen(props) {
     })
 
     const selectHero = () => {
-        //
+        console.log(`selected hero ${heroes[UIState.selectedItem].name}`);
+        const buyRequestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'bearer ' + sessionStorage.getItem('jwtToken')
+            },
+            body: JSON.stringify({
+                "heroSelected": UIState.selectedItem
+            })
+        };
+        //console.log(buyRequestOptions.body);
+        fetch("http://localhost:5000/api/characterselect/selecthero", buyRequestOptions)
+        .then(response => {
+            navigate("/boss")
+        })
+        .catch(err => console.log(err));
+    }
+
+    const viewHero = (index) => {
+        console.log(`viewing hero ${heroes[index].name}`);
+        var newState = {...UIState};
+        if (newState.selectedItem == index){
+            newState.selectedItem = -1;
+            newState.disabled = true;
+            newState.dialogue = "It is time for you to choose your hero.";
+        } else {
+            newState.selectedItem = index;
+            newState.disabled = false;
+            newState.dialogue = "A fine choice. Are you sure about your selection?";
+        }
+        setUIState(newState);
     }
 
     //return
@@ -116,17 +150,32 @@ function CharacterSelectScreen(props) {
                     <Narrator src={narrImg}/>
                 </LeftContainer>
                 <RightContainer>
-                    <HeroContainer></HeroContainer>
+                    <HeroContainer>
+                        {heroes.map((hero, index) => (
+                            <HeroDisplay key={index} onChildClick={() => viewHero(index)} imgSrc={`${prefix}` + `${hero.portrait}`} selected={index == UIState.selectedItem}/>
+                        ))
+                        }
+                    </HeroContainer>
                     <CharacterSheet>
-                        <Header>CharacterName</Header>
-                        <Description>char description?</Description> 
-                        <PixelButton onClick={() => selectHero()}><p>Select</p></PixelButton>                     
+
+                        <Header style={UIState.disabled ? { visibility: "hidden"} : {}}>{UIState.disabled ? "Filler" : heroes[UIState.selectedItem].name}</Header>
+                        <Description style={UIState.disabled ? { visibility: "hidden"} : {}}>{UIState.disabled ? "I am filler filler filler filler filler yes i am" : heroes[UIState.selectedItem].description}</Description> 
+                        <PixelButton style={UIState.disabled ? { pointerEvents: "none", opacity: "0.4" } : {}} onClick={() => selectHero()}><p>Select</p></PixelButton>                     
                     </CharacterSheet>
                 </RightContainer>
             </MainContainer>
         );
     } else {
-        return <> </>
+        return(
+            <MainContainer>
+                <LeftContainer>
+                    <DialogueSays dialogueSays={"I haven't seen you before, let's place your name in the book first."}/>
+                    <Narrator src={narrImg}/>
+                </LeftContainer>
+                <RightContainer>
+                </RightContainer>
+            </MainContainer>
+        );
     }
     
 }

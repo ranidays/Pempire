@@ -60,6 +60,7 @@ export const RightContainer = styled.div`
   -ms-interpolation-mode: nearest-neighbor; 
   box-sizing: border-box;
   padding-top: 5%;
+  gap: 5%;
 `
 
 export const CharacterSheet = styled.div`
@@ -87,6 +88,7 @@ export const HeroContainer = styled.div`
     flex-direction: row;
     flex-grow: 1;
     width: 100%;
+
     justify-content: space-evenly;
     image-rendering: crisp-edges;
   image-rendering: -moz-crisp-edges;
@@ -99,6 +101,7 @@ export const HeroImage = styled.img`
     border: 0px;
     image-rendering: crisp-edges;
     height: 100%;
+    object-fit: contain;
     image-rendering: -moz-crisp-edges;          /* Firefox */
     image-rendering: -o-crisp-edges;            /* Opera */
     image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
@@ -125,4 +128,6 @@ export const Header = styled.h1`
 export const Description = styled.p`
     font-family: 'PixelFont';
     color: black;
+    text-align: center;
+    max-width: 50%;
 `

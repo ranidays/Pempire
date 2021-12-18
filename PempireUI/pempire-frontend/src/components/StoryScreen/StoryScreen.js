@@ -4,10 +4,7 @@ import {StoryContainer, Narrator, StoryTextBox, ButtonContainer} from "./StorySc
 import { TextBox} from "../GlobalStylings";
 import { Link } from "react-router-dom";
 import {InputField, CustomButton, Header} from "./StoryScreenStylings";
-import {
-  Navigate,
-  useNavigate
-} from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 let narrator = "/assets/narrator.png";
 
@@ -40,9 +37,6 @@ function StoryScreen(props) {
       navigate("/login")
     }
 }, [beingSaid.Index])
-
-
-
 
     return (
         <StoryContainer>

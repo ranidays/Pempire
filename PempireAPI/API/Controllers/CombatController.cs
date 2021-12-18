@@ -31,6 +31,15 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet("foe")]
+        public IActionResult GetFoe([FromQuery] Actor actor)
+        {
+            Console.WriteLine("Actor =");
+            Entity? foe = ActorFactory.GenerateEntity(actor);
+            if (foe == null) return BadRequest();
+            return Ok(foe);
+        }
+
         [HttpPost("battleaction")]
         public IActionResult UseBattleAction([FromBody] BattleMoveDto battleMoveDto)
         {

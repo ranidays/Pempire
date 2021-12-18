@@ -10,7 +10,8 @@ import ItemBagScreen from "../ItemBag/ItemBagScreen";
 const CombatScreen = (props) => {
   const numButtons = 4;
   const selectedMoves = moves.slice(0, 4);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [foe, setFoe] = useState(null);
   //const [showingItems, setShowingItems] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [usedItems, setUsedItems] = useState([]);
@@ -18,6 +19,9 @@ const CombatScreen = (props) => {
     usedItems: [],
     showingItems: false,
 })
+
+  const safeGetHero = () => user !== null ? user.activeGameState.selectedHero : { health: 100, mana: 100 };
+  const safeGetFoe = () => foe !== null ? foe : { health: 100, mana: 100 };
 
   const handleClick = () => {
     const requestOptions = {
@@ -64,9 +68,25 @@ const CombatScreen = (props) => {
       }
     })
     .then(response => response.json())
-    .then(data => setUser(data))
+    .then(userData => setUser(userData))
     .catch(err => console.log(err));
   }, []);
+
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("jwt");
+    if (user !== null) {
+      fetch(`http://localhost:5000/api/combat/foe?actor=${user.activeGameState.selectedFoe}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => setFoe(data))
+      .catch(err => console.log(err));
+    }
+  }, [user]);
 
   useEffect(() => {
     usedItems.forEach(i => {
@@ -80,10 +100,10 @@ const CombatScreen = (props) => {
   } else {
     return <CombatContainer>
       <FoeDisplay>
-        <CombatProfile />
+        <CombatProfile health={safeGetFoe().health} mana={safeGetFoe().mana}/>
       </FoeDisplay>
       <UserDisplay>
-        <CombatProfile health={75} mana={25} />
+        <CombatProfile health={safeGetHero().health} mana={safeGetHero().mana} />
         <PixelButton>
           <p>Back</p>
         </PixelButton>

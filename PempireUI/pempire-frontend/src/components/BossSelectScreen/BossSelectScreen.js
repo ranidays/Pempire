@@ -5,7 +5,6 @@ let waterPepe = "/assets/bosses/waterPepe.png"
 let firePepe = "/assets/bosses/fireBoss.jpg"
 let earthPepe = "/assets/bosses/rockPepe.png"
 let grassPepe = "/assets/bosses/grassPepe.png"
-
 let shopImage = "/assets/shopIcon.png"
 let narrator = "/assets/narrator.png";
 

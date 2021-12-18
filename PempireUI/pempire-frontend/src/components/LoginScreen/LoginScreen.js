@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import TextBoxWithAnimation from "../TextBoxWithAnimation";
 import {MainContainer, LeftContainer, RightContainer, BookWithHand, Narrator, FormInputFieldContainer, InputField, SaveTab, CustomButton} from "./LoginStylings";
 import {Link, Navigate} from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 let BookHand = "/assets/book_with_hand.png";
 let narrator = "/assets/narrator.png";
 
 const LoginScreen = () => {
+    const navigate = useNavigate()
     const [responseStatus, setResponseStatus] = useState(false);
     const [savedGameResponseStatus, setSavedGameResponseStatus] = useState(null);
     const [gameState, setGameStates] = useState(null);
@@ -76,9 +78,9 @@ const LoginScreen = () => {
             fetch("http://localhost:5000/api/authentication/newgamestate", {
                 method: 'GET',
                 headers: {'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')},
-
             }).then(response => {
                 setResponseStatus(true);
+                navigate("/Boss")
             })
  setResponseStatus(true);
         }
